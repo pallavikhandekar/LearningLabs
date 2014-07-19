@@ -14,5 +14,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^', views.helloWorld),
     url(r'Register', TemplateView.as_view(template_name='./index.html')), 
-    url(r'savedText$', views.saveText),    
+    url(r'savedText$', views.saveText),   
+    url(r'CreateQuiz', TemplateView.as_view(template_name='./createquiz.html')), 
+    url(r'createQuiz$', views.createQuiz),     
+    url(r'DisplayQuiz', views.questions),
+    url(r'Quiz', TemplateView.as_view(template_name='./quiz.html'))
+    
 )

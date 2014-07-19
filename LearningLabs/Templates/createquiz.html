@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Collaborative Crowd Learning Labs</title>
+<h2>Create Quiz</h2>
+</head>
+<body>
+<script>
+parent.window.frames['displayframe'].location ='DisplayQuiz';
+</script>
+
+<form method = "post" action="createQuiz">
+{% csrf_token %}
+  Quiz Name: <input type="text" name="quizname"><br>
+  Question: <input type="text" name="question"><br>
+  Answer Choices: <input type="text" name="answerChoices"><br>
+  Correct Answer: <input type="text" name="correctAnswers"><br>
+  <input type="submit" value="Save" onClick='loadDisplayGrid();'>
+</form>
+</body>

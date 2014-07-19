@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mongoengine.django.mongo_auth',
+    'django_tables2',
     
 )
 
@@ -80,7 +81,10 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-
+TEMPLATE_CONTEXT_PROCESSORS = (
+ 'django.core.context_processors.request',                              
+ 'django.contrib.auth.context_processors.auth',
+)
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
