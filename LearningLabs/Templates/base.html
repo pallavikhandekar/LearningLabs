@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+ function createQuiz(){
+ 	document.getElementById('quizname').disabled = true;
+	window.frames['question'].document.getElementById('quizname').value=document.getElementById('quizname').value;
+	window.frames['displayframe'].document.getElementById('quizname').value=document.getElementById('quizname').value;
+	
+ }
+</script>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+}
+
+.topbar li{
+vertical-align: middle;
+}
+
+.topbar {
+    float: right;
+    }
+</style>
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}Collaborative Crowd Learning Labs{% endblock %}</title>
+</head>
+<body>
+
+	{% load staticfiles %}
+	<div id="banner">
+		<div id="logo"><img src="{% static "images/CCLL Logo.jpeg" %}" height='100' width='200'></img></div>
+		 <div id="links" class="topbar" style="text-align:center">
+	        <ul display: inline;>
+	            <li><a href="/">Login</a></li>
+	            <li><a href="/blog/">Home</a></li>
+	        </ul>
+    	</div>
+	</div>
+   
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

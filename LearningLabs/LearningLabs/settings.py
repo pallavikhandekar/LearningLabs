@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mongoengine.django.mongo_auth',
     'django_tables2',
-    
 )
 
 
@@ -72,6 +71,11 @@ DATABASES = {
    }
 }
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    "./LearningLabs/static",            
+)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
