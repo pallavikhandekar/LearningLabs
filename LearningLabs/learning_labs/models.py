@@ -17,3 +17,8 @@ class QuestionsTable(tables.Table):
     Questions= tables.Column()
     Options=tables.Column()
     Answer = tables.Column()
+    
+class Answers(models.Model):
+    quizquestionid = models.TextField()
+    userid = models.TextField()
+    answer = models.TextField()

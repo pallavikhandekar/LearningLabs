@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'savedText$', views.saveText),   
     url(r'AddQuestion', TemplateView.as_view(template_name='./createquestions.html')), 
     url(r'addQuestion', views.addQuestion),     
-    url(r'DisplayQuiz', views.questions),
+    url(r'DisplayQuiz', views.displayquestions),
     url(r'CreateQuiz', TemplateView.as_view(template_name='./quiz.html'))
     
 )
