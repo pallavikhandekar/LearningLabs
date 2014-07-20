@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
+from django.template import Context, loader
 from learning_labs.models import Register, Quiz, QuestionsTable, Answers
+import datetime
 
 # Create your views here.
 questionlist=[];
@@ -57,3 +59,11 @@ def loadQuestions(quizname):
         answerchoices = ', '.join(obj.answerchoices);
         correctAnswers = ', '.join(obj.correctAnswers);
         questionlist.append({"Questions":question,"Options":answerchoices, "Answer":correctAnswers});
+
+def answer(request,quizname,question):
+    thequestion =Quiz.objects.get(quizname=quizname,question=question)
+    s = thequestion.question
+    return render(request,'answer.html',{"thequestion":thequestion})
+
+
+
