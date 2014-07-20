@@ -61,8 +61,11 @@ def loadQuestions(quizname):
         questionlist.append({"Questions":question,"Options":answerchoices, "Answer":correctAnswers});
 
 def answer(request,quizname,question):
-    thequestion =Quiz.objects.get(quizname=quizname,question=question)
-    s = thequestion.question
+    thequestion=""
+    try:
+        thequestion =Quiz.objects.get(quizname=quizname,question=question)
+    except:
+        thequestion = "";
     return render(request,'answer.html',{"thequestion":thequestion})
 
 

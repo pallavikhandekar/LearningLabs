@@ -1,0 +1,35 @@
+{% load render_table from django_tables2 %}
+{% block content %}
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title> Answer the Question</title>
+</head>
+<body>
+{% load staticfiles %}
+<div id="logo"><img src="{% static "images/CCLL Logo.jpeg" %}" height='100' width='200'/></div>
+
+{% if thequestion %}
+<div>
+<h4>QuizName : {{ thequestion.quizname }}</h4>
+<h4>Question : {{ thequestion.question }}</h4>
+<div>
+<label>USER ID:</label>
+<input type="text"> </input>
+</div>
+<div>
+<label>Your Answer:</label>
+<input type="text"/>
+</div>
+<div>
+<input type="submit" value="Submit">
+ </div>
+</div>
+{% else %}
+<div>
+<h4>Question does not Exist</h4>
+</div>
+{% endif %}
+</body>
+</html>
+{% endblock %}
