@@ -10,21 +10,25 @@
 <div id="logo"><img src="{% static "images/CCLL Logo.jpeg" %}" height='100' width='200'/></div>
 
 {% if thequestion %}
+<form method = "post" action="answerQuestions" onsubmit="DoSubmit()">
+{% csrf_token %}
 <div>
-<h4>QuizName : {{ thequestion.quizname }}</h4>
-<h4>Question : {{ thequestion.question }}</h4>
+<h4 name="quizname">QuizName : {{ thequestion.quizname }}</h4>
+<h4 name = "question">Question : {{ thequestion.question }}</h4>
+<input name = "quiz" type="text" style="visibility: hidden" value={{ thequestion.id }}/>
 <div>
 <label>USER ID:</label>
-<input type="text"> </input>
+<input name = "userId" type="text"> </input>
 </div>
 <div>
 <label>Your Answer:</label>
-<input type="text"/>
+<input name = "answer" type="text"/>
 </div>
 <div>
 <input type="submit" value="Submit">
  </div>
 </div>
+</form>
 {% else %}
 <div>
 <h4>Question does not Exist</h4>

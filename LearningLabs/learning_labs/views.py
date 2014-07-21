@@ -40,8 +40,8 @@ def displayquestions(request):
 
 #Save answer for a question for a user
 def answerQuestions(request):
-    quizquestionid =  request.POST.get('quizquestionid');
-    userid =  request.POST.get('userid');
+    quizquestionid =  request.POST.get('quiz');
+    userid =  request.POST.get('userId');
     answer = request.POST.get('answer');
     answerObj = Answers.objects.create(quizquestionid=quizquestionid,userid=userid,answer=answer);
     answerObj.save();
@@ -68,5 +68,8 @@ def answer(request,quizname,question):
         thequestion = "";
     return render(request,'answer.html',{"thequestion":thequestion})
 
-
+def saveAnswer(request):
+    quizId =  request.POST.get('quiz');
+    answer = request.POST.get('answer')
+    userId = request.POST.get('userId')
 
