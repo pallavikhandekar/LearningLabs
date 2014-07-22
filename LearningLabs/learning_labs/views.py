@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http.response import HttpResponse
 from django.template import Context, loader
 from learning_labs.models import Register, Quiz, QuestionsTable, Answers
+from django.utils import simplejson
 import datetime
 
 # Create your views here.
@@ -68,8 +69,11 @@ def answer(request,quizname,question):
         thequestion = "";
     return render(request,'answer.html',{"thequestion":thequestion})
 
-def saveAnswer(request):
-    quizId =  request.POST.get('quiz');
-    answer = request.POST.get('answer')
-    userId = request.POST.get('userId')
+def getPolls(request):
+    queryset = Answers.objects.all();
+    response_data = {};
+    count =queryset.count();
+    response_data['count'] = count;
+    print count;
+    return HttpResponse(simplejson.dumps(response_data), mimetype='application/json');
 
