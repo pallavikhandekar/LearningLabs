@@ -74,7 +74,7 @@ DATABASES = {
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    "./static",            
+    "/static",            
 )
 
 TEMPLATE_DIRS = (

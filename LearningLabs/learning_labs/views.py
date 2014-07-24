@@ -4,6 +4,8 @@ from django.template import Context, loader
 from learning_labs.models import Register, Quiz, QuestionsTable, Answers
 from django.utils import simplejson
 import datetime
+import geoTracker
+
 
 # Create your views here.
 questionlist=[];
@@ -11,12 +13,20 @@ def helloWorld (request):
     return HttpResponse("Welcome Your are on Learning Labs App");
 
 #Register user
-def saveText(request):
+def registerUser(request):
+    geodata = geoTracker.getGeoLocationData(request.META['REMOTE_ADDR'])
+    if(geodata!=None):
+        for key, value in geodata.iteritems() :
+            print key, value
+     
     firstname = request.POST.get('fname')
     lastname =  request.POST.get('lname')
     regObj = Register.objects.create( fname=firstname,lname=lastname)
     regObj.save()
-    return HttpResponse("Text Saved");
+    if(geodata!=None):
+        return HttpResponse(str(geodata));
+    else:
+        return HttpResponse('Text Saved');
 
 #Add questions to Quiz
 def addQuestion(request):
