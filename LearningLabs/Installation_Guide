@@ -7,3 +7,5 @@ Installations:
 3. mongoengine
 
 4. django_tables2
+
+5. pygeoip
