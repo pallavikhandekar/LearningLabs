@@ -23,6 +23,6 @@ urlpatterns = patterns('',
     url(r'addQuestion', views.addQuestion),     
     url(r'DisplayQuiz', views.displayquestions),
     url(r'CreateQuiz', TemplateView.as_view(template_name='./quiz.html')),
-     url(r'answerquiz/(?P<quizname>\w+)/(?P<question>[\w|\W]+)', views.answer)
-    
+    url(r'answerquiz/(?P<quizname>\w+)/(?P<question>[\w|\W]+)', views.answer),
+    url(r'FamilyFeudGame',TemplateView.as_view(template_name='./familyFeudUI.html'))  
 )

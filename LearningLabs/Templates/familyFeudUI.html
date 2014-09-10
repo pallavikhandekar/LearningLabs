@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html style="height:100%">
+<head>
+
+<script type = "text/javascript"   src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js">
+</script>
+<script type = "text/javascript"  src = "{% static "JavaScript/familyFeudUI.js" %}">
+</script>
+
+<script type = "text/javascript" >
+ if(typeof angular == 'undefined') {
+ 	alert('undefined');
+ }
+</script>
+
+<style type="text/css">
+.css3gradient{
+ background-color:#476d8f;
+ filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#476d8f, endColorstr=#205799);
+ background-image:-moz-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-webkit-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-o-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+ background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#476d8f), color-stop(25%,#205799),color-stop(100%,#21a0db));}
+
+.childDiv{
+	width:5%;
+	height:100%;
+	border-radius:50%;
+	background:linear-gradient(to bottom, #40b3ff, #09f);
+	margin: auto;
+	text-align: center
+}
+</style>
+</head>
+
+<body class="css3gradient" style="position:absolute; top:0; bottom:0; right:0; left:0;">
+	<div  align="center">
+		<div style="height:130px" >
+		 	<img src="{% static "images/FamilyFeud.jpeg" %}"/>
+		</div>
+		<div style="padding-bottom: 6%">
+			<label id="lblQuestion" style="color: white;font-size: 20px;">Other than Java, what Programming Languages do you use?</label>
+		</div>	
+		<div ng-app>
+		{% verbatim %}
+		<table ng-controller='AppController' style="width: 30%;"> 
+		<tr ng-repeat='answer in answers'>
+			<td style="background-color: #fab025;  cursor: pointer;">
+					<div id="selectOptionDiv{{answer.optionNumber}}" class ="childDiv" ng-click="show=!show" ng-show="!show">
+						<span>{{answer.optionNumber}}</span>
+					</div>
+					<div id="answerDiv{{answer.optionNumber}}" ng-show="show" style="text-align:center"> 
+					<span>{{answer.text}}</span>
+					<span style="float: right">{{answer.percentage}}</span>
+					</div>
+			</td>
+      	</tr>
+   	    </table>
+		{% endverbatim %}
+		</div>
+		<div>
+		
+		</div>
+		
+	</div>
+	
+
+</body>
+
+</html>
+

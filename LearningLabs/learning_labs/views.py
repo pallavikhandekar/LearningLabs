@@ -6,7 +6,6 @@ from django.utils import simplejson
 import datetime
 import geoTracker
 
-
 # Create your views here.
 questionlist=[];
 def helloWorld (request):
@@ -18,7 +17,7 @@ def registerUser(request):
     if(geodata!=None):
         for key, value in geodata.iteritems() :
             print key, value
-     
+
     firstname = request.POST.get('fname')
     lastname =  request.POST.get('lname')
     regObj = Register.objects.create( fname=firstname,lname=lastname)
