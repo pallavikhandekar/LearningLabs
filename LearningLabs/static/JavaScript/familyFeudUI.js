@@ -1,11 +1,11 @@
-function AppController($scope) { 
+function AppController($scope) {
+	$scope.question = question; 
 	$scope.answers = answers;
-	
 }
 
 
 
-
+var question = { text: "Other than Java, what Programming Languages do you use?" };
 var answers = [
 { text: 'C', optionNumber:"1", percentage:'40'},
 { text: 'C++', optionNumber:"2", percentage:'30'},

@@ -26,45 +26,81 @@ background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
  background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#476d8f), color-stop(25%,#205799),color-stop(100%,#21a0db));}
 
 .childDiv{
-	width:5%;
+	width:7%;
 	height:100%;
 	border-radius:50%;
-	background:linear-gradient(to bottom, #40b3ff, #09f);
+	background:linear-gradient(to bottom, #0033CC, #09f);
 	margin: auto;
-	text-align: center
+	text-align: center;
+	color: white;
 }
+
+.label{
+   color: white;
+   font-size: 20px;
+}
+
+
 </style>
 </head>
 
 <body class="css3gradient" style="position:absolute; top:0; bottom:0; right:0; left:0;">
 	<div  align="center">
 		<div style="height:130px" >
-		 	<img src="{% static "images/FamilyFeud.jpeg" %}"/>
+		 	<img src="{% static "images/FamilyFeud.png" %}"/>
 		</div>
-		<div style="padding-bottom: 6%">
-			<label id="lblQuestion" style="color: white;font-size: 20px;">Other than Java, what Programming Languages do you use?</label>
-		</div>	
 		<div ng-app>
 		{% verbatim %}
-		<table ng-controller='AppController' style="width: 30%;"> 
-		<tr ng-repeat='answer in answers'>
-			<td style="background-color: #fab025;  cursor: pointer;">
-					<div id="selectOptionDiv{{answer.optionNumber}}" class ="childDiv" ng-click="show=!show" ng-show="!show">
-						<span>{{answer.optionNumber}}</span>
-					</div>
-					<div id="answerDiv{{answer.optionNumber}}" ng-show="show" style="text-align:center"> 
-					<span>{{answer.text}}</span>
-					<span style="float: right">{{answer.percentage}}</span>
-					</div>
-			</td>
-      	</tr>
+		<div  ng-controller='AppController' style="padding-bottom: 6%" >
+			<label id="lblQuestion" style="color: white;font-size: 20px;">{{question.text}}</label>
+		</div>	
+		<div  style="padding-bottom: 6%">
+		<table ng-controller='AppController' style="width: 30%; background-color:#FFFF66;" cellpadding="4px"
+		cellspacing="4px"> 
+			<tr ng-repeat='answer in answers'>
+				<td style="background-color: rgb(250, 176, 37); cursor: pointer; border-right: medium solid rgb(153, 0, 51); 
+				border-width: thin medium medium thin; border-style: solid; border-color: rgb(153, 0, 51);">
+						<div id="selectOptionDiv{{answer.optionNumber}}" class ="childDiv" ng-click="show=!show" ng-show="!show">
+							<span >{{answer.optionNumber}}</span>
+						</div>
+						<div id="answerDiv{{answer.optionNumber}}" ng-show="show" style="text-align:center;font-weight: bold;"> 
+						<span>{{answer.text}}</span>
+						<span style="float: right">{{answer.percentage}}</span>
+						</div>
+				</td>
+	      	</tr>
    	    </table>
+		</div>
+		<div >
+			<table ng-controller='AppController' style="width:80%" cellpadding="10px">
+				<tr colspan=3 style="text-align:center">
+					<td class="label">
+						<label>Team A Score</label>
+					</td>
+					<td  class="label">
+						<label>Total Score this round</label>
+					</td>
+					<td  class="label">
+						<label>Team B Score</label>
+					</td>
+				<tr>
+				<tr colspan=3  style="text-align: center">
+					<td>
+						<input type="text" name="teamAScore" text="0"  readonly="readonly" value="0"
+						style="border: 1px solid black;"/>
+					</td>
+					<td>
+						<input type="text" name="totalRoundScore" readonly="readonly" value="0"
+						style="border: 1px solid black;"/>
+					</td>
+					<td>
+						<input type="text" name="teamBScore" readonly="readonly"  value="0"
+						style="border: 1px solid black;"/>
+					</td>
+				<tr>
+			</table>
+		</div>
 		{% endverbatim %}
-		</div>
-		<div>
-		
-		</div>
-		
 	</div>
 	
 
