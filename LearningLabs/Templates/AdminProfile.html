@@ -7,9 +7,15 @@
 
     </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
+<style>
+body{
+    position:absolute;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+</style>
 </head>
-<body background= "{% static "images/bcg.png" %}" style="position:absolute;background-size: cover;background-repeat: no-repeat" data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
+<body background= "{% static "images/bcg.png" %}" data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
 <div>
      {% verbatim %}
     <div>

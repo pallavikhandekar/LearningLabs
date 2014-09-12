@@ -24,6 +24,7 @@
 
     app.controller('QuizController',function(){
     this.quiz={};
+
     this.addme = function(){
 
         this.quiz ={};
