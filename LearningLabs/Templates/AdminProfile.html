@@ -7,8 +7,9 @@
 
     </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
 </head>
-<body data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
+<body background= "{% static "images/bcg.png" %}" style="position:absolute;background-size: cover;background-repeat: no-repeat" data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
 <div>
      {% verbatim %}
     <div>
@@ -18,6 +19,8 @@
             <a href ng-click="tab.setTab(1)">View Questions</a></li>
           <li ng-class="{ active: tab.isSelected(2) }">
             <a href ng-click="tab.setTab(2)">Submit a New Question</a></li>
+            <li ng-class="{ active: tab.isSelected(3) }">
+            <a href ng-click="tab.setTab(3)">Add a New Quiz</a></li>
         </ul>
         <div ng-show="tab.isSelected(1)">
             <div style="width: 500px;margin: 50px">
@@ -50,6 +53,11 @@
     </div>
 </form>
           </div>
+             <div ng-show="tab.isSelected(3)">
+
+                 <center>IN Construction</center>
+
+             </div>
       </section>
 
     </div>
