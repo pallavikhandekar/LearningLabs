@@ -6,6 +6,9 @@ import django_tables2 as tables
 class Register(models.Model):
     fname = models.TextField()
     lname = models.TextField()
+    usrname=models.TextField()
+    email= models.TextField()
+    password = models.TextField()
 
 class Quiz(models.Model):
     quizname = models.TextField()

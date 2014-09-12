@@ -3,8 +3,9 @@ from django.http.response import HttpResponse
 from django.template import Context, loader
 from learning_labs.models import Register, Quiz, QuestionsTable, Answers
 from django.utils import simplejson
-import datetime
+from django.contrib.auth import authenticate, login
 import geoTracker
+
 
 # Create your views here.
 questionlist=[];
@@ -26,7 +27,49 @@ def registerUser(request):
         return HttpResponse(str(geodata));
     else:
         return HttpResponse('Text Saved');
+    
+def signUp(request):
+    firstname = request.POST.get('fname')
+    lastname =  request.POST.get('lname')
+    email = request.POST.get('email')
+    usrname = request.POST.get('usrname')
+    password = request.POST.get('password')
+    
+    regObj = Register.objects.create( fname=firstname,lname=lastname, usrname=usrname, email=email, password=password)
+    regObj.save()
+    return HttpResponse("Sign up");
 
+# def signIn(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(username=username, password=password)
+#     if user is not None:
+#         if user.is_active:
+#             return HttpResponse("Signed in")
+#         else:
+#             return HttpResponse("Not Signed in")
+#     else:
+#         return HttpResponse("Not Signed in")
+
+def signIn(request):
+    state = "Please log in below..."
+    username = password = ''
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                state = "You're successfully logged in!"
+            else:
+                state = "Your account is not active, please contact the site admin."
+        else:
+            state = "Your username and/or password were incorrect."
+
+    return HttpResponse({'state':state, 'username': username})
+ 
 #Add questions to Quiz
 def addQuestion(request):
     quizname =  request.POST.get('quizname');
