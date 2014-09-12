@@ -50,13 +50,15 @@ background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
     <link rel="stylesheet" href="style.css" />
     <title>{% block title %}Collaborative Crowd Learning Labs{% endblock %}</title>
 </head>
-<body class="">
-
 	{% load staticfiles %}
+<body background="{% static "images/gamificationboard.jpg" %}" style="background-position: 0 100px">
+	
 	<div id="banner" align="center" style="padding-bottom:6%">
+	{% block banner %}
 		<div id="logo"><img src="{% static "images/CCLL Logo.jpeg" %}" height='100' width='200'/></div>
+	{% endblock %}
 	</div>
-   
+    
 
     <div id="content">
         {% block content %}{% endblock %}
