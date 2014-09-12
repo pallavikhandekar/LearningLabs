@@ -1,90 +1,42 @@
-<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% block content %}
 {% load staticfiles %}
-<html>
-<head>
-<style type="text/css">
-.css3gradient {
-	background-color: #476d8f;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,
-		startColorstr=#476d8f, endColorstr=#205799);
-	background-image: -moz-linear-gradient(top, #476d8f 0%, #205799 25%, #21a0db 100%);
-	background-image: linear-gradient(top, #476d8f 0%, #205799 25%, #21a0db 100%);
-	background-image: -webkit-linear-gradient(top, #476d8f 0%, #205799 25%, #21a0db 100%);
-	background-image: -o-linear-gradient(top, #476d8f 0%, #205799 25%, #21a0db 100%);
-	background-image: -ms-linear-gradient(top, #476d8f 0%, #205799 25%, #21a0db 100%);
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #476d8f
-		), color-stop(25%, #205799), color-stop(100%, #21a0db));
-}
-
-.childDiv {
-	width: 7%;
-	height: 100%;
-	border-radius: 50%;
-	background: linear-gradient(to bottom, #0033CC, #09f);
-	margin: auto;
-	text-align: center;
-	color: white;
-}
-
-.label {
-	color: white;
-	font-size: 20px;
-}
-</style>
-</head>
-<body class="css3gradient"
-	style="position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
-
 	<div align="center">
-
-		<div style="height: 130px">
-			<img src="{% static "images/FamilyFeud.png" %}"/>
-		</div>
-
-		<div style="width: 80%">
-
-			<form method="post" action="signUp">
-				{% csrf_token %}
-				<div style="float: left" ng-app="" ng-controller="personController">
-					Sign up: <br> 
-					First Name: <input name="fname" type="text"><br> 
-					Last Name: <input name="lname" type="text"><br>
-					User Name: <input name="usrname" type="text"><br>
-					    Email: <input name="email" type="text" ><br>
-					Password: <input type="password" name="password" value="" /><br> 
-					<br> <input type="submit" value="Sign Up"> <br> <br>
-				</div>
-			</form>
-
+		<div style="width: 60%">
 			{{ state }}
-			<form method="get" action="signIn">
+		<div class="container" ng-controller="personController" ng-app="" style="float: left; width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
+		border-radius: 10px;  padding: 10% 10% 21.80%; border: 2px solid black;">
+			<form method="get" action="signIn" class="form-signin">
 			{% csrf_token %}
 				{% if next %} <input type="hidden" name="next" value="{{ next }}" />
-				{% endif %} 
-				Sign In: <br>
-				Username: <input type="text" name="username" value="{{ username}}" /><br /> 
-				Password: <input type="password" name="password" value="" /><br /> 
-				<input type="submit" value="Log In" />
+				{% endif %}
+				<h3>Please sign in</h3> 
+				<table style="width:100%">
+				<tr><td><input class="form-control" name="username" type="email" placeholder="Email address" required="" autofocus=""></td></tr>
+				<tr><td><input class="form-control" name="password"  type="password" placeholder="Password" required=""></td></tr>
+				<tr><td><input class="btn btn-lg btn-primary btn-block" type="submit" value="Log In" /></td></tr>
+				</table>		
 			</form>
-			
-			<!-- <form method="post" action="signIn">
-				{% csrf_token %}	
-				<div style="float: right" ng-app="" ng-controller="personController">
-					Sign In:<br> <br>
-					User Name: <input type="text"><br> 
-					Password: <input type="text"><br> 
-					<br> <input type="submit" value="Sign In"> <br>
-				</div>
-			</form> -->
+	   </div>
+	   <div ng-app="" ng-controller="personController" style="float: right; width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
+		border-radius: 10px; padding: 10%; border: 2px solid black;">
+			<form method="post" action="signUp"  class="form-signin">
+				{% csrf_token %}
+					<h3>Please sign up</h3> 
+					<table style="width:100%">
+						<tr><td><input class="form-control" name="fname" type="text" placeholder="First Name" required="" autofocus=""></td></tr>
+						<tr><td><input class="form-control" name="lname" type="text" placeholder="Last Name" required="" autofocus=""></td></tr>
+						<tr><td><input class="form-control" name="username" type="text" placeholder="User Name" required="" autofocus=""></td></tr>
+						<tr><td><input class="form-control" name="email" type="email" placeholder="Email address" required="" autofocus=""></td></tr>
+						<tr><td><input class="form-control" name="password"  type="password" placeholder="Password" required=""></td></tr>
+						<tr><td><input  class="btn btn-lg btn-primary btn-block"  type="submit"value="Sign Up"></td></tr>
+					</table>
+			</form>
 		</div>
-
-
-
-		<script>
-
-</script>
+	</div>
 
 		<script
 			src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-</body>
-</html>
+{% endblock %}

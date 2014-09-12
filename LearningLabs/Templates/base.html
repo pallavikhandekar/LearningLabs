@@ -1,6 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%">
 <head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
  function createQuiz(){
  	document.getElementById('quizname').disabled = true;
@@ -27,21 +35,26 @@ vertical-align: middle;
 .topbar {
     float: right;
     }
+    
+.css3gradient{
+ background-color:#476d8f;
+ filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#476d8f, endColorstr=#205799);
+ background-image:-moz-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-webkit-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-o-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+ background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#476d8f), color-stop(25%,#205799),color-stop(100%,#21a0db));}
+
 </style>
     <link rel="stylesheet" href="style.css" />
     <title>{% block title %}Collaborative Crowd Learning Labs{% endblock %}</title>
 </head>
-<body>
+<body class="">
 
 	{% load staticfiles %}
-	<div id="banner">
+	<div id="banner" align="center" style="padding-bottom:6%">
 		<div id="logo"><img src="{% static "images/CCLL Logo.jpeg" %}" height='100' width='200'/></div>
-		 <div id="links" class="topbar" style="text-align:center">
-	        <ul style="display: inline">
-	            <li><a href="/">Login</a></li>
-	            <li><a href="/blog/">Home</a></li>
-	        </ul>
-    	</div>
 	</div>
    
 
