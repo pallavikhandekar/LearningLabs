@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head >
+	<script type = "text/javascript"   src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
+	{% load staticfiles %}
+    <script type = "text/javascript"   src = "{% static "JavaScript/app.js" %}">
+
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
+<div>
+    <div>
+    {% verbatim %}
+   <form name="SubmitQuestion" ng-contoller="QuizController as quizCtrl" ng-submit="quizCtrl.addme()">
+  <!--  Live Preview -->
+  <blockquote>
+    <strong>Quiz: {{ quizCtrl.quiz.quizNo }}</strong>
+    {{ quizCtrl.quiz.question }}
+  </blockquote>
+<div style="width: 500px;margin-left: 100px">
+  <!--  Review Form -->
+  <h4>Submit a Question</h4>
+  <fieldset class="form-group">
+    <select ng-model="quizCtrl.quiz.quizNo" class="form-control" ng-options="stars for stars in [5,4,3,2,1]" title="Quiz">
+      <option value="">Choose a Quiz</option>
+    </select>
+  </fieldset>
+  <fieldset class="form-group">
+    <textarea ng-model="quizCtrl.quiz.question" class="form-control" placeholder="Write a Question..." title="Question"></textarea>
+  </fieldset>
+  <fieldset class="form-group">
+    <input type="submit" class="btn btn-primary pull-right" value="Submit Question" />
+  </fieldset>
+    </div>
+</form>
+
+	{% endverbatim %}
+    </div>
+</div>
+</body>
+</html>
