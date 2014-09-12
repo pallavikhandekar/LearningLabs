@@ -10,19 +10,34 @@
 </head>
 <body data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
 <div>
+     {% verbatim %}
     <div>
-    {% verbatim %}
-   <form name="SubmitQuestion" ng-contoller="QuizController as quizCtrl" ng-submit="quizCtrl.addme()">
+         <section class="tab" ng-controller="TabController as tab">
+        <ul class="nav nav-pills">
+          <li ng-class="{ active: tab.isSelected(1) }">
+            <a href ng-click="tab.setTab(1)">View Questions</a></li>
+          <li ng-class="{ active: tab.isSelected(2) }">
+            <a href ng-click="tab.setTab(2)">Submit a New Question</a></li>
+        </ul>
+        <div ng-show="tab.isSelected(1)">
+            <div style="width: 500px;margin: 50px">
+           <label>Select a Quiz : </label>
+          <select class="selectpicker" ng-model='selectedQuiz' ng-options='Qns.quizNo for Qns in quizmeCntrl.quizQns'></select>
+           <br/>
+          <ul ng-repeat="q in quizmeCntrl.quizQns[selectedQuiz.quizNo-1].questions">
+                    <li>{{ q }}</li>
+           </ul>
+           </div>
+        </div>
+        <div ng-show="tab.isSelected(2)">
+         <form name="SubmitQuestion" ng-contoller="QuizController as quizCtrl" ng-submit="quizCtrl.addme()">
   <!--  Live Preview -->
-  <blockquote>
-    <strong>Quiz: {{ quizCtrl.quiz.quizNo }}</strong>
-    {{ quizCtrl.quiz.question }}
-  </blockquote>
-<div style="width: 500px;margin-left: 100px">
+
+<div style="width: 500px;margin: 100px">
   <!--  Review Form -->
   <h4>Submit a Question</h4>
   <fieldset class="form-group">
-    <select ng-model="quizCtrl.quiz.quizNo" class="form-control" ng-options="stars for stars in [5,4,3,2,1]" title="Quiz">
+    <select ng-model="quizCtrl.quiz.quizNo" class="form-control" ng-options="stars for stars in [1,2]" title="Quiz">
       <option value="">Choose a Quiz</option>
     </select>
   </fieldset>
@@ -34,9 +49,14 @@
   </fieldset>
     </div>
 </form>
+          </div>
+      </section>
+
+    </div>
+
+
 
 	{% endverbatim %}
-    </div>
-</div>
+ </div>
 </body>
 </html>
