@@ -1,61 +1,17 @@
-<!DOCTYPE html>
+{% extends "FamilyFeudUIBase.html" %}
+
+{% block content %}
+
 {% load staticfiles %}
-<html style="height:100%">
-<head>
-
-<script type = "text/javascript"   src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js">
-</script>
-<script type = "text/javascript"  src = "{% static "JavaScript/familyFeudUI.js" %}">
-</script>
-
-<script type = "text/javascript" >
- if(typeof angular == 'undefined') {
- 	alert('undefined');
- }
-</script>
-
-<style type="text/css">
-.css3gradient{
- background-color:#476d8f;
- filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#476d8f, endColorstr=#205799);
- background-image:-moz-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
-background-image:linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
-background-image:-webkit-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
-background-image:-o-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
-background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
- background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#476d8f), color-stop(25%,#205799),color-stop(100%,#21a0db));}
-
-.childDiv{
-	width:7%;
-	height:100%;
-	border-radius:50%;
-	background:linear-gradient(to bottom, #0033CC, #09f);
-	margin: auto;
-	text-align: center;
-	color: white;
-}
-
-.label{
-   color: white;
-   font-size: 20px;
-}
 
 
-</style>
-</head>
-
-<body class="css3gradient" style="position:absolute; top:0; bottom:0; right:0; left:0;">
-	<div  align="center">
-		<div style="height:130px" >
-		 	<img src="{% static "images/FamilyFeud.png" %}"/>
-		</div>
-		<div ng-app>
+		<div ng-app ng-controller='AppController'>
 		{% verbatim %}
-		<div  ng-controller='AppController' style="padding-bottom: 6%" >
-			<label id="lblQuestion" style="color: white;font-size: 20px;">{{question.text}}</label>
+		<div style="padding-bottom: 4%" >
+			<label id="lblQuestion" style="color: white;font-size: 25px;font-family: arial;">{{question.text}}</label>
 		</div>	
 		<div  style="padding-bottom: 6%">
-		<table ng-controller='AppController' style="width: 30%; background-color:#FFFF66;" cellpadding="4px"
+		<table style="width: 30%; background-color:#FFFF66; border: 2px solid " cellpadding="4px"
 		cellspacing="4px"> 
 			<tr ng-repeat='answer in answers'>
 				<td style="background-color: rgb(250, 176, 37); cursor: pointer; border-right: medium solid rgb(153, 0, 51); 
@@ -71,8 +27,8 @@ background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
 	      	</tr>
    	    </table>
 		</div>
-		<div >
-			<table ng-controller='AppController' style="width:80%" cellpadding="10px">
+		<div style="padding-bottom:4%">
+			<table  style="width:80%" cellpadding="10px">
 				<tr colspan=3 style="text-align:center">
 					<td class="label">
 						<label>Team A Score</label>
@@ -85,26 +41,28 @@ background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
 					</td>
 				<tr>
 				<tr colspan=3  style="text-align: center">
-					<td>
-						<input type="text" name="teamAScore" text="0"  readonly="readonly" value="0"
-						style="border: 1px solid black;"/>
+					<td class="label">
+						<label  name="teamAScore">0</label>
 					</td>
-					<td>
-						<input type="text" name="totalRoundScore" readonly="readonly" value="0"
-						style="border: 1px solid black;"/>
+					<td class="label">
+						<label  name="totalRoundScore">0</label>
 					</td>
-					<td>
-						<input type="text" name="teamBScore" readonly="readonly"  value="0"
-						style="border: 1px solid black;"/>
+					<td class="label">
+						<label  name="teamBScore">0</label>
 					</td>
 				<tr>
 			</table>
 		</div>
+	
+		<div id="nextQuestionDiv"  style="cursor:pointer">
+			 <button style="float:left; background:linear-gradient(to bottom, #FFFF66, rgb(250, 176, 37)); border: 2px solid; border-radius: 25px;cursor:pointer;" 
+			 ng-click="loadPreviousQuestion()" >Previous Question</button> 
+		
+			 <button style="float:right; background:linear-gradient(to bottom, #FFFF66, rgb(250, 176, 37)); border: 2px solid; border-radius: 25px;cursor:pointer;" 
+			 ng-click="loadNextQuestion()" >Next Question</button> 
+		</div>
 		{% endverbatim %}
 	</div>
 	
-
-</body>
-
-</html>
+{% endblock %}
 
