@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+ function createQuiz(){
+ 	document.getElementById('quizname').disabled = true;
+	window.frames['question'].document.getElementById('quizname').value=document.getElementById('quizname').value;
+	window.frames['displayframe'].document.getElementById('quizname').value=document.getElementById('quizname').value;
+	
+ }
+</script>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+}
+
+.topbar li{
+vertical-align: middle;
+}
+
+.topbar {
+    float: right;
+    }
+body {
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+    
+.css3gradient{
+ background-color:#476d8f;
+ filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#476d8f, endColorstr=#205799);
+ background-image:-moz-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-webkit-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-o-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
+ background-image:-webkit-gradient(linear, right top, right bottom, color-stop(0%,#476d8f), color-stop(25%,#205799),color-stop(100%,#21a0db));}
+
+</style>
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}Collaborative Crowd Learning Labs{% endblock %}</title>
+</head>
+	{% load staticfiles %}
+<body background="{% static "images/background.jpg" %}">
+	
+	<div id="banner" style="align-items: center">
+	{% block banner %}
+		<img src="{% static "images/FamilyFeud.png" %}" style="margin-left: 40%"/>
+	{% endblock %}
+	</div>
+    
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
