@@ -12,8 +12,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^', views.helloWorld),
-    url(r'Register', TemplateView.as_view(template_name='./register.html')), 
     url(r'registerUser$', views.registerUser),
     url(r'countpolls', views.getPolls),
     url(r'counter', TemplateView.as_view(template_name='./counter.html')),
