@@ -39,6 +39,15 @@ def signUp(request):
     regObj.save()
     return HttpResponse("Sign up");
 
+def audienceAnswer(request):
+    studentId = request.POST.get('studentId')
+    questionId =  request.POST.get('questionid')
+    answer = request.POST.get('answer')
+    
+    aaObj = audienceAnswer.objects.create( studentId=studentId,questionid=questionId, answer=answer)
+    aaObj.save()
+    return HttpResponse("Answer Saved");
+
 # def signIn(request):
 #     username = request.POST['username']
 #     password = request.POST['password']

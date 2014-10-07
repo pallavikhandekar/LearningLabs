@@ -9,7 +9,7 @@
 {% load staticfiles %}
 <div id="logo"><img src="{% static "images/CCLL Logo.jpeg" %}" height='100' width='200'/></div>
 
-{% if thequestion %}
+<!-- {% if thequestion %} -->
 <form method = "post" action="answerQuestions" onsubmit="DoSubmit()">
 {% csrf_token %}
 <div>
@@ -29,11 +29,11 @@
  </div>
 </div>
 </form>
-{% else %}
+<!-- {% else %}
 <div>
 <h4>Question does not Exist</h4>
 </div>
-{% endif %}
+{% endif %} -->
 </body>
 </html>
 {% endblock %}

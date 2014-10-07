@@ -25,3 +25,9 @@ class Answers(models.Model):
     quizquestionid = models.TextField()
     userid = models.TextField()
     answer = models.TextField()
+    
+class AudincePost(models.Model):
+    studentId = models.TextField()
+    questionid = models.TextField()
+    answer = models.TextField()
+  
