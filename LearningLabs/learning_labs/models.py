@@ -21,13 +21,24 @@ class QuestionsTable(tables.Table):
     Options=tables.Column()
     Answer = tables.Column()
     
-class Answers(models.Model):
-    quizquestionid = models.TextField()
-    userid = models.TextField()
-    answer = models.TextField()
+# class Answers(models.Model):
+#     quizquestionid = models.TextField()
+#     userid = models.TextField()
+#     answer = models.TextField()
     
 class AudincePost(models.Model):
     studentId = models.TextField()
     questionid = models.TextField()
     answer = models.TextField()
-  
+
+class Answers(models.Model):
+    Name = models.TextField()
+    ID = models.IntegerField()
+    SIS_ID = models.IntegerField()
+    Section = models.TextField()
+    Section_Id = models.IntegerField()
+    Section_SIS_Id= models.TextField()
+    Question_Id= models.IntegerField()
+    Question= models.TextField()
+    Submitted= models.TextField()
+    Answer= models.TextField()
