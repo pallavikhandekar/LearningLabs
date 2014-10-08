@@ -28,5 +28,10 @@ urlpatterns = patterns('',
     url(r'signUp$', views.signUp),
     url(r'signIn$', views.signIn),
     url(r'Audiencepoll',TemplateView.as_view(template_name='./audiencepoll.html')),
-     url(r'answer',TemplateView.as_view(template_name='./answer.html'))
+    url(r'answer',TemplateView.as_view(template_name='./answer.html')),
+    
+    #**********Text Mining Section ***********
+     url(r'miningresults',views.showChart)
+    
+    # ******End Text Mining Section ***********
 )

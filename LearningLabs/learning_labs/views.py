@@ -5,6 +5,7 @@ from learning_labs.models import Register, Quiz, QuestionsTable, Answers
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 import geoTracker
+import mining
 
 
 # Create your views here.
@@ -138,3 +139,14 @@ def getPolls(request):
     print count;
     return HttpResponse(simplejson.dumps(response_data), mimetype='application/json');
 
+#*****************TEXT MINING SECTION ******************
+
+def showChart(request):
+    chartData = mining.getChartData();
+    return render(request, 'TextMining/MiningResults.html', {"data":chartData})
+
+
+
+
+
+#***************END TEXT MINING SECTION ******************
