@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
-from django.template import Context, loader
-from learning_labs.models import Register, Quiz, QuestionsTable, Answers
+# from django.template import Context, loader
+from learning_labs.models import Register, Quiz, QuestionsTable,Answers,AudincePost
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 import geoTracker
+from django import forms
 import mining
+
 
 
 # Create your views here.
@@ -36,18 +38,18 @@ def signUp(request):
     usrname = request.POST.get('usrname')
     password = request.POST.get('password')
     
-    regObj = Register.objects.create( fname=firstname,lname=lastname, usrname=usrname, email=email, password=password)
+    regObj = Register.objects.create(fname=firstname,lname=lastname, usrname=usrname, email=email, password=password)
     regObj.save()
     return HttpResponse("Sign up");
 
 def audienceAnswer(request):
     studentId = request.POST.get('studentId')
-    questionId =  request.POST.get('questionid')
+    questionId = request.POST.get('questionId')
     answer = request.POST.get('answer')
     
-    aaObj = audienceAnswer.objects.create( studentId=studentId,questionid=questionId, answer=answer)
+    aaObj = AudincePost.objects.create(studentId=studentId,questionId=questionId, answer=answer)
     aaObj.save()
-    return HttpResponse("Answer Saved");
+    return HttpResponse("Answer Saved Successfuly!");
 
 # def signIn(request):
 #     username = request.POST['username']
@@ -106,7 +108,7 @@ def answerQuestions(request):
     quizquestionid =  request.POST.get('quiz');
     userid =  request.POST.get('userId');
     answer = request.POST.get('answer');
-    answerObj = Answers.objects.create(quizquestionid=quizquestionid,userid=userid,answer=answer);
+    answerObj = answer.objects.create(quizquestionid=quizquestionid,userid=userid,answer=answer);
     answerObj.save();
     return HttpResponse("Answer saved successfully!");
 
@@ -132,7 +134,7 @@ def answer(request,quizname,question):
     return render(request,'answer.html',{"thequestion":thequestion})
 
 def getPolls(request):
-    queryset = Answers.objects.all();
+    queryset = answer.objects.all();
     response_data = {};
     count =queryset.count();
     response_data['count'] = count;
@@ -149,4 +151,4 @@ def showChart(request):
 
 
 
-#***************END TEXT MINING SECTION ******************
+# ***************END TEXT MINING SECTION ******************
