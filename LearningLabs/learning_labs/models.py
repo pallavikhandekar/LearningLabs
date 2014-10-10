@@ -28,7 +28,7 @@ class QuestionsTable(tables.Table):
     
 class AudincePost(models.Model):
     studentId = models.TextField()
-    questionid = models.TextField()
+    questionId = models.TextField()
     answer = models.TextField()
 
 class Answers(models.Model):
