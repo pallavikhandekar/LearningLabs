@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head >
+	<script type = "text/javascript"   src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
+	{% load staticfiles %}
+    <script type = "text/javascript"   src = "{% static "JavaScript/app.js" %}">
+
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style>
+body{
+    position:absolute;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+</style>
+</head>
+<body background= "{% static "images/bcg.png" %}" data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
+<form action="upload_file.php" method="post"
+enctype="multipart/form-data">
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" value="Submit">
+</form>
+
+</body>
+</html>
