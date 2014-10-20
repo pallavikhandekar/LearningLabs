@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
 # from django.template import Context, loader
-from learning_labs.models import Register, Quiz, QuestionsTable,Answers
+from learning_labs.models import Register, Quiz, QuestionsTable,pollAnswers
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 import geoTracker
@@ -47,7 +47,7 @@ def audienceAnswer(request):
     questionId = request.POST.get('questionId')
     answer = request.POST.get('answer')
     
-    aaObj = Answers.objects.create(studentId=studentId,questionId=questionId, answer=answer)
+    aaObj = pollAnswers.objects.create(studentId=studentId,questionId=questionId, answer=answer)
     aaObj.save()
     return HttpResponse("Answer Saved Successfuly!");
 
