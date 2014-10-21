@@ -2,10 +2,21 @@
 <html>
 
 <head>
+{% load staticfiles %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
-{% load staticfiles %}
+
 <script type="text/javascript" src="{% static "JavaScript/app.js" %}">	</script>
+
+<script>
+	function disable(){
+	var x = document.getElementById('submit');
+	x.disabled = true;
+	alert("Thanks for your submission");
+	}
+</script>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -32,70 +43,84 @@ tr.spaceUnder > td {
     padding-bottom: 25px;
 }
 
+.countdownHolder{
+  padding: 10px 10px 10px;
+  color: #CEF6F5;
+  font-size: 30px;
+}
+
+.container {
+    margin-top: 10px;
+}
+
 </style>
 </head>
 
 <body background="{% static "images/webbackground.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
+<div id="countdown" class="countdownHolder">
+	<span id="countdown" class="timer"></span>
+		<script>
+			var seconds = 60;
+			function secondPassed() {
+				var minutes = Math.round((seconds - 30) / 60);
+				var remainingSeconds = seconds % 60;
+				if (remainingSeconds < 10) {
+					remainingSeconds = "0" + remainingSeconds;
+				}
+				document.getElementById('countdown').innerHTML = minutes + ":"
+						+ remainingSeconds;
+				if (seconds == 0) {
+					clearInterval(countdownTimer);
+					document.getElementById('countdown').innerHTML = "Buzzzzz";
+					var x = document.getElementById('submit');
+					x.disabled = true;
+					alert("Sorry! Your time is over");
+				} else {
+					seconds--;
+				}
+			}
 
-	<!-- <div>
-	<form class="" name="input" method="post" action="/answerSaved">
-		{% csrf_token %}
-		<h3>Please Enter Your Answers</h3>
-		<table align="center" style="width: 100%">
-			<tr>
-				<td><input class="form-control" name="studentId" type="text"
-					placeholder="Enter Your Student ID:" required="" autofocus=""></td>
-			</tr>
-			<tr>
-				<td><input class="form-control" name="questionId" type="text"
-					placeholder="Enter Question ID:" required="" autofocus=""></td>
-			</tr>
-			<tr>
-				<td><input class="form-control" name="answer" type="text"
-					placeholder="Enter Your Answer for Quiz:" required="" autofocus=""></td>
-			</tr>
-			<tr>
-				<td><input class="btn btn-lg btn-primary btn-block"
-					type="submit" value=Submit> </td>
-			</tr>
-		</table>
-		</form>
-	</div> -->
-
+			var countdownTimer = setInterval('secondPassed()', 1000);
+		</script>
+	</div>
+				
 	<!-- Test with bootstrap -->
 	<div class="bs-example">
 	<h1 class="text-center"> Please enter your answer here</h1>
-	
-		
-	<div class="padding1">
-	<form name="input" method="post" action="/answerSaved">
-		{% csrf_token %}
-	
-		<table align="center" style="width: 100%">
-		
-		   <tr class="spaceUnder">
-				<td><input class="form-control" name="questionId" type="text"
-					placeholder="Enter Question ID:" required="" autofocus=""></td>
-			</tr>
-			
-			<tr class="spaceUnder">
-				<td><input class="form-control" name="studentId" type="text"
-					placeholder="Enter Your Student ID:" required="" autofocus=""></td>
-			</tr>
-			
-			<tr class="spaceUnder">
-				<td><input class="form-control" name="answer" type="text"
-					placeholder="Enter Your Answer for Quiz:" required="" autofocus=""></td>
-			</tr>
-			
-			<tr class="spaceUnder">
-				<td><input class="btn btn-lg btn-primary btn-block"
-					type="submit" value=Submit> </td>
-			</tr>
-		</table>
-		</form>
-	 	</div>
-	</div>
+
+
+		<div class="padding1">
+			<form name="input" method="post" action="/answerSaved">
+				{% csrf_token %}
+
+				<table align="center" style="width: 100%">
+
+					<tr class="spaceUnder">
+						<td><input class="form-control" name="questionId" type="text"
+							placeholder="Enter Question ID:" required="" autofocus=""></td>
+					</tr>
+
+					<tr class="spaceUnder">
+						<td><input class="form-control" name="studentId" type="text"
+							placeholder="Enter Your Student ID:" required="" autofocus=""></td>
+					</tr>
+
+					<tr class="spaceUnder">
+						<td><input class="form-control" name="answer" type="text"
+							placeholder="Enter Your Answer for Quiz:" required=""
+							autofocus=""></td>
+					</tr>
+
+					<tr class="spaceUnder">
+						<td><input class="btn btn-primary btn-lg active" id="submit" 
+						onclick="disable()" method="post" type="Submit" value=Submit></td>
+					
+					</tr>
+				</table>
+				
+			</form>
+		</div>
+		</div>
 
 </body>
 </html>
