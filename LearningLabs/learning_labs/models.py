@@ -1,7 +1,8 @@
 from django.db import models
 from djangotoolbox.fields import ListField
 import django_tables2 as tables
-
+from django import forms
+from time import time
 
 # Login / Registration data model
 class Register(models.Model):
@@ -33,7 +34,7 @@ class pollAnswers(models.Model):
     questionId = models.TextField()
     answer = models.TextField()
 
-# TODO: Remove 
+# # TODO: Remove 
 class Answers(models.Model):
     Name = models.TextField()
     ID = models.IntegerField()
@@ -45,3 +46,12 @@ class Answers(models.Model):
     Question = models.TextField()
     Submitted = models.TextField()
     Answer = models.TextField()
+       
+
+# class Document(models.Model):
+#     title = models.CharField(max_length=200)
+#     thumbnail = models.FileField()
+    
+# def get_upload_file_name(instance, filename):
+#     return "uploaded_files/ %s_%s" % (str(time)()).replace('.', '_'), filename
+    

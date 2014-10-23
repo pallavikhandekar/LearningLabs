@@ -1,27 +1,72 @@
 <!DOCTYPE html>
 <html>
-<head >
-	<script type = "text/javascript"   src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
-	{% load staticfiles %}
-    <script type = "text/javascript"   src = "{% static "JavaScript/app.js" %}">
 
-    </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<style>
-body{
-    position:absolute;
-    background-size: cover;
-    background-repeat: no-repeat
+<head>
+{% load staticfiles %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
+
+<script type="text/javascript" src="{% static "JavaScript/app.js" %}">	</script>
+
+<script>
+	function disable(){
+	var x = document.getElementById('submit');
+	x.disabled = true;
+	alert("Thanks for your submission");
+	}
+</script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<style type="text/css">
+body {
+	position: absolute;
+	background-size: cover;
+	background-repeat: no-repeat
+}
+
+h1.text-center {
+	text-align: center;
+	padding: 10px 30px 50px 350px;
+	text-decoration: underline;
+	color: #CEF6F5;
+}
+
+.padding1 {
+	padding: 10px 10px 10px 350px;
+}
+
+tr.spaceUnder>td {
+	padding-bottom: 25px;
+}
+
+.countdownHolder {
+	padding: 10px 10px 10px;
+	color: #CEF6F5;
+	font-size: 30px;
+}
+
+.container {
+	margin-top: 10px;
 }
 </style>
 </head>
-<body background= "{% static "images/bcg.png" %}" data-ng-app="application" ng-controller = "QuizMe as quizmeCntrl">
-<form action="upload_file.php" method="post"
-enctype="multipart/form-data">
-<label for="file">Filename:</label>
-<input type="file" name="file" id="file"><br>
-<input type="submit" name="submit" value="Submit">
-</form>
 
+<body background="{% static "images/webbackground.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
+
+	<div>
+		<form enctype="multipart/form-data" method="post" action="/uploadFile/">
+
+			{% csrf_token %} 
+	   <label for="file">Filename: </label> <input type="file" name="file" id="file"><br> 
+				 <input type="submit" name="submit" value="Submit">
+		</form>
+	</div>
 </body>
 </html>
+
+
+

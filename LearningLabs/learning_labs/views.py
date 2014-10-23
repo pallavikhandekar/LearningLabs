@@ -1,14 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http.response import HttpResponse
 # from django.template import Context, loader
 from learning_labs.models import Register, Quiz, QuestionsTable,pollAnswers
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
+from mongoengine.django.auth import User
 import geoTracker
 from django import forms
 import mining
-
-
+from django.core.context_processors import csrf, request
+from learning_labs.forms import UploadFileForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 questionlist=[];
@@ -38,9 +40,9 @@ def signUp(request):
     usrname = request.POST.get('usrname')
     password = request.POST.get('password')
     
-    regObj = Register.objects.create(fname=firstname,lname=lastname, usrname=usrname, email=email, password=password)
+    regObj = User.objects.create(first_name=firstname,last_name=lastname, username=usrname, email=email, password=password)
     regObj.save()
-    return HttpResponse("Sign up");
+    return HttpResponse("You are signed up successfully!");
 
 def audienceAnswer(request):
     studentId = request.POST.get('studentId')
@@ -51,36 +53,21 @@ def audienceAnswer(request):
     aaObj.save()
     return HttpResponse("Answer Saved Successfuly!");
 
-# def signIn(request):
-#     username = request.POST['username']
-#     password = request.POST['password']
-#     user = authenticate(username=username, password=password)
-#     if user is not None:
-#         if user.is_active:
-#             return HttpResponse("Signed in")
-#         else:
-#             return HttpResponse("Not Signed in")
-#     else:
-#         return HttpResponse("Not Signed in")
-
 def signIn(request):
-    state = "Please log in below..."
-    username = password = ''
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                state = "You're successfully logged in!"
-            else:
-                state = "Your account is not active, please contact the site admin."
+    username = request.POST.get('usrname','')
+    password = request.POST.get('password','')
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            return HttpResponse("Signed in")
         else:
-            state = "Your username and/or password were incorrect."
+            return HttpResponse("Not Signed in")
+    else:
+        return HttpResponse("Not Signed in")
+        
+        
 
-    return HttpResponse({'state':state, 'username': username})
+
  
 #Add questions to Quiz
 def addQuestion(request):
@@ -147,8 +134,19 @@ def showChart(request):
     chartData = mining.getChartData();
     return render(request, 'TextMining/MiningResults.html', {"data":chartData})
 
-
-
-
-
 # ***************END TEXT MINING SECTION ******************
+
+# upload file
+def uploadFile(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():    
+            form.save()
+            return HttpResponse("Data saved successfully!");
+#             return HttpResponseRedirect('/success/url/')
+    else:
+        form = UploadFileForm()
+    return HttpResponse("Data saved unsuccessfully!");
+ 
+
+# # end upload file

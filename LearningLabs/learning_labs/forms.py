@@ -1,5 +1,8 @@
 from django import forms
 
+
 class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
+    title = forms.CharField()
+    file = forms.FileField(label='Select a profile Image')
+
+       

@@ -24,17 +24,23 @@ urlpatterns = patterns('',
     url(r'AdminProfile', TemplateView.as_view(template_name='./AdminProfile.html')),
     url(r'answerquiz/(?P<quizname>\w+)/(?P<question>[\w|\W]+)', views.answer),
     url(r'FamilyFeudGame',TemplateView.as_view(template_name='./familyFeudUI.html')),
+    
     url(r'Profile',TemplateView.as_view(template_name='./profile.html')),
     url(r'signUp$', views.signUp),
     url(r'signIn$', views.signIn),
+    
     url(r'Audiencepoll',TemplateView.as_view(template_name='./audiencepoll.html')),
     url(r'answerSaved', views.audienceAnswer),
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
+    
     url(r'Upload',TemplateView.as_view(template_name='./upload.html')),
+    url(r'^uploadFile/$', views.uploadFile),
     #**********Text Mining Section ***********
     url(r'miningresults',views.showChart)
     
     # ******End Text Mining Section ***********
+    
+    
 
 )

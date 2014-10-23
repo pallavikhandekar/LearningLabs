@@ -10,13 +10,14 @@
 			{{ state }}
 		<div class="container" ng-controller="personController" ng-app="" style="float: left; width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
 		border-radius: 10px;  padding: 10% 10% 21.80%; border: 2px solid black;">
-			<form method="get" action="signIn" class="form-signin">
+			<form method="post" action="signIn" class="form-signin">
 			{% csrf_token %}
 				{% if next %} <input type="hidden" name="next" value="{{ next }}" />
 				{% endif %}
 				<h3>Please sign in</h3> 
 				<table style="width:100%">
-				<tr><td><input class="form-control" name="username" type="email" placeholder="Email address" required="" autofocus=""></td></tr>
+<!-- 				<tr><td><input class="form-control" name="email" type="email" placeholder="Email address" required="" autofocus=""></td></tr> -->
+				<tr><td><input class="form-control" name="usrname" type="text" placeholder="User Name" required="" autofocus=""></td></tr>
 				<tr><td><input class="form-control" name="password"  type="password" placeholder="Password" required=""></td></tr>
 				<tr><td><input class="btn btn-lg btn-primary btn-block" type="submit" value="Log In" /></td></tr>
 				</table>		
@@ -30,7 +31,7 @@
 					<table style="width:100%">
 						<tr><td><input class="form-control" name="fname" type="text" placeholder="First Name" required="" autofocus=""></td></tr>
 						<tr><td><input class="form-control" name="lname" type="text" placeholder="Last Name" required="" autofocus=""></td></tr>
-						<tr><td><input class="form-control" name="username" type="text" placeholder="User Name" required="" autofocus=""></td></tr>
+						<tr><td><input class="form-control" name="usrname" type="text" placeholder="User Name" required="" autofocus=""></td></tr>
 						<tr><td><input class="form-control" name="email" type="email" placeholder="Email address" required="" autofocus=""></td></tr>
 						<tr><td><input class="form-control" name="password"  type="password" placeholder="Password" required=""></td></tr>
 						<tr><td><input  class="btn btn-lg btn-primary btn-block"  type="submit"value="Sign Up"></td></tr>
