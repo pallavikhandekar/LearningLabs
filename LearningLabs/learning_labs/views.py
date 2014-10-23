@@ -44,6 +44,21 @@ def signUp(request):
     regObj.save()
     return HttpResponse("You are signed up successfully!");
 
+
+def signIn(request):
+    username = request.POST.get('usrname','')
+    password = request.POST.get('password','')
+    obj = User.objects.get(username=username, password=password)
+    
+    if obj is not None:
+        if obj.is_active:
+            return HttpResponse("Signed in")
+        else:
+            return HttpResponse("Not Signed in")
+    else:
+        return HttpResponse("Not Signed in")
+        
+        
 def audienceAnswer(request):
     studentId = request.POST.get('studentId')
     questionId = request.POST.get('questionId')
@@ -52,21 +67,6 @@ def audienceAnswer(request):
     aaObj = pollAnswers.objects.create(studentId=studentId,questionId=questionId, answer=answer)
     aaObj.save()
     return HttpResponse("Answer Saved Successfuly!");
-
-def signIn(request):
-    username = request.POST.get('usrname','')
-    password = request.POST.get('password','')
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            return HttpResponse("Signed in")
-        else:
-            return HttpResponse("Not Signed in")
-    else:
-        return HttpResponse("Not Signed in")
-        
-        
-
 
  
 #Add questions to Quiz

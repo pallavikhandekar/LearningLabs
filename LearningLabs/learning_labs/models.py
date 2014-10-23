@@ -3,6 +3,7 @@ from djangotoolbox.fields import ListField
 import django_tables2 as tables
 from django import forms
 from time import time
+from django.contrib.auth.models import User
 
 # Login / Registration data model
 class Register(models.Model):
