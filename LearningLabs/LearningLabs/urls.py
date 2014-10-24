@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'signUp$', views.signUp),
     url(r'signIn$', views.signIn),
     
-    url(r'Audiencepoll',TemplateView.as_view(template_name='./audiencepoll.html')),
+    url(r'Audiencepoll',views.audienceAnswer),
     url(r'answerSaved', views.audienceAnswer),
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
@@ -38,10 +38,10 @@ urlpatterns = patterns('',
     url(r'Upload',TemplateView.as_view(template_name='./upload.html')),
     url(r'^uploadFile/$', views.uploadFile),
     #**********Text Mining Section ***********
-    url(r'miningresults',views.showChart)
+    url(r'miningresults',views.showChart),
     
     # ******End Text Mining Section **********
-
+    url(r'Dashboard',TemplateView.as_view(template_name='./dashboard.html'))
     
 
 )

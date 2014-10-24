@@ -12,6 +12,9 @@ from django.core.context_processors import csrf, request
 from learning_labs.forms import UploadFileForm
 from django.contrib.auth.models import User
 
+#Stores current question ID
+currentQuestionID = 0
+
 # Create your views here.
 questionlist=[];
 def helloWorld (request):
@@ -60,13 +63,25 @@ def signIn(request):
         
         
 def audienceAnswer(request):
-    studentId = request.POST.get('studentId')
-    questionId = request.POST.get('questionId')
-    answer = request.POST.get('answer')
-    
-    aaObj = pollAnswers.objects.create(studentId=studentId,questionId=questionId, answer=answer)
-    aaObj.save()
-    return HttpResponse("Answer Saved Successfuly!");
+    global currentQuestionID 
+    if request.method == 'GET':
+        
+        if currentQuestionID == 0:
+            currentQuestionID =1
+            
+        questionId = Quiz.objects.get(questions ='question1').questionID;
+        questionName = Quiz.objects.get(questions ='question1').questions;
+        return render(request, "audiencepoll.html", {"questionId": questionId, "questionName":questionName });
+    else:
+        print request.POST.get('questionID');
+        studentId = request.POST.get('studentId')
+        questionId = request.POST.get('questionId')
+        answer = request.POST.get('answer')
+ 
+     
+        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer)
+        aaObj.save()
+        return HttpResponse("Answer Saved Successfuly!")
 
  
 #Add questions to Quiz

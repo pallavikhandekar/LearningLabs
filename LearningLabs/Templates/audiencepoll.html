@@ -28,9 +28,16 @@ body {
 	background-repeat: no-repeat
 }
 
+label {
+   text-align: left;
+  padding: 10px 30px 50px 150px;
+  color: #CEF6F5; 
+   font-size: 50px;
+}
+
 h1.text-center {
   text-align: center;
-  padding: 10px 30px 50px 350px;
+  padding: 10px 30px 50px 450px;
   text-decoration: underline;
  color: #CEF6F5; 
 }
@@ -88,16 +95,18 @@ tr.spaceUnder > td {
 	<div class="bs-example">
 	<h1 class="text-center"> Please enter your answer here</h1>
 
+		
 
 		<div class="padding1">
 			<form name="input" method="post" action="/answerSaved">
 				{% csrf_token %}
 
+                   <input type="hidden" name="questionID" value= {{questionId}}>
+                   
 				<table align="center" style="width: 100%">
 
 					<tr class="spaceUnder">
-						<td><input class="form-control" name="questionId" type="text"
-							placeholder="Enter Question ID:" required="" autofocus=""></td>
+						<td><label>{{questionName}}</label></td>
 					</tr>
 
 					<tr class="spaceUnder">
