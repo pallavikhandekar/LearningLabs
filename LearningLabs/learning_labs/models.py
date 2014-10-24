@@ -15,9 +15,12 @@ class Register(models.Model):
 
 # Stores Quiz and associated questions and answers choices if any.
 class Quiz(models.Model):
+    quizId = models.IntegerField()
+    quizName = models.TextField()
     questionID = models.IntegerField()
-    questions = models.TextField()
-    possibleAnswer = models.TextField()
+    question = models.TextField()
+    correctAnswer = models.TextField()
+    answerOptions = models.TextField()
     
 #     quizname = models.TextField()
 #     question = models.TextField()
@@ -26,7 +29,7 @@ class Quiz(models.Model):
    
 # TODO: Remove / Merge with QUIZ 
 class QuestionsTable(tables.Table):
-    Questions = tables.Column()
+    Question = tables.Column()
     Options = tables.Column()
     Answer = tables.Column()
     
@@ -47,7 +50,7 @@ class Answers(models.Model):
     Question = models.TextField()
     Submitted = models.TextField()
     Answer = models.TextField()
-       
+    
 
 # class Document(models.Model):
 #     title = models.CharField(max_length=200)

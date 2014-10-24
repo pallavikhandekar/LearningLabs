@@ -1,22 +1,24 @@
 from django.shortcuts import render, render_to_response
 from django.http.response import HttpResponse
-# from django.template import Context, loader
 from learning_labs.models import Register, Quiz, QuestionsTable,pollAnswers
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
-import geoTracker
 from django import forms
-import mining
 from django.core.context_processors import csrf, request
 from learning_labs.forms import UploadFileForm
 from django.contrib.auth.models import User
+import mining
+import os, manage, csv
+import geoTracker
 
 #Stores current question ID
 currentQuestionID = 0
 
 # Create your views here.
 questionlist=[];
+SITE_ROOT = os.path.dirname(os.path.realpath(manage.__file__));
+
 def helloWorld (request):
     return HttpResponse("Welcome Your are on Learning Labs App");
 
@@ -151,7 +153,7 @@ def showChart(request):
 
 # ***************END TEXT MINING SECTION ******************
 
-# upload file
+# Import Quiz Data
 def uploadFile(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -163,5 +165,18 @@ def uploadFile(request):
         form = UploadFileForm()
     return HttpResponse("Data saved unsuccessfully!");
  
-
-# # end upload file
+def saveCSVToMongo(request):
+    csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
+    dataReader = csv.reader(open(csvFilePath), delimiter=',', quotechar='"')
+    for row in dataReader:
+        quizObj = Quiz();
+        quizObj.quizId= row[0];
+        quizObj.quizName = row[1];
+        quizObj.questionID = row[2];
+        quizObj.question = row[3];
+        quizObj.correctAnswer = row[4];
+        quizObj.answerOptions = row[5];
+        quizObj.save();
+        
+    return HttpResponse("Import return");
+#End  Import Quiz Data
