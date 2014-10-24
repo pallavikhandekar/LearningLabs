@@ -37,6 +37,8 @@ urlpatterns = patterns('',
     
     url(r'Upload',TemplateView.as_view(template_name='./upload.html')),
     url(r'^uploadFile/$', views.uploadFile),
+    url(r'^importCsv/$', views.saveCSVToMongo),
+    
     #**********Text Mining Section ***********
     url(r'miningresults',views.showChart)
     
