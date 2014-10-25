@@ -65,22 +65,24 @@ def signIn(request):
         
         
 def audienceAnswer(request):
+    #Assumption: we have quiz and current question
+    questionId = 7;
+    quizId = 1;
     global currentQuestionID 
     if request.method == 'GET':
         
         if currentQuestionID == 0:
             currentQuestionID =1
             
-        questionId = Quiz.objects.get(questions ='question1').questionID;
-        questionName = Quiz.objects.get(questions ='question1').questions;
-        return render(request, "audiencepoll.html", {"questionId": questionId, "questionName":questionName });
+        questionName = Quiz.objects.get(questionID =questionId, quizId=quizId).question;
+        return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });
     else:
-        print request.POST.get('questionID');
+#         print request.POST.get('questionID');
         studentId = request.POST.get('studentId')
-        questionId = request.POST.get('questionId')
+        questionId = request.POST.get('quizId')
+        quizId = request.POST.get('questionId')
         answer = request.POST.get('answer')
  
-     
         aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer)
         aaObj.save()
         return HttpResponse("Answer Saved Successfuly!")

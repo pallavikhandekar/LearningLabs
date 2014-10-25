@@ -8,19 +8,43 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
 
-<script type="text/javascript" src="{% static "JavaScript/app.js" %}">	</script>
+<script type="text/javascript" src="{% static "JavaScript/app.js" %}">
+	
+</script>
 
 <script>
-	function disable(){
-	var x = document.getElementById('submit');
-	x.disabled = true;
-	alert("Thanks for your submission");
+	function disable() {
+		var x = document.getElementById('submit');
+		x.disabled = true;
+		alert("Thanks for your submission");
 	}
+
+	var seconds = 15;
+	function secondPassed() {
+		var minutes = Math.round((seconds - 30) / 60);
+		var remainingSeconds = seconds % 60;
+		if (remainingSeconds < 10) {
+			remainingSeconds = "0" + remainingSeconds;
+		}
+		document.getElementById('countdown').innerHTML = minutes + ":"
+				+ remainingSeconds;
+		if (seconds == 0) {
+			clearInterval(countdownTimer);
+			document.getElementById('countdown').innerHTML = "Buzzzzz";
+			var x = document.getElementById('submit');
+			x.disabled = true;
+			alert("Sorry! Your time is over");
+		} else {
+			seconds--;
+		}
+	}
+
+	var countdownTimer = setInterval('secondPassed()', 1000);
 </script>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	
+
 <style type="text/css">
 body {
 	position: absolute;
@@ -29,107 +53,85 @@ body {
 }
 
 label {
-   text-align: left;
-  padding: 10px 30px 50px 150px;
-  color: #CEF6F5; 
-   font-size: 50px;
+   text-align: center;
+	padding: 10px 5px 15px 10px;
+	color: #CEF6F5;
+	font-size: 30px;
 }
 
 h1.text-center {
-  text-align: center;
-  padding: 10px 30px 50px 450px;
-  text-decoration: underline;
- color: #CEF6F5; 
+	text-align: center;
+	padding: 10px 5px; 
+	text-decoration: underline;
+	color: #CEF6F5;
 }
 
 .padding1 {
-  padding: 10px 10px 10px 450px;
+	padding: 10px 5px;
 }
 
-tr.spaceUnder > td {
-    padding-bottom: 25px;
+.padding2 {
+	padding: 10px 5px 15px 450px;
 }
 
-.countdownHolder{
-  padding: 10px 10px 10px;
-  color: #CEF6F5;
-  font-size: 30px;
+tr.spaceUnder>td {
+	padding-bottom: 25px;
+}
+
+.countdownHolder {
+	padding: 10px 10px 10px;
+	color: #CEF6F5;
+	font-size: 30px;
 }
 
 .container {
-    margin-top: 10px;
+	margin-top: 10px;
 }
-
 </style>
 </head>
 
 <body background="{% static "images/webbackground.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
-<div id="countdown" class="countdownHolder">
-	<span id="countdown" class="timer"></span>
-		<script>
-			var seconds = 15;
-			function secondPassed() {
-				var minutes = Math.round((seconds - 30) / 60);
-				var remainingSeconds = seconds % 60;
-				if (remainingSeconds < 10) {
-					remainingSeconds = "0" + remainingSeconds;
-				}
-				document.getElementById('countdown').innerHTML = minutes + ":"
-						+ remainingSeconds;
-				if (seconds == 0) {
-					clearInterval(countdownTimer);
-					document.getElementById('countdown').innerHTML = "Buzzzzz";
-					var x = document.getElementById('submit');
-					x.disabled = true;
-					alert("Sorry! Your time is over");
-				} else {
-					seconds--;
-				}
-			}
 
-			var countdownTimer = setInterval('secondPassed()', 1000);
-		</script>
+	<div id="countdown" class="countdownHolder">
+		<span id="countdown" class="timer"></span>
 	</div>
-				
+
 	<!-- Test with bootstrap -->
-	<div class="bs-example">
-	<h1 class="text-center"> Please enter your answer here</h1>
-
-		
-
-		<div class="padding1">
+<div  class="padding2">
+		<h1 class="text-center">Please enter your answer here</h1>
 			<form name="input" method="post" action="/answerSaved">
 				{% csrf_token %}
 
-                   <input type="hidden" name="questionID" value= {{questionId}}>
-                   
-				<table align="center" style="width: 100%">
+				<div style="width: 400px">
+					<input type="hidden" name="questionID" value={{quizId}}> 
+					<input type="hidden" name="questionID" value={{questionId}}> 
+					<label>{{questionName}}</label>
+				</div>
 
-					<tr class="spaceUnder">
-						<td><label>{{questionName}}</label></td>
-					</tr>
+				<div>
+					<table align="center" style="width: 300px">
 
-					<tr class="spaceUnder">
-						<td><input class="form-control" name="studentId" type="text"
-							placeholder="Enter Your Student ID:" required="" autofocus=""></td>
-					</tr>
+						<tr class="spaceUnder">
+							<td><input class="form-control" name="studentId" type="text"
+								placeholder="Enter Your Student ID:" required="" autofocus=""></td>
+						</tr>
 
-					<tr class="spaceUnder">
-						<td><input class="form-control" name="answer" type="text"
-							placeholder="Enter Your Answer for Quiz:" required=""
-							autofocus=""></td>
-					</tr>
+						<tr class="spaceUnder">
+							<td><input class="form-control" name="answer" type="text"
+								placeholder="Enter Your Answer for Quiz:" required=""
+								autofocus=""></td>
+						</tr>
 
-					<tr class="spaceUnder">
-						<td><input class="btn btn-primary btn-lg active" id="submit" 
-						onclick="disable()" method="post" type="Submit" value=Submit></td>
-					
-					</tr>
-				</table>
-				
+						<tr class="spaceUnder">
+							<td><input class="btn btn-primary btn-lg active" id="submit"
+								onclick="disable()" method="post" type="Submit" value=Submit></td>
+
+						</tr>
+					</table>
+				</div>
+
 			</form>
-		</div>
-		</div>
+	</div>
 
 </body>
 </html>
