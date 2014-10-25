@@ -16,6 +16,9 @@ import geoTracker
 #Stores current question ID
 currentQuestionID = 0
 
+#Stores current question ID
+currentQuestionID = 0
+
 # Create your views here.
 questionlist=[];
 SITE_ROOT = os.path.dirname(os.path.realpath(manage.__file__));
