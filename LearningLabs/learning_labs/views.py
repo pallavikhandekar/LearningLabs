@@ -6,15 +6,14 @@ from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
 from django import forms
 from django.core.context_processors import csrf, request
-from learning_labs.forms import UploadFileForm
+from learning_labs.forms import *
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
 
 import mining
 import os, manage, csv
 import geoTracker
-
-#Stores current question ID
-currentQuestionID = 0
 
 #Stores current question ID
 currentQuestionID = 0
@@ -66,39 +65,60 @@ def signIn(request):
             return HttpResponse("Not Signed in")
     else:
         return HttpResponse("Not Signed in")
-        
-        
-def audienceAnswer(request):
-    #Assumption: we have quiz and current question
-    questionId = 7;
-    quizId = 1;
-    global currentQuestionID 
-                 
-    if request.method == 'GET':
-        
-        if currentQuestionID == 0:
-            currentQuestionID =1
-            
-        questionName = Quiz.objects.get(questionID =questionId, quizId=quizId).question;
-        return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });
-    else:
-#         print request.POST.get('questionID');
-        studentId = request.POST.get('studentId')
-        questionId = request.POST.get('quizId')
-        quizId = request.POST.get('questionId')
-        answer = request.POST.get('answer')
- 
-        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer)
-        aaObj.save()
-        return HttpResponse("Answer Saved Successfuly!")
+
     
 def populateQuiz(request):
     entry_list = set(Quiz.objects.values_list('quizId', flat=True))
-    for q in entry_list:
-        print q
-    return render(request, "AdminProfile.html", {"entry_list": entry_list});
+    quizId = request.POST.get('quizIdToPoll')
+    question_list = Quiz.objects.values_list('question', flat=True).filter(quizId = quizId)
+    questionToPoll = request.POST.get('questionToPoll')
+    print quizId
+    if questionToPoll is not None:
+        print questionToPoll
+        setBoolvalue(quizId,questionToPoll);
+    print "inPopulateQuiz"
+    return render(request, "selectQuiz.html", {"entry_list": entry_list, "question_list":question_list});
 
- 
+def setBoolvalue(quizId,questionToPoll):
+    print "insetbool"
+    print "insetbool"+ quizId
+    print "insetbool"+ questionToPoll
+    questionId = Quiz.objects.get(quizId = quizId,question= questionToPoll).questionId;
+    boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
+    booli= boolObj.currentQuestion;
+    booli = True
+    boolObj.currentQuestion = booli
+    boolObj.save()
+    
+#     obj.currentQuestion = True
+
+def audienceAnswer(request):
+    # Assumption: we have quiz and current question
+#     questionId = 7;
+#     quizId = 1;
+    questionId= Quiz.objects.get(currentQuestion=True).questionId;
+    quizId = Quiz.objects.get(currentQuestion=True).quizId;
+    print questionId,quizId
+    questionName = Quiz.objects.get(questionId=questionId, quizId=quizId).question;
+    if request.method == 'GET':
+        boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
+        booli= boolObj.currentQuestion;
+        booli = False
+        boolObj.currentQuestion = booli
+        boolObj.save()
+        print questionName
+        return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });
+    else:
+        studentId = request.POST.get('studentId')
+        quizId = request.POST.get('quizId')
+        questionId = request.POST.get('questionId')
+        answer = request.POST.get('answer')
+#         questionName = request.POST.get('questionName')
+#         print questionName
+        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
+        aaObj.save()
+        return HttpResponse("Answer Saved Successfuly!")
+    
 #Add questions to Quiz
 def addQuestion(request):
     quizname =  request.POST.get('quizname');
@@ -182,15 +202,16 @@ def uploadFile(request):
     return HttpResponse("Data saved unsuccessfully!");
  
 def saveCSVToMongo(file):
-    #csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
+#     csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
     dataReader = csv.reader(file, delimiter=',', quotechar='"')
     for row in dataReader:
         quizObj = Quiz();
         quizObj.quizId= row[0];
         quizObj.quizName = row[1];
-        quizObj.questionID = row[2];
-        quizObj.question = row[3];
-        quizObj.correctAnswer = row[4];
-        quizObj.answerOptions = row[5];
+        quizObj.questionId = row[2];
+        quizObj.currentQuestion = row[3];
+        quizObj.question = row[4];
+        quizObj.correctAnswer = row[5];
+        quizObj.answerOptions = row[6];
         quizObj.save();
 #****************End Import Quiz Data****************
