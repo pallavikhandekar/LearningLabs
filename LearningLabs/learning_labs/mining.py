@@ -11,7 +11,7 @@ def getChartData():
     docs = base.c("")
     #p=""
     #queryset = StudentAnswers.objects.all();
-    for obj in Answers.objects.all().filter(questionId =23156645):
+    for obj in Answers.objects.all().filter(Question_Id =23156645):
         answer = obj.Answer;
         print(answer)
         docs = base.cbind(answer, docs)

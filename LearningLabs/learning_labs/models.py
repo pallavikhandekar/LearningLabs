@@ -29,14 +29,13 @@ class pollAnswers(models.Model):
     question = models.TextField()
     studentId = models.TextField()
     answer = models.TextField()
-    
-# TODO: Remove / Merge with QUIZ 
+
 class QuestionsTable(tables.Table):
     Question = tables.Column()
     Options = tables.Column()
     Answer = tables.Column()
     
-# # TODO: Remove 
+
 class Answers(models.Model):
     Name = models.TextField()
     ID = models.IntegerField()
