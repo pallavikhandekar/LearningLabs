@@ -16,6 +16,14 @@
 	x.disabled = true;
 	alert("Thanks for your submission");
 	}
+	
+	function validateForm(){
+		var x = document.forms["uploadDataForm"]["file"].value;
+	    if (x == null || x == "") {
+	        alert("Please select file");
+	        return false;
+	    }
+	}
 </script>
 
 <link rel="stylesheet"
@@ -58,10 +66,10 @@ tr.spaceUnder>td {
 <body background="{% static "images/webbackground.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
 
 	<div>
-		<form enctype="multipart/form-data" method="post" action="/uploadFile/">
+		<form name="uploadDataForm" enctype="multipart/form-data" method="post" action="/uploadFile/" onsubmit="return validateForm()">
 
 			{% csrf_token %} 
-	   <label for="file">Filename: </label> <input type="file" name="file" id="file"><br> 
+	   <label for="file">* Filename: </label> <input type="file" name="file" id="file"><br> 
 				 <input type="submit" name="submit" value="Submit">
 		</form>
 	</div>

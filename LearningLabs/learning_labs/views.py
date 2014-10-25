@@ -8,9 +8,13 @@ from django import forms
 from django.core.context_processors import csrf, request
 from learning_labs.forms import UploadFileForm
 from django.contrib.auth.models import User
+
 import mining
 import os, manage, csv
 import geoTracker
+
+#Stores current question ID
+currentQuestionID = 0
 
 # Create your views here.
 questionlist=[];
@@ -62,13 +66,27 @@ def signIn(request):
         
         
 def audienceAnswer(request):
-    studentId = request.POST.get('studentId')
-    questionId = request.POST.get('questionId')
-    answer = request.POST.get('answer')
-    
-    aaObj = pollAnswers.objects.create(studentId=studentId,questionId=questionId, answer=answer)
-    aaObj.save()
-    return HttpResponse("Answer Saved Successfuly!");
+    #Assumption: we have quiz and current question
+    questionId = 7;
+    quizId = 1;
+    global currentQuestionID 
+    if request.method == 'GET':
+        
+        if currentQuestionID == 0:
+            currentQuestionID =1
+            
+        questionName = Quiz.objects.get(questionID =questionId, quizId=quizId).question;
+        return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });
+    else:
+#         print request.POST.get('questionID');
+        studentId = request.POST.get('studentId')
+        questionId = request.POST.get('quizId')
+        quizId = request.POST.get('questionId')
+        answer = request.POST.get('answer')
+ 
+        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer)
+        aaObj.save()
+        return HttpResponse("Answer Saved Successfuly!")
 
  
 #Add questions to Quiz
@@ -138,21 +156,24 @@ def showChart(request):
 
 # ***************END TEXT MINING SECTION ******************
 
-# Import Quiz Data
+# ****************Import Quiz Data****************
 def uploadFile(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():    
-            form.save()
-            return HttpResponse("Data saved successfully!");
-#             return HttpResponseRedirect('/success/url/')
+        file = request.FILES['file'];
+        try:
+            saveCSVToMongo(file);
+            return render(request, 'upload.html');
+        except Exception as e:
+            Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else "")," 
+            +"Answer Options for Quiz (if any else "")"
+            return HttpResponse('/success/url/')
     else:
         form = UploadFileForm()
     return HttpResponse("Data saved unsuccessfully!");
  
-def saveCSVToMongo(request):
-    csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
-    dataReader = csv.reader(open(csvFilePath), delimiter=',', quotechar='"')
+def saveCSVToMongo(file):
+    #csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
+    dataReader = csv.reader(file, delimiter=',', quotechar='"')
     for row in dataReader:
         quizObj = Quiz();
         quizObj.quizId= row[0];
@@ -162,6 +183,4 @@ def saveCSVToMongo(request):
         quizObj.correctAnswer = row[4];
         quizObj.answerOptions = row[5];
         quizObj.save();
-        
-    return HttpResponse("Import return");
-#End  Import Quiz Data
+#****************End Import Quiz Data****************
