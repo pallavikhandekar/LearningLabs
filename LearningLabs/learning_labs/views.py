@@ -69,6 +69,7 @@ def audienceAnswer(request):
     questionId = 7;
     quizId = 1;
     global currentQuestionID 
+                 
     if request.method == 'GET':
         
         if currentQuestionID == 0:
@@ -86,6 +87,12 @@ def audienceAnswer(request):
         aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer)
         aaObj.save()
         return HttpResponse("Answer Saved Successfuly!")
+    
+def populateQuiz(request):
+    entry_list = set(Quiz.objects.values_list('quizId', flat=True))
+    for q in entry_list:
+        print q
+    return render(request, "AdminProfile.html", {"entry_list": entry_list});
 
  
 #Add questions to Quiz

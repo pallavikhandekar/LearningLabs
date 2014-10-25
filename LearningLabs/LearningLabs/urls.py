@@ -23,6 +23,8 @@ urlpatterns = patterns('',
     url(r'DisplayQuiz', views.displayquestions),
     url(r'CreateQuiz', TemplateView.as_view(template_name='./base.html')),
     url(r'AdminProfile', TemplateView.as_view(template_name='./AdminProfile.html')),
+    url(r'popQuiz$', views.populateQuiz),
+    
     url(r'answerquiz/(?P<quizname>\w+)/(?P<question>[\w|\W]+)', views.answer),
     url(r'FamilyFeudGame',TemplateView.as_view(template_name='./familyFeudUI.html')),
     
@@ -43,7 +45,6 @@ urlpatterns = patterns('',
     url(r'miningresults',views.showChart),
     
     # ******End Text Mining Section **********
-    url(r'Dashboard',TemplateView.as_view(template_name='./dashboard.html'))
+    url(r'selectQuiz.html',views.populateQuiz)
     
-
 )

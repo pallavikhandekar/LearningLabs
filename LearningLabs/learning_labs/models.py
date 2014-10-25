@@ -22,22 +22,19 @@ class Quiz(models.Model):
     correctAnswer = models.TextField()
     answerOptions = models.TextField()
     
-#     quizname = models.TextField()
-#     question = models.TextField()
-#     answerchoices = ListField()
-#     correctAnswers = ListField()
-   
+class pollAnswers(models.Model): 
+    questionId = models.TextField()
+    quizId = models.IntegerField()
+    studentId = models.TextField()
+    quizName = models.TextField()
+    answer = models.TextField()
+    
 # TODO: Remove / Merge with QUIZ 
 class QuestionsTable(tables.Table):
     Question = tables.Column()
     Options = tables.Column()
     Answer = tables.Column()
     
-class pollAnswers(models.Model):
-    studentId = models.TextField()
-    questionId = models.TextField()
-    answer = models.TextField()
-
 # # TODO: Remove 
 class Answers(models.Model):
     Name = models.TextField()
