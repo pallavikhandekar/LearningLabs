@@ -19,7 +19,7 @@
 		alert("Thanks for your submission");
 	}
 
-	var seconds = 15;
+	var seconds = 60;
 	function secondPassed() {
 		var minutes = Math.round((seconds - 30) / 60);
 		var remainingSeconds = seconds % 60;
@@ -103,8 +103,9 @@ tr.spaceUnder>td {
 				{% csrf_token %}
 
 				<div style="width: 400px">
-					<input type="hidden" name="questionID" value={{quizId}}> 
-					<input type="hidden" name="questionID" value={{questionId}}> 
+					<input type="hidden" name="quizId" value={{quizId}}> 
+					<input type="hidden" name="questionId" value={{questionId}}> 
+					<input type="hidden" name="questionName" value={{questionName}}> 
 					<label>{{questionName}}</label>
 				</div>
 

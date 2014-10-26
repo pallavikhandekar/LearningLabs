@@ -17,28 +17,25 @@ class Register(models.Model):
 class Quiz(models.Model):
     quizId = models.IntegerField()
     quizName = models.TextField()
-    questionID = models.IntegerField()
+    questionId = models.IntegerField()
+    currentQuestion =models.BooleanField(default=False)
     question = models.TextField()
     correctAnswer = models.TextField()
     answerOptions = models.TextField()
     
-#     quizname = models.TextField()
-#     question = models.TextField()
-#     answerchoices = ListField()
-#     correctAnswers = ListField()
-   
-# TODO: Remove / Merge with QUIZ 
+class pollAnswers(models.Model): 
+    questionId = models.IntegerField()
+    quizId = models.IntegerField()
+    question = models.TextField()
+    studentId = models.TextField()
+    answer = models.TextField()
+
 class QuestionsTable(tables.Table):
     Question = tables.Column()
     Options = tables.Column()
     Answer = tables.Column()
     
-class pollAnswers(models.Model):
-    studentId = models.TextField()
-    questionId = models.TextField()
-    answer = models.TextField()
 
-# # TODO: Remove 
 class Answers(models.Model):
     Name = models.TextField()
     ID = models.IntegerField()

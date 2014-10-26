@@ -81,9 +81,15 @@ body {
 				<!--     Testing populating quiz : pratiksha-->
 				<div ng-show="tab.isSelected(4)">
 					<div style="width: 500px; margin: 50px">
-						<label>Select a Quiz ID: </label> <select class="selectpicker"></select>
-						
+					<form method="post" action="popQuiz">
+                    <!-- added from selectQuiz.html -->
+						<select name="quizId">
+							{% for obj in entry_list %}
+							<option value="{{obj}}">{{obj}}</option> 
+							{% endfor %}
+						</select>
 						</ul>
+						</form>
 					</div>
 				</div>
 			</section>

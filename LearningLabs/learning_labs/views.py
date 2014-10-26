@@ -1,62 +1,62 @@
 from django.shortcuts import render, render_to_response
 from django.http.response import HttpResponse
-from learning_labs.models import Register, Quiz, QuestionsTable,pollAnswers
+from learning_labs.models import Register, Quiz, QuestionsTable, pollAnswers
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
 from django import forms
 from django.core.context_processors import csrf, request
-from learning_labs.forms import UploadFileForm
+from learning_labs.forms import *
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
 
 import mining
 import os, manage, csv
 import geoTracker
 
-#Stores current question ID
+# Stores current question ID
 currentQuestionID = 0
-
-#Stores current question ID
-currentQuestionID = 0
+quizGlobalId =0
 
 # Create your views here.
-questionlist=[];
+questionlist = [];
 SITE_ROOT = os.path.dirname(os.path.realpath(manage.__file__));
 
 def helloWorld (request):
     return HttpResponse("Welcome Your are on Learning Labs App");
 
-#Register user
+# Register user
 def registerUser(request):
     geodata = geoTracker.getGeoLocationData(request.META['REMOTE_ADDR'])
-    if(geodata!=None):
+    if(geodata != None):
         for key, value in geodata.iteritems() :
             print key, value
 
     firstname = request.POST.get('fname')
-    lastname =  request.POST.get('lname')
-    regObj = Register.objects.create( fname=firstname,lname=lastname)
+    lastname = request.POST.get('lname')
+    regObj = Register.objects.create(fname=firstname, lname=lastname)
     regObj.save()
-    if(geodata!=None):
+    if(geodata != None):
         return HttpResponse(str(geodata));
     else:
         return HttpResponse('Text Saved');
     
 def signUp(request):
     firstname = request.POST.get('fname')
-    lastname =  request.POST.get('lname')
+    lastname = request.POST.get('lname')
     email = request.POST.get('email')
     usrname = request.POST.get('usrname')
     password = request.POST.get('password')
     
-    regObj = User.objects.create(first_name=firstname,last_name=lastname, username=usrname, email=email, password=password)
+    regObj = User.objects.create(first_name=firstname, last_name=lastname, username=usrname, email=email, password=password)
     regObj.save()
     return HttpResponse("You are signed up successfully!");
 
 
 def signIn(request):
-    username = request.POST.get('usrname','')
-    password = request.POST.get('password','')
+    username = request.POST.get('usrname', '')
+    password = request.POST.get('password', '')
     obj = User.objects.get(username=username, password=password)
     
     if obj is not None:
@@ -66,65 +66,100 @@ def signIn(request):
             return HttpResponse("Not Signed in")
     else:
         return HttpResponse("Not Signed in")
+
+    
+def populateQuiz(request):
+    entry_list = set(Quiz.objects.values_list('quizId', flat= True))
+    quizId = request.POST.get('quizIdToPoll')
+    question_list = Quiz.objects.values_list('question', flat=True).filter(quizId=quizId)
+    questionToPoll = request.POST.get('questionToPoll')
+    
+    if quizId is None:
+        quizId = 1
+        print  "quiz id is: 1"
         
+    if questionToPoll is not None:
+        print "question poll is:"
+        print questionToPoll
+        setBoolvalue(quizId, questionToPoll);
+   
+    return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "question_list": question_list});
         
+
+def setBoolvalue(quizId, questionToPoll):
+# Make all the values of CurrentQuestions as False
+    questions_list = Quiz.objects.all()
+    print "questions list: "
+    for qList in questions_list:
+        print qList.currentQuestion
+        qList.currentQuestion = False
+        qList.save()          
+# Make CurrentQuestion for selected quizid and question to be true 
+    questionId = Quiz.objects.get(quizId=quizId, question=questionToPoll).questionId;
+    boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
+    booli = boolObj.currentQuestion;
+    booli = True
+    boolObj.currentQuestion = booli
+    boolObj.save()
+
 def audienceAnswer(request):
-    #Assumption: we have quiz and current question
-    questionId = 7;
-    quizId = 1;
-    global currentQuestionID 
+    questionId = None
+    quizId = None
+    questionName = None
     if request.method == 'GET':
+        try:
+            questionId = Quiz.objects.get(currentQuestion=True).questionId;
+            quizId = Quiz.objects.get(currentQuestion=True).quizId;
+            print questionId, quizId
+            questionName = Quiz.objects.get(questionId=questionId, quizId=quizId).question;
+            return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });       
+        except Exception as e:
+            Errormessage = "Poll is closed question is not selected yet"
+            return HttpResponse('Poll is closed question is not selected yet')
         
-        if currentQuestionID == 0:
-            currentQuestionID =1
-            
-        questionName = Quiz.objects.get(questionID =questionId, quizId=quizId).question;
-        return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });
     else:
-#         print request.POST.get('questionID');
         studentId = request.POST.get('studentId')
-        questionId = request.POST.get('quizId')
-        quizId = request.POST.get('questionId')
+        quizId = request.POST.get('quizId')
+        questionId = request.POST.get('questionId')
         answer = request.POST.get('answer')
- 
-        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer)
+        questionName = request.POST.get('questionName')
+        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
         aaObj.save()
         return HttpResponse("Answer Saved Successfuly!")
-
- 
-#Add questions to Quiz
+    
+# Add questions to Quiz
 def addQuestion(request):
-    quizname =  request.POST.get('quizname');
-    question =  request.POST.get('question');
+    quizname = request.POST.get('quizname');
+    question = request.POST.get('question');
     answerChoices = request.POST.get('answerChoices').split(',');
-    correctAnswers =  request.POST.get('correctAnswers').split(',');
-    quizObj = Quiz.objects.create(quizname = quizname,question= question, \
-                                  answerchoices = answerChoices , correctAnswers = correctAnswers);
+    correctAnswers = request.POST.get('correctAnswers').split(',');
+    quizObj = Quiz.objects.create(quizname=quizname, question=question, \
+                                  answerchoices=answerChoices , correctAnswers=correctAnswers);
     quizObj.save();
     loadQuestions(quizname);
     return render(request, "createquestions.html");
 
-#Display questions for a Quiz
+# Display questions for a Quiz
 def displayquestions(request):
     data = QuestionsTable(questionlist);
     if not questionlist:
         temp = [];
-        temp.append({"Questions":'',"Options":'', "Answer":''});
-        data=QuestionsTable(temp)
+        temp.append({"Questions":'', "Options":'', "Answer":''});
+        data = QuestionsTable(temp)
     return render(request, "displayquiz.html", {"questions": data});
 
-#Save answer for a question for a user
+# Save answer for a question for a user
 def answerQuestions(request):
-    quizquestionid =  request.POST.get('quiz');
-    userid =  request.POST.get('userId');
+    quizquestionid = request.POST.get('quiz');
+    userid = request.POST.get('userId');
     answer = request.POST.get('answer');
-    answerObj = answer.objects.create(quizquestionid=quizquestionid,userid=userid,answer=answer);
+    answerObj = answer.objects.create(quizquestionid=quizquestionid, userid=userid, answer=answer);
     answerObj.save();
     return HttpResponse("Answer saved successfully!");
 
-#Load Questions for a Quiz
+# Load Questions for a Quiz
 def questions(request):
-    quizname =  request.POST.get('quizname');
+    quizname = request.POST.get('quizname');
     loadQuestions(quizname);
     return render(request, "");
 
@@ -133,20 +168,20 @@ def loadQuestions(quizname):
         question = obj.question;
         answerchoices = ', '.join(obj.answerchoices);
         correctAnswers = ', '.join(obj.correctAnswers);
-        questionlist.append({"Questions":question,"Options":answerchoices, "Answer":correctAnswers});
+        questionlist.append({"Questions":question, "Options":answerchoices, "Answer":correctAnswers});
 
-def answer(request,quizname,question):
-    thequestion=""
+def answer(request, quizname, question):
+    thequestion = ""
     try:
-        thequestion =Quiz.objects.get(quizname=quizname,question=question)
+        thequestion = Quiz.objects.get(quizname=quizname, question=question)
     except:
         thequestion = "";
-    return render(request,'answer.html',{"thequestion":thequestion})
+    return render(request, 'answer.html', {"thequestion":thequestion})
 
 def getPolls(request):
     queryset = answer.objects.all();
     response_data = {};
-    count =queryset.count();
+    count = queryset.count();
     response_data['count'] = count;
     print count;
     return HttpResponse(simplejson.dumps(response_data), mimetype='application/json');
@@ -168,22 +203,23 @@ def uploadFile(request):
             return render(request, 'upload.html');
         except Exception as e:
             Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else "")," 
-            +"Answer Options for Quiz (if any else "")"
+            + "Answer Options for Quiz (if any else "")"
             return HttpResponse('/success/url/')
     else:
         form = UploadFileForm()
     return HttpResponse("Data saved unsuccessfully!");
  
 def saveCSVToMongo(file):
-    #csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
+#     csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
     dataReader = csv.reader(file, delimiter=',', quotechar='"')
     for row in dataReader:
         quizObj = Quiz();
-        quizObj.quizId= row[0];
+        quizObj.quizId = row[0];
         quizObj.quizName = row[1];
-        quizObj.questionID = row[2];
-        quizObj.question = row[3];
-        quizObj.correctAnswer = row[4];
-        quizObj.answerOptions = row[5];
+        quizObj.questionId = row[2];
+        quizObj.currentQuestion = row[3];
+        quizObj.question = row[4];
+        quizObj.correctAnswer = row[5];
+        quizObj.answerOptions = row[6];
         quizObj.save();
 #****************End Import Quiz Data****************
