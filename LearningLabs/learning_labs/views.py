@@ -93,8 +93,7 @@ def setBoolvalue(quizId, questionToPoll):
     for qList in questions_list:
         print qList.currentQuestion
         qList.currentQuestion = False
-        qList.save()
-              
+        qList.save()          
 # Make CurrentQuestion for selected quizid and question to be true 
     questionId = Quiz.objects.get(quizId=quizId, question=questionToPoll).questionId;
     boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
