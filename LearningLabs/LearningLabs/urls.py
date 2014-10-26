@@ -45,6 +45,7 @@ urlpatterns = patterns('',
     url(r'miningresults',views.showChart),
     
     # ******End Text Mining Section **********
+    
     url(r'selectQuiz.html',views.populateQuiz)
     
 )
