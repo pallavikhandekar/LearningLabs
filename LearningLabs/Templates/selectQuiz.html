@@ -7,14 +7,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
-<script type="text/javascript">  
-  document.getElementsByName('quizIdToPoll').value = "<?php echo $_GET['quizIdToPoll'];?>";  
-</script>  
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	
-<body background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
-
 <style type="text/css">
 body {
 	position: absolute;
@@ -59,11 +55,12 @@ tr.spaceUnder>td {
 }
 </style>
 </head>
+
+<body background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
 <div  align="center">
 <h1 class="text-center">Welcome Admin, Please select a question to populate </h1>
 	<form name="QuizForm" method="post" action="/selectQuiz.html">
 	{% csrf_token %}
-	
 	<div style="width: 400px">
 					
 				<table>
@@ -71,9 +68,13 @@ tr.spaceUnder>td {
 					<tr >
 					<td><label>Select a Quiz ID: </label>
 					<select name="quizIdToPoll"> 
-					{% for obj in entry_list %}
-	    			<option value="{{obj}}" >{{obj}}</option> 
-	    			{% endfor %}
+					{% for qId in entry_list %}
+						{% if qId == quizId %}
+	    					<option value="{{qId}}" selected>{{qId}}</option>
+	    				{% else %}
+	    					<option value="{{qId}}">{{qId}}</option>
+	    				{% endif %} 
+	    	    	{% endfor %}
 				   </select>
 				   <input class="btn btn-primary" id="submit"
 							 method="post" type="Submit" value=OK width="5" height="5">
@@ -82,9 +83,6 @@ tr.spaceUnder>td {
 				   <tr >
 					<td><label>Select a Question: </label>
 					<select name="questionToPoll" width="300" style="width: 300px"> 
-					{% for obj in question_ids %}
-	    			<option value="{{obj}}" >{{obj}}</option> 
-	    			{% endfor %}
 	    			
 	    			{% for obj in question_list %}
 	    			<option value="{{obj}}" >{{obj}}</option> 
@@ -97,7 +95,7 @@ tr.spaceUnder>td {
 				</table>
 			 
 	    </div>
-	 
+	 </form>
 	
 </div>
 </body>
