@@ -81,13 +81,27 @@ def populateQuiz(request):
     if questionToPoll is not None:
         print "question poll is:"
         print questionToPoll
-#         setBoolvalue(quizId, questionToPoll);
+        setBoolvalue(quizId, questionToPoll);
    
     return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "question_list": question_list});
         
 
-    
-#     obj.currentQuestion = True
+def setBoolvalue(quizId, questionToPoll):
+# Make all the values of CurrentQuestions as False
+    questions_list = Quiz.objects.all()
+    print "questions list: "
+    for qList in questions_list:
+        print qList.currentQuestion
+        qList.currentQuestion = False
+        qList.save()
+              
+# Make CurrentQuestion for selected quizid and question to be true 
+    questionId = Quiz.objects.get(quizId=quizId, question=questionToPoll).questionId;
+    boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
+    booli = boolObj.currentQuestion;
+    booli = True
+    boolObj.currentQuestion = booli
+    boolObj.save()
 
 def audienceAnswer(request):
     questionId = None
