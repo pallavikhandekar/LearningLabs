@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from learning_labs.models import Register, Quiz, QuestionsTable, pollAnswers
 from django.utils import simplejson
@@ -200,11 +200,10 @@ def uploadFile(request):
         file = request.FILES['file'];
         try:
             saveCSVToMongo(file);
-            return render(request, 'upload.html');
+            return redirect('/home/Upload');
         except Exception as e:
-            Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else "")," 
-            + "Answer Options for Quiz (if any else "")"
-            return HttpResponse('/success/url/')
+            Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else ""), Answer Options for Quiz (if any else "")"
+            return HttpResponse(Errormessage)
     else:
         form = UploadFileForm()
     return HttpResponse("Data saved unsuccessfully!");
