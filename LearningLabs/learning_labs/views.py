@@ -83,7 +83,7 @@ def populateQuiz(request):
         print questionToPoll
         setBoolvalue(quizId, questionToPoll);
    
-    return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "question_list": question_list});
+    return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "questionToPoll":questionToPoll, "question_list": question_list});
         
 
 def setBoolvalue(quizId, questionToPoll):
