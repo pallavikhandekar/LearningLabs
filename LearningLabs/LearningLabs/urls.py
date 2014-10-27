@@ -6,11 +6,6 @@ from django.views.generic.base import TemplateView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'LearningLabs.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
-    
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'registerUser$', views.registerUser),
@@ -37,7 +32,7 @@ urlpatterns = patterns('',
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
     
-    url(r'Upload',TemplateView.as_view(template_name='./upload.html')),
+    #url(r'Upload$',TemplateView.as_view(template_name='./upload.html')),
     url(r'^uploadFile/$', views.uploadFile),
     url(r'^importCsv/$', views.saveCSVToMongo),
     
@@ -46,6 +41,8 @@ urlpatterns = patterns('',
     
     # ******End Text Mining Section **********
     
-    url(r'selectQuiz.html',views.populateQuiz)
+    url(r'selectQuiz.html',views.populateQuiz),
+    url(r'^home$',TemplateView.as_view(template_name='./index.html')),
+    url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html'))
     
 )
