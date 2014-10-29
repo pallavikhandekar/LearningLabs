@@ -49,10 +49,9 @@ def signUp(request):
     usrname = request.POST.get('usrname')
     studentId = request.POST.get('studentId')
     password = request.POST.get('password')
-    
-    readObj = pollAnswers.objects.filter(studentId=studentId,email=email )
+    readObj = pollAnswers.objects.filter(studentId=studentId)
     if not readObj: 
-        regObj = User.objects.create(first_name=firstname, last_name=lastname, username=usrname,studentId=studentId ,email=email, password=password)
+        regObj = Register.objects.create(fname=firstname, lname=lastname, usrname=usrname,studentId=studentId ,email=email, password=password)
         regObj.save()
         return HttpResponse("You are signed up successfully!");
     else:
@@ -60,18 +59,30 @@ def signUp(request):
 
 
 def signIn(request):
-    username = request.POST.get('usrname', '')
-    password = request.POST.get('password', '')
-    obj = User.objects.get(username=username, password=password)
-    
-    if obj is not None:
-        if obj.is_active:
-            return HttpResponse("Signed in")
-        else:
-            return HttpResponse("Not Signed in")
+    studentId = request.POST.get('studentId')
+    password = request.POST.get('password')
+    readObj = Register.objects.filter(studentId=studentId, password=password)
+    if not readObj: 
+        return HttpResponse("Your credentials are wrong");
     else:
-        return HttpResponse("Not Signed in")
-
+        return HttpResponse("You are signdin successfully");
+    
+def resetPassword(request):
+    studentId = request.POST.get('studentId')
+    newPassword = request.POST.get('newPassword')
+    confirmPassword = request.POST.get('confirmPassword')
+    
+    readObj = Register.objects.filter(studentId=studentId)
+    print readObj;
+    if not readObj:
+        return HttpResponse("Student ID doesnt exist");
+    else:
+        if newPassword == confirmPassword:
+            Register.objects.filter(studentId=studentId).update(password=confirmPassword)
+            return HttpResponse("Your password updated successfully");
+        else:
+            return HttpResponse("Your passwords dont match");
+    
     
 def populateQuiz(request):
     entry_list = set(Quiz.objects.values_list('quizId', flat= True))

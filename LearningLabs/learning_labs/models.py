@@ -10,7 +10,8 @@ class Register(models.Model):
     fname = models.TextField()
     lname = models.TextField()
     usrname = models.TextField()
-    email = models.TextField()
+    studentId = models.ImageField()
+    email = models.EmailField()
     password = models.TextField()
 
 # Stores Quiz and associated questions and answers choices if any.

@@ -26,6 +26,8 @@ urlpatterns = patterns('',
     url(r'Profile',TemplateView.as_view(template_name='./profile.html')),
     url(r'signUp$', views.signUp),
     url(r'signIn$', views.signIn),
+    url(r'ResetPassword', TemplateView.as_view(template_name='./resetPassword.html')),
+    url(r'resetPassword', views.resetPassword),
     
     url(r'Audiencepoll',views.audienceAnswer),
     url(r'answerSaved', views.audienceAnswer),
@@ -44,5 +46,6 @@ urlpatterns = patterns('',
     url(r'selectQuiz.html',views.populateQuiz),
     url(r'^home$',TemplateView.as_view(template_name='./index.html')),
     url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html'))
+   
     
 )
