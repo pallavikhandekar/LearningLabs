@@ -47,11 +47,16 @@ def signUp(request):
     lastname = request.POST.get('lname')
     email = request.POST.get('email')
     usrname = request.POST.get('usrname')
+    studentId = request.POST.get('studentId')
     password = request.POST.get('password')
     
-    regObj = User.objects.create(first_name=firstname, last_name=lastname, username=usrname, email=email, password=password)
-    regObj.save()
-    return HttpResponse("You are signed up successfully!");
+    readObj = pollAnswers.objects.filter(studentId=studentId,email=email )
+    if not readObj: 
+        regObj = User.objects.create(first_name=firstname, last_name=lastname, username=usrname,studentId=studentId ,email=email, password=password)
+        regObj.save()
+        return HttpResponse("You are signed up successfully!");
+    else:
+        return HttpResponse("Your Student ID already exits in record")
 
 
 def signIn(request):
@@ -135,14 +140,17 @@ def audienceAnswer(request):
     
 # Add questions to Quiz
 def addQuestion(request):
-    quizname = request.POST.get('quizname');
+    quizId = request.POST.get('quizId');
+    quizName = request.POST.get('quizName');
+    questionId = request.POST.get('questionId');
     question = request.POST.get('question');
-    answerChoices = request.POST.get('answerChoices').split(',');
-    correctAnswers = request.POST.get('correctAnswers').split(',');
-    quizObj = Quiz.objects.create(quizname=quizname, question=question, \
-                                  answerchoices=answerChoices , correctAnswers=correctAnswers);
+#     answerOptions = request.POST.get('answerOptions').split(',');
+    answerOptions = request.POST.get('answerOptions');
+    correctAnswer = request.POST.get('correctAnswer');
+#     correctAnswer = request.POST.get('correctAnswer').split(',');
+    quizObj = Quiz.objects.create(quizId=quizId,quizName=quizName,questionId=questionId,question=question,answerOptions=answerOptions,correctAnswer=correctAnswer);
     quizObj.save();
-    loadQuestions(quizname);
+#     loadQuestions(quizName);
     return render(request, "createquestions.html");
 
 # Display questions for a Quiz
