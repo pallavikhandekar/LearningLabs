@@ -144,14 +144,19 @@ def addQuestion(request):
     quizName = request.POST.get('quizName');
     questionId = request.POST.get('questionId');
     question = request.POST.get('question');
-#     answerOptions = request.POST.get('answerOptions').split(',');
-    answerOptions = request.POST.get('answerOptions');
-    correctAnswer = request.POST.get('correctAnswer');
-#     correctAnswer = request.POST.get('correctAnswer').split(',');
-    quizObj = Quiz.objects.create(quizId=quizId,quizName=quizName,questionId=questionId,question=question,answerOptions=answerOptions,correctAnswer=correctAnswer);
-    quizObj.save();
-#     loadQuestions(quizName);
-    return render(request, "createquestions.html");
+#     answerOptions = request.POST.get('answerOptions');
+#     correctAnswer = request.POST.get('correctAnswer');
+    answerOptions = request.POST.get('answerOptions').split(',');
+    correctAnswer = request.POST.get('correctAnswer').split(',');
+    readObj = Quiz.objects.filter(quizId=quizId, questionId=questionId)
+    if not readObj:
+        quizObj = Quiz.objects.create(quizId=quizId,quizName=quizName,questionId=questionId,question=question,answerOptions=answerOptions,correctAnswer=correctAnswer);
+        quizObj.save();
+#       loadQuestions(quizName);
+#       return render(request, "createquestions.html");
+        return HttpResponse("Question Saved Successfuly!")
+    else:
+        return HttpResponse("This question Id for quiz ID already exits! Make it unique")
 
 # Display questions for a Quiz
 def displayquestions(request):

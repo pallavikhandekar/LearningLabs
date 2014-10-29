@@ -50,12 +50,6 @@ tr.spaceUnder>td {
 	padding-bottom: 25px;
 }
 
-.countdownHolder {
-	padding: 10px 10px 10px;
-	color: #CEF6F5;
-	font-size: 30px;
-}
-
 .container {
 	margin-top: 10px;
 }
@@ -84,11 +78,78 @@ select {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+ul#tabmenu
+{
+    width:100%;
+    margin: 0 auto; /*If the menu has a width, this "margin:0 auto;" makes the menu center-aligned. You can remove it for left-alignment, or change it to "margin-left:auto; margin-right:0;" for right-alignment.*/
+    text-align:center;
+    list-style:none;
+    padding:0;
+    font-size:0;
+    position:relative;
+}
+ul#tabmenu:after
+{
+    content:'.'; height: 0; clear: both; display: block; visibility: hidden;
+}
+        
+ul#tabmenu li
+{
+    display:inline;
+    list-style:none; padding:0;
+    margin-top:0;margin-bottom:0;
+    margin-left:-1px;margin-right:0;
+}
+        
+/*Main menu links*/
+ul#tabmenu li a
+{
+    letter-spacing:normal;
+    color:#555555;
+    padding:0 18px;
+    line-height:24px;
+    font-size:21px;
+    font-weight:normal;
+    font-family:Arial;
+    text-decoration:none;
+    display:inline-block; 
+    outline:0;
+    
+    border:none;
+    border-bottom:none;
+    background:#FFFFFF url(bg-gray.gif) no-repeat 0 bottom;
+    position:relative;
+    top:1px;
+    z-index:4;  
+    
+}
+/* If you've set the menu's javascript file with { preview:false }, you may want to specify the following hovered tab styles     
+ul#tabmenu li a:hover {
+    color: red;
+    background: black;
+}*/
+
+ul#tabmenu li.active a
+{
+    padding-bottom:1px;
+    background: #FFFFFF url(bg-gray1.gif) no-repeat 0 bottom;
+    color:#333333;
+}
+        
 </style>
 </head>
 
 <body background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
 <div  align="center">
+<div>
+<!-- 
+<ul id="tabmenu">
+    <li>Tab Menu </li>
+    <li><a href="?2">Tabbed Menu</a> </li>
+   
+</ul> -->
+</div>
 <h1 class="text-center">Welcome Admin, Please select a question to populate </h1>
 	<form name="QuizForm" method="post" action="/selectQuiz.html">
 	{% csrf_token %}
@@ -139,5 +200,6 @@ select {
 	 </form>
 	
 </div>
+
 </body>
 </html>
