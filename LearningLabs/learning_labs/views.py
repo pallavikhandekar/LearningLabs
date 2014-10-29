@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
-from learning_labs.models import Register, Quiz, QuestionsTable, pollAnswers
+from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
@@ -25,14 +25,14 @@ SITE_ROOT = os.path.dirname(os.path.realpath(manage.__file__));
 
 def helloWorld (request):
     return HttpResponse("Welcome Your are on Learning Labs App");
-
-# Register user
+ 
+# Register user : We can remove this
 def registerUser(request):
     geodata = geoTracker.getGeoLocationData(request.META['REMOTE_ADDR'])
     if(geodata != None):
         for key, value in geodata.iteritems() :
             print key, value
-
+ 
     firstname = request.POST.get('fname')
     lastname = request.POST.get('lname')
     regObj = Register.objects.create(fname=firstname, lname=lastname)
@@ -49,7 +49,7 @@ def signUp(request):
     usrname = request.POST.get('usrname')
     studentId = request.POST.get('studentId')
     password = request.POST.get('password')
-    readObj = pollAnswers.objects.filter(studentId=studentId)
+    readObj = PollAnswers.objects.filter(studentId=studentId)
     if not readObj: 
         regObj = Register.objects.create(fname=firstname, lname=lastname, usrname=usrname,studentId=studentId ,email=email, password=password)
         regObj.save()
@@ -140,10 +140,10 @@ def audienceAnswer(request):
         answer = request.POST.get('answer')
         questionName = request.POST.get('questionName')
         print studentId, quizId, quizId, questionName 
-        readObj = pollAnswers.objects.filter(studentId=studentId, quizId=quizId, questionId=questionId )
+        readObj = PollAnswers.objects.filter(studentId=studentId, quizId=quizId, questionId=questionId )
         print readObj;
         if not readObj:
-            aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
+            aaObj = PollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
             aaObj.save()
             return HttpResponse("Answer Saved Successfuly!")
         else:

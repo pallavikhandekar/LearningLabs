@@ -24,19 +24,24 @@ class Quiz(models.Model):
     correctAnswer = models.TextField()
     answerOptions = models.TextField()
     
-class pollAnswers(models.Model): 
+class PollAnswers(models.Model): 
     questionId = models.IntegerField()
     quizId = models.IntegerField()
     question = models.TextField()
     studentId = models.TextField()
     answer = models.TextField()
 
+
+
+
+#*********************************************************************#
+# we can remove this model
 class QuestionsTable(tables.Table):
     Question = tables.Column()
     Options = tables.Column()
     Answer = tables.Column()
     
-
+# we can remove this model
 class Answers(models.Model):
     Name = models.TextField()
     ID = models.IntegerField()
@@ -47,13 +52,6 @@ class Answers(models.Model):
     Question_Id = models.IntegerField()
     Question = models.TextField()
     Submitted = models.TextField()
-    Answer = models.TextField()
-    
-
-# class Document(models.Model):
-#     title = models.CharField(max_length=200)
-#     thumbnail = models.FileField()
-    
-# def get_upload_file_name(instance, filename):
-#     return "uploaded_files/ %s_%s" % (str(time)()).replace('.', '_'), filename
+    Answer = models.TextField() 
+#*********************************************************************#
     
