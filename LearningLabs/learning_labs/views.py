@@ -110,8 +110,8 @@ def audienceAnswer(request):
         try:
             questionId = Quiz.objects.get(currentQuestion=True).questionId;
             quizId = Quiz.objects.get(currentQuestion=True).quizId;
-            print questionId, quizId
             questionName = Quiz.objects.get(questionId=questionId, quizId=quizId).question;
+            print questionName
             return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });       
         except Exception as e:
             Errormessage = "Poll is closed question is not selected yet"
@@ -123,9 +123,15 @@ def audienceAnswer(request):
         questionId = request.POST.get('questionId')
         answer = request.POST.get('answer')
         questionName = request.POST.get('questionName')
-        aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
-        aaObj.save()
-        return HttpResponse("Answer Saved Successfuly!")
+        print studentId, quizId, quizId, questionName 
+        readObj = pollAnswers.objects.filter(studentId=studentId, quizId=quizId, questionId=questionId )
+        print readObj;
+        if not readObj:
+            aaObj = pollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
+            aaObj.save()
+            return HttpResponse("Answer Saved Successfuly!")
+        else:
+            return HttpResponse("Cannot retake poll!")
     
 # Add questions to Quiz
 def addQuestion(request):
