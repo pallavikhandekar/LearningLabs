@@ -10,7 +10,7 @@ class Register(models.Model):
     fname = models.TextField()
     lname = models.TextField()
     usrname = models.TextField()
-    studentId = models.ImageField()
+    studentId = models.IntegerField().primary_key()
     email = models.EmailField()
     password = models.TextField()
 
