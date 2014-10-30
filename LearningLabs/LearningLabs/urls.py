@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     
     url(r'answerquiz/(?P<quizname>\w+)/(?P<question>[\w|\W]+)', views.answer),
     url(r'FamilyFeudGame',TemplateView.as_view(template_name='./familyFeudUI.html')),
-    
+#     url(r'FamilyFeudGame',views.getCurrentQuestion),
+#      
     url(r'Profile',TemplateView.as_view(template_name='./profile.html')),
     url(r'signUp$', views.signUp),
     url(r'signIn$', views.signIn),
@@ -45,7 +46,9 @@ urlpatterns = patterns('',
     
     url(r'selectQuiz.html',views.populateQuiz),
     url(r'^home$',TemplateView.as_view(template_name='./index.html')),
-    url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html'))
+    url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html')),
+    url(r'CreateTeams',TemplateView.as_view(template_name='./createTeams.html')),
+    url(r'Teams',views.createTeams)
    
     
 )
