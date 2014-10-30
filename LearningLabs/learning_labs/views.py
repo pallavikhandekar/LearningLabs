@@ -100,7 +100,15 @@ def populateQuiz(request):
         setBoolvalue(quizId, questionToPoll);
    
     return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "questionToPoll":questionToPoll, "question_list": question_list});
-        
+
+def getCurrentQuestion(request):
+    questionId = Quiz.objects.get(currentQuestion=True).questionId;
+    quizId = Quiz.objects.get(currentQuestion=True).quizId;
+    questionName = Quiz.objects.get(questionId=questionId, quizId=quizId).question;
+    print questionName
+    return render(request, "familyFeudUI.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });       
+      
+           
 
 def setBoolvalue(quizId, questionToPoll):
 # Make all the values of CurrentQuestions as False
