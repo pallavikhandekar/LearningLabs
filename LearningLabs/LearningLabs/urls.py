@@ -12,9 +12,7 @@ urlpatterns = patterns('',
     url(r'countpolls', views.getPolls),
     url(r'counter', TemplateView.as_view(template_name='./counter.html')),
     url(r'polls', TemplateView.as_view(template_name='./Polls.html')),
-    url(r'answerQuestions', views.answerQuestions),
-    url(r'AddQuestion', TemplateView.as_view(template_name='./createquestions.html')), 
-    url(r'addQuestion', views.addQuestion),     
+    url(r'answerQuestions', views.answerQuestions),     
     url(r'DisplayQuiz', views.displayquestions),
     url(r'CreateQuiz', TemplateView.as_view(template_name='./base.html')),
     url(r'AdminProfile', TemplateView.as_view(template_name='./AdminProfile.html')),
@@ -42,10 +40,17 @@ urlpatterns = patterns('',
     url(r'miningresults',views.showChart),
     
     # ******End Text Mining Section **********
-    
-    url(r'selectQuiz.html',views.populateQuiz),
+
+    #******* URL for Template ***************
     url(r'^home$',TemplateView.as_view(template_name='./index.html')),
-    url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html'))
+    url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html')),
+    url(r'^home/selectQuiz$',views.populateQuiz),
+    
+    url(r'^home/AddQuestion', TemplateView.as_view(template_name='./createquestions.html')),
+    url(r'addQuestion', views.addQuestion)
+    
+    #******* END URL for Template ***************
+    #******* URL for Template ***************
    
     
 )

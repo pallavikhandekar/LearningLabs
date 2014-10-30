@@ -85,39 +85,37 @@ def resetPassword(request):
     
     
 def populateQuiz(request):
-    entry_list = set(Quiz.objects.values_list('quizId', flat= True))
-    quizId = request.POST.get('quizIdToPoll')
-    question_list = Quiz.objects.values_list('question', flat=True).filter(quizId=quizId)
-    questionToPoll = request.POST.get('questionToPoll')
-    
-    if quizId is None:
-        quizId = 1
-        print  "quiz id is: 1"
-        
-    if questionToPoll is not None:
-        print "question poll is:"
-        print questionToPoll
-        setBoolvalue(quizId, questionToPoll);
-   
-    return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "questionToPoll":questionToPoll, "question_list": question_list});
-        
+    quiz_list = set(Quiz.objects.values_list('quizId', flat= True)) #Fetches quiz id from Quiz collection
+    if len(quiz_list) ==0:
+        return render(request, "selectQuiz.html",{"quiz_list": quiz_list}); #Send empty list to check on html
+    else:
+        #Fetch the questions:
+        quizId = request.POST.get('quizIdToPoll')
+        question_list = Quiz.objects.values_list('question', flat=True).filter(quizId=quizId)
+        questionToPoll = request.POST.get('questionToPoll')
+        if quizId is None:
+            quizId = 1
+            print  "quiz id is: 1"  
+        if questionToPoll is not None:
+            print "question poll is:"
+            print questionToPoll
+            setBoolvalue(quizId, questionToPoll);
+        return render(request, "selectQuiz.html", {"quiz_list": quiz_list, "quizId": int(quizId), "questionToPoll":questionToPoll, "question_list": question_list});         
 
 def setBoolvalue(quizId, questionToPoll):
 # Make all the values of CurrentQuestions as False
     questions_list = Quiz.objects.all()
-    print "questions list: "
+    #print "questions list: "
     for qList in questions_list:
-        print qList.currentQuestion
+        #print qList.currentQuestion
         qList.currentQuestion = False
         qList.save()          
-# Make CurrentQuestion for selected quizid and question to be true 
+    # Make CurrentQuestion for selected quizid and question to be true 
     questionId = Quiz.objects.get(quizId=quizId, question=questionToPoll).questionId;
     boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
-    booli = boolObj.currentQuestion;
-    booli = True
-    boolObj.currentQuestion = booli
+    boolObj.currentQuestion = True
     boolObj.save()
-
+    
 def audienceAnswer(request):
     questionId = None
     quizId = None
