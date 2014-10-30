@@ -49,7 +49,7 @@ def signUp(request):
     usrname = request.POST.get('usrname')
     studentId = request.POST.get('studentId')
     password = request.POST.get('password')
-    readObj = PollAnswers.objects.filter(studentId=studentId)
+    readObj = Register.objects.filter(studentId=studentId)
     if not readObj: 
         regObj = Register.objects.create(fname=firstname, lname=lastname, usrname=usrname,studentId=studentId ,email=email, password=password)
         regObj.save()
@@ -101,6 +101,7 @@ def populateQuiz(request):
    
     return render(request, "selectQuiz.html", {"entry_list": entry_list, "quizId": int(quizId), "questionToPoll":questionToPoll, "question_list": question_list});
 
+# Need to work on it for family feud html
 def getCurrentQuestion(request):
     questionId = Quiz.objects.get(currentQuestion=True).questionId;
     quizId = Quiz.objects.get(currentQuestion=True).quizId;
@@ -109,7 +110,6 @@ def getCurrentQuestion(request):
     return render(request, "familyFeudUI.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });       
       
            
-
 def setBoolvalue(quizId, questionToPoll):
 # Make all the values of CurrentQuestions as False
     questions_list = Quiz.objects.all()
@@ -260,3 +260,7 @@ def saveCSVToMongo(file):
         quizObj.answerOptions = row[6];
         quizObj.save();
 #****************End Import Quiz Data****************
+
+#****************Create Teams******************
+def createTeams(request):
+    return HttpResponse("Teams created successfully!");

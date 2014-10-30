@@ -14,6 +14,11 @@ class Register(models.Model):
     email = models.EmailField()
     password = models.TextField()
 
+class Teams(models.Model):
+    teamName = models.TextField()
+    gameDate = models.DateField()
+    
+    
 # Stores Quiz and associated questions and answers choices if any.
 class Quiz(models.Model):
     quizId = models.IntegerField()
