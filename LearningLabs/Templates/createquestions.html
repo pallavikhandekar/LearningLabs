@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends "index.html" %}
 
-<head>
+{% block content %}
+
 {% load staticfiles %}
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
+
 <script>
 	function showMsg() {
 		var x = document.getElementById('submit');
@@ -14,57 +12,10 @@
 		alert("Question has been submitted");
 	}
 </script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-<style type="text/css">
-body {
-	position: absolute;
-	background-size: cover;
-	background-repeat: no-repeat
-}
+<div id="page-wrapper">
 
-label {
-	text-align: center;
-	padding: 10px 5px 15px 10px;
-	color: #CEF6F5;
-	font-size: 25px;
-}
-
-input{
- margin-left: 10px;
-}
-
-h1 {
-	text-align: center;
-	padding: 10px 5px;
-	text-decoration: underline;
-	color: #CEF6F5;
-}
-
-.padding1 {
-	padding: 10px 5px 15px 450px;
-}
-
-.padding2 {
-	text-align: center;
-	margin-left: 30px;
-	padding: 10px 5px 15px 10px;
-}
-
-tr.spaceUnder>td {
-	padding-bottom: 25px;
-}
-
-.container {
-	margin-top: 10px;
-}
-</style>
-</head>
-
-<body background="{% static "images/learn.png" %}" style="background-size: cover; position: absolute; top: 0; bottom: 0; right: 0; left: 0;">
-	
-
+ 	<div class="container-fluid">
 		<h1>Add Questions</h1>
 		<form method="post" action="addQuestion" id="usrform">
 			{% csrf_token %} 
@@ -91,8 +42,9 @@ tr.spaceUnder>td {
 			    <input class="btn btn-primary padding2" id="submit" onclick="showMsg()" method="post" type="Submit" value=Submit>
 			</div>
 		</form>
+</div>
+</div>
+{% endblock %}
 
 
 
-</body>
-</html>

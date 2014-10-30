@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "index.html" %}
 
-<head>
+{% block content %}
+
 {% load staticfiles %}
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
 <script>
 function showMsg() {
 	var x = document.getElementById('submit');
@@ -14,192 +11,60 @@ function showMsg() {
 	alert("Question has been submitted");
 }
 </script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	
-<style type="text/css">
-body {
-	position:absolute ;
-	background-size: cover;
-	background-repeat: no-repeat
-}
 
-label {
-   text-align: center;
-	padding: 10px 5px 15px 10px;
-	color: #CEF6F5;
-	font-size: 30px;
-}
+<div id="page-wrapper">
 
-h1.text-center {
-	text-align: center;
-	padding: 10px 5px; 
-	text-decoration: underline;
-	color: #CEF6F5;
-}
-
-.padding1 {
-	padding: 10px 5px;
-}
-
-.padding2 {
-	padding: 10px 5px 15px 450px;
-}
-
-tr.spaceUnder>td {
-	padding-bottom: 25px;
-}
-
-.container {
-	margin-top: 10px;
-}
-
-select {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -webkit-padding-end: 20px;
-    -moz-padding-end: 20px;
-    -webkit-padding-start: 2px;
-    -moz-padding-start: 2px;
-    background-color: #F0FFFF; /* fallback color if gradients are not supported */
-    background-position: center right;
-    background-repeat: no-repeat;
-    border: 1px solid #AAA;
-    border-radius: 2px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-    color: #555;
-    font-size: inherit;
-    margin: 0;
-    overflow: hidden;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-ul#tabmenu
-{
-    width:100%;
-    margin: 0 auto; /*If the menu has a width, this "margin:0 auto;" makes the menu center-aligned. You can remove it for left-alignment, or change it to "margin-left:auto; margin-right:0;" for right-alignment.*/
-    text-align:center;
-    list-style:none;
-    padding:0;
-    font-size:0;
-    position:relative;
-}
-ul#tabmenu:after
-{
-    content:'.'; height: 0; clear: both; display: block; visibility: hidden;
-}
-        
-ul#tabmenu li
-{
-    display:inline;
-    list-style:none; padding:0;
-    margin-top:0;margin-bottom:0;
-    margin-left:-1px;margin-right:0;
-}
-        
-/*Main menu links*/
-ul#tabmenu li a
-{
-    letter-spacing:normal;
-    color:#555555;
-    padding:0 18px;
-    line-height:24px;
-    font-size:21px;
-    font-weight:normal;
-    font-family:Arial;
-    text-decoration:none;
-    display:inline-block; 
-    outline:0;
-    
-    border:none;
-    border-bottom:none;
-    background:#FFFFFF url(bg-gray.gif) no-repeat 0 bottom;
-    position:relative;
-    top:1px;
-    z-index:4;  
-    
-}
-/* If you've set the menu's javascript file with { preview:false }, you may want to specify the following hovered tab styles     
-ul#tabmenu li a:hover {
-    color: red;
-    background: black;
-}*/
-
-ul#tabmenu li.active a
-{
-    padding-bottom:1px;
-    background: #FFFFFF url(bg-gray1.gif) no-repeat 0 bottom;
-    color:#333333;
-}
-        
-</style>
-</head>
-
-<body background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
-<div  align="center">
-<div>
-<!-- 
-<ul id="tabmenu">
-    <li>Tab Menu </li>
-    <li><a href="?2">Tabbed Menu</a> </li>
-   
-</ul> -->
-</div>
-<h1 class="text-center">Welcome Admin, Please select a question to populate </h1>
-	<form name="QuizForm" method="post" action="/selectQuiz.html">
-	{% csrf_token %}
-	<div style="width: 400px">
-					
-				<table>
-					
-					<tr >
-					<td><label>Select a Quiz ID: </label>
-					<select name="quizIdToPoll"> 
-					{% for qId in entry_list %}
-						{% if qId == quizId %}
-	    					<option value="{{qId}}" selected>{{qId}}</option>
-	    				{% else %}
-	    					<option value="{{qId}}">{{qId}}</option>
-	    				{% endif %} 
-	    	    	{% endfor %}
-				   </select>
-				   <input class="btn btn-primary" id="submit"
-							 method="post" type="Submit" value=OK width="5" height="5">
-				   </td></tr>
-				  
-				   <tr >
-					<td><label>Select a Question: </label>
-					<select name="questionToPoll" width="300" style="width: 300px"> 
-	    			{% for qId in question_list %}
-						{% if qId == questionToPoll %}
-	    					<option value="{{qId}}" selected>{{qId}}</option>
-	    				{% else %}
-	    					<option value="{{qId}}">{{qId}}</option>
-	    				{% endif %} 
-	    	    	{% endfor %}
-	    	    	
-	    		<!-- 	{% for obj in question_list %}
-	    			<option value="{{obj}}" >{{obj}}</option> 
-	    			{% endfor %} -->
-				   </select>
-				   <input class="btn btn-primary" id="submit"
-								onclick="showMsg()" method="post" type="Submit" value=Submit>
-				   <!-- <input class="btn btn-primary alert" id="submit"
-							 method="post" type="Submit" value=OK width="5" height="5"> -->
+ 	<div class="container-fluid">
+		<!-- <h1 class="text-center">Select a question to populate </h1> -->
+			{% if quiz_list %} <!-- if quiz exists populate form else show empty message -->
+				<form name="QuizForm" method="post" action="/home/selectQuiz">
+				{% csrf_token %}
+				<div style="width: 400px">
+							
+						<table>
+							
+							<tr >
+							<td><label>Select a Quiz ID: </label>
+							<select name="quizIdToPoll"> 
+							{% for qId in quiz_list %}
+								{% if qId == quizId %}
+			    					<option value="{{qId}}" selected>{{qId}}</option>
+			    				{% else %}
+			    					<option value="{{qId}}">{{qId}}</option>
+			    				{% endif %} 
+			    	    	{% endfor %}
+						   </select>
+						   <input class="btn btn-primary" id="submit"
+									 method="post" type="Submit" value=OK width="5" height="5">
+						   </td></tr>
+						  
+						   <tr >
+							<td><label>Select a Question: </label>
+							<select name="questionToPoll" width="300" style="width: 300px"> 
+			    			{% for qId in question_list %}
+								{% if qId == questionToPoll %}
+			    					<option value="{{qId}}" selected>{{qId}}</option>
+			    				{% else %}
+			    					<option value="{{qId}}">{{qId}}</option>
+			    				{% endif %} 
+			    	    	{% endfor %}
 		
-				   </td></tr>
-
-				</table>
-			 
-	    </div>
-	 </form>
-	
+						   </select>
+						   <input class="btn btn-primary" id="submit"
+										onclick="showMsg()" method="post" type="Submit" value=Submit>
+						   </td></tr>
+		
+						</table>
+					 
+			    	</div>
+			 	</form>
+			
+			{% else %}
+			
+				<label>No Quiz found to display </label>
+			{% endif %}
+			
+	</div>
 </div>
 
-</body>
-</html>
+{% endblock %}
