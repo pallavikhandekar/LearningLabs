@@ -1,115 +1,82 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
+  <head>
+   {% load staticfiles %}
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+      
+     <style>
+			div {
+			    padding-top: 10px;
+			   /*  padding-left: 50px;
+			    padding-right: 50px; */
+			  
+			}
+			h2{
+					text-align: center;
+					padding: 10px 5px; 
+					text-decoration: underline;
+					color: #CEF6F5;
+				}
+			
+		</style>
+  </head>
+  <body  background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
+     
+     <h2> Select The Teams</h2>
+     <br>
+     
+     <form name="input" method="post" action="/CreateTeams">
+			{% csrf_token %}
+		
+		<input type="hidden" name="queryset" value={{queryset}}> 
+     
+     <div id="datetimepicker" class="input-append date" align="center">
+      <input type="text" name="datetime" data-format="YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+    </div>
+   <script type="text/javascript"
+     src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script> 
+    <script type="text/javascript"
+     src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+    <script type="text/javascript">
+      $('#datetimepicker').datetimepicker({
+        format: 'dd/MM/yyyy hh:mm:ss',
+        language: 'en-us'
+      });
+    </script>
 
-    <head>
-    {% load staticfiles %}
-        <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-        <link rel="stylesheet" href="https://rawgit.com/lukaskral/bootstrap-table/feature_lukaskral_bootstrap_table_filter_integration/dist/bootstrap-table.min.css">
-        <script src="https://rawgit.com/lukaskral/bootstrap-table/feature_lukaskral_bootstrap_table_filter_integration/src/bootstrap-table.js"></script>
-
-        <link rel="stylesheet" href="../src/bootstrap-table-filter.css">
-        <script src="../src/bootstrap-table-filter.js"></script>
-        <script src="../src/ext/bs-table.js"></script>
-               <pre style="margin-top: 30px" id="log"></pre>
-
-        <script type="text/javascript">
-            $(function() {
-                $('#tbl').bootstrapTable();
-
-                $('#filter-bar').bootstrapTableFilter({
-                    connectTo: '#tbl',
-                    onAll: function(name, args) {
-                        var d = new Date();
-                        $('#log').prepend(d.toLocaleString() + ': ' + name + "\n");
-                    },
-                    onSubmit: function(data) {
-                        var data = $('#filter-bar').bootstrapTableFilter('getData');
-                        var d = new Date();
-                        $('#log').prepend(d.toLocaleString() + ': ' + JSON.stringify(data) + "\n");
-                    }
-                });
-                    
-            });
-
-        </script>
-
-    </head>
-
-<body background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
-<h1 class="text-center">Welcome Admin, Please select teams </h1>
-	<form name="selectTeam" method="post" action="Teams">
-	{% csrf_token %}
-        <div id="filter-bar">
-        </div>
-
-        <table
-            id="tbl"
-            data-url="tbl_data.json"
-            data-click-to-select="true"
-            data-toolbar="#filter-bar"
-            data-show-toggle="true"
-            data-show-columns="true"
-            data-single-select="true"
-            data-height="299"
-            data-show-refresh="true"
-            data-search="true"
-            data-select-item-name="toolbar1"
-            data-toolbar="#custom-toolbar"
-            >
-          
-    <thead>
-        <tr>
-            <th data-field="state" data-checkbox="true"></th>
-            <th data-field="id" data-align="right">Student ID</th>
-            <th data-field="name" data-align="center">First Name</th>
-            <th data-field="price" data-align="">Last Name</th>
-        </tr>
-    </thead>
-
-            <tbody>
-              <tr>
-                	<td></td>
-                    <td>2</td>
-                    <td>test2</td>
-                    <td>$2</td>
-                </tr>
-                  <tr>
-                	<td></td>
-                    <td>3</td>
-                    <td>test3</td>
-                    <td>$3</td>
-                </tr>
-                  <tr>
-                	<td></td>
-                    <td>3</td>
-                    <td>test3</td>
-                    <td>$3</td>
-                </tr>
-                  <tr>
-                	<td></td>
-                    <td>3</td>
-                    <td>test3</td>
-                    <td>$3</td>
-                </tr>
-                  <tr>
-                	<td></td>
-                    <td>3</td>
-                    <td>test3</td>
-                    <td>$3</td>
-                </tr>
-        </table>
-        <input class="btn btn-primary" id="submit" method="post" type="Submit" value="Submit">
-</form>
-    </body>
-
-</html>
+		
+		<div align="center">
+			
+			<select name="selStudent" multiple="multiple" >
+				<option value="selTeam" selected>--Select Team Name--</option>
+				<option value="A">studentId, First Name, Last Name</option>
+				{% for category in queryset %}	
+				  <option value="{{category.studentId}},{{category.fname}},{{category.lname}}">{{category.studentId}} , {{category.fname}} , {{category.lname}}</option>
+				 {% endfor %}
+			</select><br>
+			
+			
+			<select name="teamName">
+				  <option value="selTeam" selected>--Select Team Name--</option>
+				  <option value="A">Team A</option>
+				  <option value="B">Team B</option>
+			</select><br>
+			<br><input type="submit"> 
+		</div>
+	
+		</form>
+ </body>
+ </html>

@@ -43,7 +43,7 @@ function showMsg() {
 							<select name="questionToPoll" width="300" style="width: 300px"> 
 			    			{% for qId in question_list %}
 								{% if qId == questionToPoll %}
-			    					<option value="{{qId}}" selected>{{qId}}</option>
+			    					<option  value="{{qId}}" selected>{{qId}}</option>
 			    				{% else %}
 			    					<option value="{{qId}}">{{qId}}</option>
 			    				{% endif %} 

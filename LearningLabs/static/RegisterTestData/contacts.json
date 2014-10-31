@@ -1,0 +1,10 @@
+{ "_id" : { "$oid" : "5451cc77b0bdf2efd9eb6c49" }, "studentId" : 1234, "usrname" : "raghuram", "email" : "raghu@gmail.com", "lname" : "ram", "fname" : "raghu", "password" : "raghu" }
+{ "_id" : { "$oid" : "5451cca2b0bdf2efd9eb6c4a" }, "studentId" : 1235, "usrname" : "Bhaji", "email" : "bhaji@mastani.com", "lname" : "Mastani", "fname" : "Bhajirao", "password" : "bhaji" }
+{ "_id" : { "$oid" : "5451ccdcb0bdf2efd9eb6c4b" }, "studentId" : 1236, "usrname" : "Raja", "email" : "raja@gmail.com", "lname" : "Hindustani", "fname" : "Raja", "password" : "raja" }
+{ "_id" : { "$oid" : "5451ce4cb0bdf2f003ccbd4e" }, "studentId" : 1237, "usrname" : "ram", "email" : "ram@leela.com", "lname" : "Leela", "fname" : "Ram", "password" : "qwert" }
+{ "_id" : { "$oid" : "5451ce94b0bdf2f003ccbd4f" }, "studentId" : 1238, "usrname" : "Akki", "email" : "akki@kumar.com", "lname" : "Kumar", "fname" : "Akshay", "password" : "akki" }
+{ "_id" : { "$oid" : "5451cebeb0bdf2f003ccbd50" }, "studentId" : 1239, "usrname" : "HritikRosh", "email" : "roshan@gmail.com", "lname" : "roshan", "fname" : "hritik", "password" : "hritik" }
+{ "_id" : { "$oid" : "5451cf1bb0bdf2f003ccbd51" }, "studentId" : 1230, "usrname" : "Deepi", "email" : "deepi@padukone.com", "lname" : "Padukone", "fname" : "Deepika", "password" : "deepi" }
+{ "_id" : { "$oid" : "5451cf38b0bdf2f003ccbd52" }, "studentId" : 1231, "usrname" : "Karee", "email" : "karee@saif.com", "lname" : "Kapoor", "fname" : "Kareena", "password" : "karee" }
+{ "_id" : { "$oid" : "5451cf5ab0bdf2f003ccbd53" }, "studentId" : 1232, "usrname" : "Saifu", "email" : "saifu@kareena.com", "lname" : "Ali", "fname" : "Saif", "password" : "saifu" }
+{ "_id" : { "$oid" : "5451cf7fb0bdf2f003ccbd54" }, "studentId" : 1233, "usrname" : "sunny", "email" : "sunny@mirchi.com", "lname" : "leone", "fname" : "Sunny", "password" : "sunny" }
