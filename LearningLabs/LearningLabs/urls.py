@@ -30,8 +30,15 @@ urlpatterns = patterns('',
     
     url(r'Audiencepoll',views.audienceAnswer),
     url(r'answerSaved', views.audienceAnswer),
+    
+    url(r'Audiencepoll',views.audienceAnswer),
+    url(r'answerSaved', views.audienceAnswer),
+    
+    url(r'CreateTeams',views.createTeams),
+    url(r'answerSaved', views.createTeams),
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
+    url(r'myTest',TemplateView.as_view(template_name='./tempTest.html')),
     
     #url(r'Upload$',TemplateView.as_view(template_name='./upload.html')),
     url(r'^uploadFile/$', views.uploadFile),
@@ -45,9 +52,9 @@ urlpatterns = patterns('',
     #******* URL for Template ***************
     url(r'^home$',TemplateView.as_view(template_name='./index.html')),
     url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html')),
-
-    url(r'CreateTeams',TemplateView.as_view(template_name='./createTeams.html')),
-    url(r'Teams',views.createTeams),
+  
+# #     url(r'CreateTeams',TemplateView.as_view(template_name='./createTeams.html')),
+#     url(r'^createTeams/',views.createTeams,name='createTeams'),
 
     url(r'^home/selectQuiz$',views.populateQuiz),
     

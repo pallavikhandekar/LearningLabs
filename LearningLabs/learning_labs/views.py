@@ -263,6 +263,7 @@ def saveCSVToMongo(file):
 #****************End Import Quiz Data****************
 
 #****************Create Teams******************
+# Create Team method, populates Entire student data to admin where admin can select students and put them in team
 def createTeams(request):
     if request.method == 'GET':
         try:
