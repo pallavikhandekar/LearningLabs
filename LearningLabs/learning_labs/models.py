@@ -16,8 +16,10 @@ class Register(models.Model):
 
 class Teams(models.Model):
     teamName = models.TextField()
-    gameDate = models.DateField()
-    
+    gameDate = models.DateTimeField()
+    fname = models.TextField()
+    lname = models.TextField()
+    studentId = models.IntegerField()
     
 # Stores Quiz and associated questions and answers choices if any.
 class Quiz(models.Model):

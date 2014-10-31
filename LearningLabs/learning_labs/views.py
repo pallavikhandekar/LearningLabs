@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
-from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers
+from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
@@ -10,6 +10,8 @@ from learning_labs.forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
+from datetime import datetime
+
 
 import mining
 import os, manage, csv
@@ -134,7 +136,7 @@ def audienceAnswer(request):
             questionId = Quiz.objects.get(currentQuestion=True).questionId;
             quizId = Quiz.objects.get(currentQuestion=True).quizId;
             questionName = Quiz.objects.get(questionId=questionId, quizId=quizId).question;
-            print questionName
+            print questionId,quizId, questionName
             return render(request, "audiencepoll.html", {"questionId": questionId, "quizId" : quizId, "questionName":questionName });       
         except Exception as e:
             Errormessage = "Poll is closed question is not selected yet"
@@ -262,4 +264,34 @@ def saveCSVToMongo(file):
 
 #****************Create Teams******************
 def createTeams(request):
-    return HttpResponse("Teams created successfully!");
+    if request.method == 'GET':
+        try:
+            queryset = Register.objects.all()
+            print([p.lname for p in queryset])
+            return render(request, "createTeams.html", {"queryset":queryset });       
+        except Exception as e:
+            Errormessage = "Some thing is wrong with student record"
+            return HttpResponse('Sorry! No data found')
+         
+    else:
+        print "i am post"
+        
+        teamName= request.POST.get('teamName')
+        print teamName
+        gameDate = request.POST.get('datetime')
+        date, time = gameDate.split(" ")
+        print "Date is:" + date 
+        print "Time is:" + time
+        print gameDate
+        chngFormat = datetime.strptime(gameDate,"%d/%m/%Y %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
+        print "Changed format" + chngFormat
+        studentDetail = request.POST.getlist('selStudent')
+        for q in studentDetail:
+            studentId,fname,lname = q.split(",")
+            print "Student ID is:" + studentId 
+            print "First Name is:" + fname
+            print "Last Name is:" + lname
+        
+            teamObj = Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=studentId,lname=lname,fname=fname )
+            teamObj.save()
+        return HttpResponse("Teams Created Successfuly!")
