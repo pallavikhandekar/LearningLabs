@@ -31,10 +31,7 @@ urlpatterns = patterns('',
     url(r'Audiencepoll',views.audienceAnswer),
     url(r'answerSaved', views.audienceAnswer),
     
-    url(r'Audiencepoll',views.audienceAnswer),
-    url(r'answerSaved', views.audienceAnswer),
-    
-    url(r'CreateTeams',views.createTeams),
+    url(r'createTeams',views.createTeams),
     url(r'answerSaved', views.createTeams),
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
@@ -45,7 +42,7 @@ urlpatterns = patterns('',
     url(r'^importCsv/$', views.saveCSVToMongo),
     
     #**********Text Mining Section ***********
-    url(r'miningresults',views.showChart),
+    url(r'miningResults',views.showChart),
     
     # ******End Text Mining Section **********
 
@@ -58,9 +55,11 @@ urlpatterns = patterns('',
 
     url(r'^home/selectQuiz$',views.populateQuiz),
     
-    url(r'^home/AddQuestion', TemplateView.as_view(template_name='./createquestions.html')),
-    url(r'addQuestion', views.addQuestion)
+    url(r'^home/addQuestion$', TemplateView.as_view(template_name='./createquestions.html')),
+    url(r'addQuestion', views.addQuestion),
     
+    url(r'^home/createTeams$',views.createTeams),
+    url(r'^home/miningResults$',views.showChart)
     #******* END URL for Template ***************
     #******* URL for Template ***************
 

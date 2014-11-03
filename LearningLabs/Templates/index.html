@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles %}
-	<head>
+	<head  style="height:100%">
 	
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -10,10 +10,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen"
+    		 href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" href="{% static 'css/sb-admin.css' %}">
+		
+      	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css" rel="stylesheet">
 		<link href="{% static 'css/font-awesome-4.1.0/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -140,7 +144,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                	<li class="active">
+                        <a href="/home/Upload"><i class="fa fa-fw"></i> Welcome Page</a>
+                    </li>
+                    <li>
                         <a href="/home/Upload"><i class="fa fa-fw"></i> Upload Quiz</a>
                     </li>
                     <li>
@@ -148,30 +155,13 @@
                     </li>
               
                     <li>
-                        <a href="/home/AddQuestion"><i class="fa fa-fw "></i> Add Question</a>
+                        <a href="/home/addQuestion"><i class="fa fa-fw "></i> Add Question</a>
                     </li>
                     <li>
-                        <a href="/CreateTeams"><i class="fa fa-fw fa-table"></i> Create Teams</a>
+                        <a href="/home/createTeams"><i class="fa fa-fw"></i> Create Teams</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Poll Results</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i>  Scores</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                        <a href="/home/miningResults"><i class="fa fa-fw"></i> Poll Results</a>
                     </li>
                 </ul>
             </div>
@@ -179,7 +169,13 @@
         </nav>
 
        	<div id="contentPane">
-       				 {% block content %}{% endblock %}
+       				 {% block content %}
+       				 
+       				 	<div>
+       				 		WELCOME
+       				 	</div>
+       				 	
+       				 {% endblock %}
    		 </div>
        
 

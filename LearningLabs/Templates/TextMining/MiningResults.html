@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  	<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+{% extends "index.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script>
 		Array.prototype.contains = function(obj) {
@@ -30,7 +31,7 @@
 		//Holds the selected data
 		var selectedData = [];
 		
-		function onMiningResultsLoad(){
+		window.onload = function onMiningResultsLoad(){
 			drawChart(dataChart);
 		}
 		//Draw chart from passed data array
@@ -79,8 +80,9 @@
 		}
 		
     </script>
-  <body onload= "onMiningResultsLoad();">
-  	<div align = "center">
+<div id="page-wrapper">
+
+ 	<div class="container-fluid">
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
   	<div >
 	    <label  for="mergeTitle">New Bar Title:</label>
@@ -91,5 +93,6 @@
   		<input class="btn btn-primary btn-lg" type="submit" value=Update onclick="mergeData();">
   	</div>
   	</div>
-  </body>
-</html>
+  	</div>
+  	
+  {% endblock %}

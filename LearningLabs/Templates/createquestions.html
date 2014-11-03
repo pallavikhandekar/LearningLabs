@@ -19,24 +19,33 @@
 		<h1>Add Questions</h1>
 		<form method="post" action="addQuestion" id="usrform">
 			{% csrf_token %} 
-			<div align="left">
-				<label> Enter Quiz Id:</label> 
-				<input type="text" name="quizId" placeholder="Mandatory"><br> 
-				
-				<label>Enter Quiz Name:</label> 
-				<input type="text" name="quizName" placeholder="Optional"><br>
-				
-			    <label>Question Id: </label> 
-			    <input type="text" name="questionId" placeholder="Mandatory"> <br> 
-			    
-			    <label>Enter Question:</label> 
-			    <textarea rows="1" cols="80" name="question" form="usrform" placeholder="Mandatory" ></textarea><br> 
-			    
-			    <label>Answer Options:</label> 
-			    <input type="text" name="answerOptions" placeholder="Optional"> <br> 
-			    
-			    <label> Correct Answer:</label> 
-			    <input type="text" name="correctAnswer" placeholder="Optional"> <br> 
+			<div>
+				<table>
+				<tr>
+				<td><label>* Enter Quiz Id:</label></td>
+				<td><input class="form-control" type="text" name="quizId" ></td>
+				</tr>
+				<tr>
+				<td><label>Enter Quiz Name:</label></td>
+				<td><input class="form-control" type="text" name="quizName"></td>
+				</tr>
+				<tr>
+				<td><label>* Question Id: </label></td>
+			    <td><input class="form-control" type="text" name="questionId"></td>
+			    </tr>
+			    <tr>
+				<td><label>* Enter Question:</label></td>
+			    <td><textarea  class="form-control" rows="1" cols="80" name="question" form="usrform" ></textarea></td>
+			    </tr> 
+			    <tr>
+				<td><label>Answer Options:</label></td>
+			    <td><input class="form-control" type="text" name="answerOptions" ></td>
+			    </tr>
+			    <tr>
+				<td><label>Correct Answer:</label></td>
+			    <td><input class="form-control" type="text" name="correctAnswer" ></td>
+			    </tr>
+			    </table> 
 			</div>
 			<div>
 			    <input class="btn btn-primary padding2" id="submit" onclick="showMsg()" method="post" type="Submit" value=Submit>
