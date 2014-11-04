@@ -83,15 +83,20 @@
 <div id="page-wrapper">
 
  	<div class="container-fluid">
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
-  	<div >
-	    <label  for="mergeTitle">New Bar Title:</label>
-	    <input type="text" id="mergeTitle" placeholder="">
-	    <span title = "Rename single Bar or Merge multiple Bars" class="glyphicon glyphicon-info-sign"></span>
+ 	<div class="row">
+    <div id="chart_div" style="width: 70%; height: 500px"></div>
+    </div>
+  	<div class="row">
+  		<div class="col-lg-3">
+	        <div class="form-group has-feedback has-feedback-left">
+		    <label class="control-label" >New Bar Title:</label>
+	    	 <input type="text" id="mergeTitle" placeholder="" class="form-control">
+	    	 <i title = "Enter new or merge title" class="glyphicon glyphicon-info-sign form-control-feedback"></i>
+			</div>
+		</div>
 	</div>
-	<div >
-  		<input class="btn btn-primary btn-lg" type="submit" value=Update onclick="mergeData();">
-  	</div>
+	<div class="row">
+  		<input class="btn btn-primary" type="submit" value=Update onclick="mergeData();">
   	</div>
   	</div>
   	

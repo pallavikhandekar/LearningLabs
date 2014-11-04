@@ -21,12 +21,24 @@
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
+		<script>
+			
+			 $(document).ready(function() 
+			 {
+			    // executes when HTML-Document is loaded and DOM is ready
+			    var i = document.URL.lastIndexOf("/");
+			    menuId = document.URL.substring(i+1);
+			  	$('#'+ menuId).addClass('active');
+			 
+			 });  
+			 
 	
+		</script>
 	</head>
 	<body  background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
 
  <!-- Navigation -->
-   <div id="wrapper">
+   <div id="wrapper" style="heigth:100%">
 
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -42,86 +54,7 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
+               
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -143,24 +76,24 @@
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                	<li class="active">
-                        <a href="/home/Upload"><i class="fa fa-fw"></i> Welcome Page</a>
+                <ul class="nav navbar-nav side-nav" id="side-menu-list">
+                	<li id="home">
+                        <a href="/home"><i class="fa fa-fw"></i> Welcome Page</a>
                     </li>
-                    <li>
+                    <li id="Upload">
                         <a href="/home/Upload"><i class="fa fa-fw"></i> Upload Quiz</a>
                     </li>
-                    <li>
+                    <li id="selectQuiz">
                         <a href="/home/selectQuiz"><i class="fa fa-fw"></i> Select Question</a>
                     </li>
               
-                    <li>
+                    <li id="addQuestion">
                         <a href="/home/addQuestion"><i class="fa fa-fw "></i> Add Question</a>
                     </li>
-                    <li>
+                    <li id="createTeams">
                         <a href="/home/createTeams"><i class="fa fa-fw"></i> Create Teams</a>
                     </li>
-                    <li>
+                    <li id="miningResults">
                         <a href="/home/miningResults"><i class="fa fa-fw"></i> Poll Results</a>
                     </li>
                 </ul>

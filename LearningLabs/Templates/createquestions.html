@@ -16,39 +16,51 @@
 <div id="page-wrapper">
 
  	<div class="container-fluid">
-		<h1>Add Questions</h1>
-		<form method="post" action="addQuestion" id="usrform">
+		<form class="form-horizontal" role="form" method="post" action="addQuestion" id="usrform">
 			{% csrf_token %} 
-			<div>
-				<table>
-				<tr>
-				<td><label>* Enter Quiz Id:</label></td>
-				<td><input class="form-control" type="text" name="quizId" ></td>
-				</tr>
-				<tr>
-				<td><label>Enter Quiz Name:</label></td>
-				<td><input class="form-control" type="text" name="quizName"></td>
-				</tr>
-				<tr>
-				<td><label>* Question Id: </label></td>
-			    <td><input class="form-control" type="text" name="questionId"></td>
-			    </tr>
-			    <tr>
-				<td><label>* Enter Question:</label></td>
-			    <td><textarea  class="form-control" rows="1" cols="80" name="question" form="usrform" ></textarea></td>
-			    </tr> 
-			    <tr>
-				<td><label>Answer Options:</label></td>
-			    <td><input class="form-control" type="text" name="answerOptions" ></td>
-			    </tr>
-			    <tr>
-				<td><label>Correct Answer:</label></td>
-			    <td><input class="form-control" type="text" name="correctAnswer" ></td>
-			    </tr>
-			    </table> 
+				<div class="form-group">
+					<label class=" control-label col-sm-2">* Enter Quiz Id:</label>
+					<div class="col-sm-5">
+					<input class="form-control" type="text" name="quizId" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label class=" control-label col-sm-2">Enter Quiz Name:</label>
+					<div class="col-sm-5">
+					<input class="form-control" type="text" name="quizName">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class=" control-label col-sm-2">* Question Id: </label>
+					<div class="col-sm-5">
+				    <input class="form-control" type="text" name="questionId">
+				    </div>
+				</div>
+				
+				<div class="form-group">
+					<label class=" control-label col-sm-2">* Enter Question:</label>
+					<div class="col-sm-5">
+			    	<textarea  class="form-control" rows="1" cols="80" name="question" form="usrform" ></textarea>
+			    	</div>
+				</div>
+				
+				<div class="form-group">
+					<label class=" control-label col-sm-2">Answer Options:</label>
+					<div class="col-sm-5">
+			    	<input class="form-control" type="text" name="answerOptions" >
+			    	</div>
+				</div>
+				<div class="form-group">
+					<label class=" control-label col-sm-2">Correct Answer:</label>
+					<div class="col-sm-5">
+			    	<input class="form-control" type="text" name="correctAnswer" >
+			    	</div>
+				</div>
+
+			<div class="form-group">
+    			<div class="col-sm-offset-2 col-sm-10">
+			 	<button type="submit" class="btn btn-primary padding2"  id="submit" onclick="showMsg()" method="post">Submit</button>
 			</div>
-			<div>
-			    <input class="btn btn-primary padding2" id="submit" onclick="showMsg()" method="post" type="Submit" value=Submit>
 			</div>
 		</form>
 </div>

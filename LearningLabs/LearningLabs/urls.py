@@ -38,8 +38,7 @@ urlpatterns = patterns('',
     url(r'myTest',TemplateView.as_view(template_name='./tempTest.html')),
     
     #url(r'Upload$',TemplateView.as_view(template_name='./upload.html')),
-    url(r'^uploadFile/$', views.uploadFile),
-    url(r'^importCsv/$', views.saveCSVToMongo),
+  
     
     #**********Text Mining Section ***********
     url(r'miningResults',views.showChart),
@@ -48,11 +47,11 @@ urlpatterns = patterns('',
 
     #******* URL for Template ***************
     url(r'^home$',TemplateView.as_view(template_name='./index.html')),
-    url(r'^home/Upload/$',TemplateView.as_view(template_name='./upload.html')),
-  
-# #     url(r'CreateTeams',TemplateView.as_view(template_name='./createTeams.html')),
-#     url(r'^createTeams/',views.createTeams,name='createTeams'),
-
+    
+    url(r'^home/Upload$',TemplateView.as_view(template_name='./upload.html')),
+    url(r'^uploadFile/$', views.uploadFile),
+    url(r'^importCsv/$', views.saveCSVToMongo),
+    
     url(r'^home/selectQuiz$',views.populateQuiz),
     
     url(r'^home/addQuestion$', TemplateView.as_view(template_name='./createquestions.html')),
