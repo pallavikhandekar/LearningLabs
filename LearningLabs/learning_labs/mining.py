@@ -4,6 +4,7 @@ from rpy2.robjects.packages import importr
 from learning_labs.models import Quiz,Answers
 import nltk
 from nltk.corpus import stopwords
+from textblob import TextBlob
 from textblob import Word
 
 numDict = {1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eight",9:"nine",10:"ten",11:"eleven",
@@ -33,6 +34,11 @@ def getChartData():
         nouns = [tup[0] for tup in nltk.pos_tag(anstokens) if tup[1] == 'NN' or tup[1]=='NNS']
         for n in nouns:
             nounSet.add(n)
+        b = TextBlob(answer)
+        nounList = b.noun_phrases
+        for n in nounList:
+            for m in n.split():
+               nounSet.add(m)
         looper = 0
         for token in anstokens:
             if token.isdigit():
