@@ -39,6 +39,12 @@ class PollAnswers(models.Model):
     answer = models.TextField()
 
 
+class TopFiveAnswers(models.Model):
+    questionId = models.IntegerField()
+    quizId = models.IntegerField()
+    answer = models.TextField()
+    frequency = models.IntegerField();
+    
 
 
 #*********************************************************************#

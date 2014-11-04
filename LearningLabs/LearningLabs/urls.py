@@ -58,7 +58,8 @@ urlpatterns = patterns('',
     url(r'addQuestion', views.addQuestion),
     
     url(r'^home/createTeams$',views.createTeams),
-    url(r'^home/miningResults$',views.showChart)
+    url(r'^home/miningResults$',views.showChart),
+    url(r'familyFeudData$',views.saveFamilyFeudData)
     #******* END URL for Template ***************
     #******* URL for Template ***************
 

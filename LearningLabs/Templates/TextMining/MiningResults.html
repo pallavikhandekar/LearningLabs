@@ -15,6 +15,15 @@
 		    }
 		    return false;
 		}
+		
+		//comparator for frequecies
+		function DescFrequencyComparator(a,b){
+			if (a[1] < b[1]) return 1;
+			if (a[1] > b[1]) return -1;
+			return 0;
+		}
+
+
 	    google.load("visualization", "1", {packages:["corechart"]});
 	
 		var dataChart = [['Words','Frequency']];
@@ -25,7 +34,8 @@
 		 var options = {
 		    title: 'Polling Results',
 		    selectionMode: 'multiple',
-		    hAxis: {title: 'Answer Choice', titleTextStyle: {color: 'red'}}
+		    hAxis: {title: 'Answer Choice', titleTextStyle: {color: 'red'}},
+		    vAxis: {viewWindowMode:'pretty'}
 		  };
 		
 		//Holds the selected data
@@ -79,6 +89,38 @@
 			 drawChart(dataChart);
 		}
 		
+		
+		//POST AJAX on Save
+		 $(document).ready(function() {
+            $("#btnSave").click(function() {
+            	//Sort data descending order
+				dataChart.sort(DescFrequencyComparator);
+				familyFeudData = [];
+				for (i=1; i<6; i++){
+					var obj = {}
+					obj.answer = dataChart[i][0];
+					obj.frequency = dataChart[i][1];
+					familyFeudData.push(obj);
+				}
+				$.ajax({
+                        url : "/familyFeudData", 
+                        type : "POST",
+                        dataType: "json",
+                        data : {
+                            'familyFeudData' : JSON.stringify(familyFeudData),
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(json) {
+                                $('#result').append( 'Server Response: ' + json.server_response);
+                            },
+                            error : function(xhr,errmsg,err) {
+                                alert(xhr.status + ": " + xhr.responseText);
+                            }
+                    });
+                    return false;
+            });
+            
+         });
     </script>
 <div id="page-wrapper">
 
@@ -86,18 +128,27 @@
  	<div class="row">
     <div id="chart_div" style="width: 70%; height: 500px"></div>
     </div>
-  	<div class="row">
-  		<div class="col-lg-3">
-	        <div class="form-group has-feedback has-feedback-left">
-		    <label class="control-label" >New Bar Title:</label>
-	    	 <input type="text" id="mergeTitle" placeholder="" class="form-control">
-	    	 <i title = "Enter new or merge title" class="glyphicon glyphicon-info-sign form-control-feedback"></i>
+  	<div class="row" style="padding-top: 10px">
+  		<div class="form-horizontal">
+  			<div class="col-lg-2">
+  			<label class="control-label" >New Bar Title:</label>
+  			</div>
+	        <div class="form-group has-feedback has-feedback-left col-lg-3">
+		     <input type="text" id="mergeTitle" placeholder="" class="form-control">
+		      <i title = "Enter new or merge title" class="glyphicon glyphicon-info-sign form-control-feedback"></i>
+			</div>
+			<div  class="col-lg-2">
+			<input class="btn btn-primary" type="button" value="Update Chart" onclick="mergeData();">
 			</div>
 		</div>
 	</div>
-	<div class="row">
-  		<input class="btn btn-primary" type="submit" value=Update onclick="mergeData();">
+	<form role="form">
+	<div class="row col-lg-2">
+  		<input id="btnSave" class="btn btn-primary" type="button" value="Save Data for Game">
   	</div>
+  		<input type="hidden" id="finalPolledData"></input>
+	</form>
+	
   	</div>
   	
   {% endblock %}
