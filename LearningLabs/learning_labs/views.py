@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams, TopFiveAnswers
+from django.db.models import  Sum
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
@@ -229,6 +230,33 @@ def showChart(request):
     chartData = mining.getChartData();
     return render(request, 'TextMining/MiningResults.html', {"data":chartData})
 
+def saveFamilyFeudData(request):
+    print "saveFamilyFeudData";
+    data = json.loads(request.POST.getlist("familyFeudData")[0]);
+    for obj in data:
+        result = TopFiveAnswers();
+        result.quizId=1;
+        result.questionId=1;
+        result.answer = obj["answer"];
+        result.frequency = obj["frequency"];
+        result.save();
+
+    return HttpResponse("Data Saved Successfully");
+
+def fetchFamilyFeudGameData(request):
+    print "fetchFamilyFeudGameData";
+    response = [];
+    quiz = Quiz.objects.get(currentQuestion=True);
+    question = quiz.question;
+    gameData = TopFiveAnswers.objects.filter(quizId = quiz.quizId);
+    aggregation = TopFiveAnswers.objects.filter(quizId = quiz.quizId).aggregate(totalSum=Sum('frequency'))
+    answerNumber = 0;
+    for data in gameData:
+        answerNumber += 1;
+        percentageValue = round((data.frequency*100)/aggregation['totalSum']);
+        response.append({'answer': data.answer, 'frequency':data.frequency, "answerNumber":++answerNumber,"percentageValue":percentageValue});
+    
+    return HttpResponse(simplejson.dumps({"question":question, "gameData":response}), mimetype='application/json');
 # ***************END TEXT MINING SECTION ******************
 
 # ****************Import Quiz Data****************
@@ -247,31 +275,21 @@ def uploadFile(request):
  
 def saveCSVToMongo(file):
 #     csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
-    dataReader = csv.reader(file, delimiter=',', quotechar='"')
+    dataReader = csv.reader(file)
     for row in dataReader:
         quizObj = Quiz();
         quizObj.quizId = row[0];
         quizObj.quizName = row[1];
         quizObj.questionId = row[2];
-        quizObj.currentQuestion = row[3];
+        if row[3].lower() == "true":
+            quizObj.currentQuestion = True;
+        else:
+            quizObj.currentQuestion = False;
         quizObj.question = row[4];
         quizObj.correctAnswer = row[5];
         quizObj.answerOptions = row[6];
         quizObj.save();
         
-        
-def saveFamilyFeudData(request):
-    print "saveFamilyFeudData";
-    data = json.loads(request.POST.getlist("familyFeudData")[0]);
-    for obj in data:
-        result = TopFiveAnswers();
-        result.quizId=1;
-        result.questionId=1;
-        result.answer = obj["answer"];
-        result.frequency = obj["frequency"];
-        result.save();
-
-    return HttpResponse("Data Saved Successfully");
 #****************End Import Quiz Data****************
 
 #****************Create Teams******************

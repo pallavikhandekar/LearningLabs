@@ -72,21 +72,27 @@
 		
 		//Combine bars / rename bar 
 		function mergeData(){
-			var newTitle = document.getElementById('mergeTitle').value;
-			var addMergedData = 0;
 			
-			for (i = 0; i < selectedData.length; i++) { 
-				addMergedData  =selectedData[i][1]+addMergedData;
-				var j = dataChart.length;
-			    while (j--) {
-			        if (dataChart[j][0] == selectedData[i][0]) {
-			            dataChart.splice(j,1);
-			        }
-			    }
-			}
-
-			 dataChart.push([newTitle,addMergedData]);
-			 drawChart(dataChart);
+			var newTitle = document.getElementById('mergeTitle').value;
+			if (newTitle!=undefined && newTitle!=""){
+				var addMergedData = 0;
+				
+				for (i = 0; i < selectedData.length; i++) { 
+					addMergedData  =selectedData[i][1]+addMergedData;
+					var j = dataChart.length;
+				    while (j--) {
+				        if (dataChart[j][0] == selectedData[i][0]) {
+				            dataChart.splice(j,1);
+				        }
+				    }
+				}
+	
+				 dataChart.push([newTitle,addMergedData]);
+				 drawChart(dataChart);
+			 }else {
+			 	alert("Enter title for merging!");
+			 	return false;
+			 }
 		}
 		
 		
@@ -94,7 +100,8 @@
 		 $(document).ready(function() {
             $("#btnSave").click(function() {
             	//Sort data descending order
-				dataChart.sort(DescFrequencyComparator);
+            	sendData = dataChart;
+				sendData.sort(DescFrequencyComparator);
 				familyFeudData = [];
 				for (i=1; i<6; i++){
 					var obj = {}
@@ -134,7 +141,7 @@
   			<label class="control-label" >New Bar Title:</label>
   			</div>
 	        <div class="form-group has-feedback has-feedback-left col-lg-3">
-		     <input type="text" id="mergeTitle" placeholder="" class="form-control">
+		     <input type="text" id="mergeTitle" placeholder="" class="form-control" >
 		      <i title = "Enter new or merge title" class="glyphicon glyphicon-info-sign form-control-feedback"></i>
 			</div>
 			<div  class="col-lg-2">

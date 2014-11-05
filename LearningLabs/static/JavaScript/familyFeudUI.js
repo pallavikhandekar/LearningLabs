@@ -1,7 +1,16 @@
-function AppController($scope) {
-	$scope.question = questions[0]; 
-	$scope.answers = answers[0];
-	$scope.currentQuestion = 0;
+function AppController($http,$scope) {
+	
+	$http({method: 'GET', url: '/loadFamilyFeudGameData'}).
+	success(function(data, status, headers, config) {
+     	$scope.question = data.question;
+     	$scope.currentQuestion = 0;
+     	$scope.answers = data.gameData;
+    }).
+    error(function(data, status, headers, config) {
+      // log error
+      alert(data);
+    });
+  
 	$scope.loadNextQuestion=function(){
 		if($scope.currentQuestion+1<questions.length){
 		    $scope.currentQuestion = $scope.currentQuestion + 1;
@@ -43,3 +52,4 @@ var answers = [[
 { text: 'Observer', optionNumber:"5",percentage:'1'}
 ]
 ];
+

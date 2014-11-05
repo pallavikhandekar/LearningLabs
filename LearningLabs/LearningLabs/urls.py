@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'popQuiz$', views.populateQuiz),
     
     url(r'answerquiz/(?P<quizname>\w+)/(?P<question>[\w|\W]+)', views.answer),
-    url(r'FamilyFeudGame',TemplateView.as_view(template_name='./familyFeudUI.html')),
+    #url(r'FamilyFeudGame',TemplateView.as_view(template_name='./familyFeudUI.html')),
 #     url(r'FamilyFeudGame',views.getCurrentQuestion),
 #      
     url(r'Profile',TemplateView.as_view(template_name='./profile.html')),
@@ -49,7 +49,7 @@ urlpatterns = patterns('',
     url(r'^home$',TemplateView.as_view(template_name='./index.html')),
     
     url(r'^home/Upload$',TemplateView.as_view(template_name='./upload.html')),
-    url(r'^uploadFile/$', views.uploadFile),
+    url(r'^uploadFile$', views.uploadFile),
     url(r'^importCsv/$', views.saveCSVToMongo),
     
     url(r'^home/selectQuiz$',views.populateQuiz),
@@ -59,7 +59,11 @@ urlpatterns = patterns('',
     
     url(r'^home/createTeams$',views.createTeams),
     url(r'^home/miningResults$',views.showChart),
-    url(r'familyFeudData$',views.saveFamilyFeudData)
+    url(r'familyFeudData$',views.saveFamilyFeudData),
+    url(r'FamilyFeudGame$',TemplateView.as_view(template_name='./familyFeudUI.html')),
+    url(r'^loadFamilyFeudGameData$',views.fetchFamilyFeudGameData)
+    
+    
     #******* END URL for Template ***************
     #******* URL for Template ***************
 
