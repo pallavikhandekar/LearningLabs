@@ -56,8 +56,8 @@
 				var selection = chart.getSelection();
 		        if (selection.length) {
 		        	for (i = 0; i < selection.length; i++) { 
-						if(selectedData.contains(data.Ad[selection[i].row][0].Pe)==false){
-		           			selectedData.push([data.Ad[selection[i].row][0].Pe,parseInt(data.Ad[selection[i].row][1].Pe)]);
+						if(selectedData.contains(data.Gc[selection[i].row][0].df)==false){
+		           			selectedData.push([data.Gc[selection[i].row][0].df,parseInt(data.Gc[selection[i].row][1].df)]);
 		            	}
 		            }
 		         }
@@ -115,6 +115,7 @@
                         dataType: "json",
                         data : {
                             'familyFeudData' : JSON.stringify(familyFeudData),
+                            'questionId' :  document.getElementById('questionId').textContent,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                             },
                             success : function(json) {
@@ -132,6 +133,10 @@
 <div id="page-wrapper">
 
  	<div class="container-fluid">
+ 	<div class="row">
+   		<h4>Polling results for Question: <span class="label">{{question}}</span></h4>
+   		<label style="display:none" id="questionId">{{questionId}}</label>
+    </div>
  	<div class="row">
     <div id="chart_div" style="width: 70%; height: 500px"></div>
     </div>

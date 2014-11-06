@@ -9,6 +9,7 @@
 		{% verbatim %}
 		<div style="padding-bottom: 4%" >
 			<label id="lblQuestion" style="color: white;font-size: 25px;font-family: arial;">{{question}}</label>
+			<label>{{quizId}}</label>
 		</div>	
 		<div  style="padding-bottom: 6%">
 		<table style="width: 30%; background-color:#FFFF66; border: 2px solid " cellpadding="4px"
@@ -55,8 +56,8 @@
 		</div>
 	
 		<div id="nextQuestionDiv"  style="cursor:pointer">
-			 <button style="float:left; background:linear-gradient(to bottom, #FFFF66, rgb(250, 176, 37)); border: 2px solid; border-radius: 25px;cursor:pointer;" 
-			 ng-click="loadPreviousQuestion()" >Previous Question</button> 
+<!-- 			 <button style="float:left; background:linear-gradient(to bottom, #FFFF66, rgb(250, 176, 37)); border: 2px solid; border-radius: 25px;cursor:pointer;"  -->
+<!-- 			 ng-click="loadPreviousQuestion()" >Previous Question</button>  -->
 		
 			 <button style="float:right; background:linear-gradient(to bottom, #FFFF66, rgb(250, 176, 37)); border: 2px solid; border-radius: 25px;cursor:pointer;" 
 			 ng-click="loadNextQuestion()" >Next Question</button> 
