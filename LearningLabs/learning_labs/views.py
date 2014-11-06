@@ -227,16 +227,22 @@ def getPolls(request):
 #*****************TEXT MINING SECTION ******************
 
 def showChart(request):
+    currentQuestion = Quiz.objects.get(currentQuestion=True);
+    currentQuestionText = currentQuestion.question;
+    currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
+    currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
     chartData = mining.getChartData();
-    return render(request, 'TextMining/MiningResults.html', {"data":chartData})
+    return render(request, 'TextMining/MiningResults.html', {"data":chartData, "question":currentQuestionText, "questionId":currentQuestionId, 'quizId':currentQuizId})
 
 def saveFamilyFeudData(request):
     print "saveFamilyFeudData";
+    questionId = request.POST.get('questionId');
+    quizId = request.POST.get('quizId');
     data = json.loads(request.POST.getlist("familyFeudData")[0]);
     for obj in data:
         result = TopFiveAnswers();
-        result.quizId=1;
-        result.questionId=1;
+        result.quizId=quizId;
+        result.questionId=questionId; 
         result.answer = obj["answer"];
         result.frequency = obj["frequency"];
         result.save();
@@ -246,17 +252,33 @@ def saveFamilyFeudData(request):
 def fetchFamilyFeudGameData(request):
     print "fetchFamilyFeudGameData";
     response = [];
+    #Fetch current Quiz id from current Question.
     quiz = Quiz.objects.get(currentQuestion=True);
-    question = quiz.question;
-    gameData = TopFiveAnswers.objects.filter(quizId = quiz.quizId);
-    aggregation = TopFiveAnswers.objects.filter(quizId = quiz.quizId).aggregate(totalSum=Sum('frequency'))
-    answerNumber = 0;
-    for data in gameData:
-        answerNumber += 1;
-        percentageValue = round((data.frequency*100)/aggregation['totalSum']);
-        response.append({'answer': data.answer, 'frequency':data.frequency, "answerNumber":++answerNumber,"percentageValue":percentageValue});
-    
-    return HttpResponse(simplejson.dumps({"question":question, "gameData":response}), mimetype='application/json');
+    if quiz is None:
+        return HttpResponse("Current Quiz not set");
+    else:
+        lastQuestionId = (Quiz.objects.filter(quizId=quiz.quizId).reverse()[0]).questionId;
+        isNext = request.GET.get('isNext');
+        if (isNext is not None) and (isNext == '1') :
+            shownQuestionId = request.GET.get('questionId');
+            shownQuizId = request.GET.get('quizId');
+            if shownQuestionId == str(lastQuestionId):
+                return HttpResponse("End of Quiz");
+            elif shownQuestionId == str(quiz.questionId): #condition that next question is not played yet
+                return HttpResponse("Admins are working on setting up next question in the game!");
+            
+        question = quiz.question; #Current Question
+        gameData = TopFiveAnswers.objects.filter(questionId = quiz.questionId);
+        if gameData is None:
+            return HttpResponse("Polls are in progress");
+        aggregation = TopFiveAnswers.objects.filter(questionId = quiz.questionId).aggregate(totalSum=Sum('frequency'))
+        answerNumber = 0;
+        for data in gameData:
+            answerNumber += 1;
+            percentageValue = round((data.frequency*100)/aggregation['totalSum']);
+            response.append({'answer': data.answer, 'frequency':data.frequency, "answerNumber":++answerNumber,"percentageValue":percentageValue});
+        
+        return HttpResponse(simplejson.dumps({"question":question, "gameData":response,"currentQuestion":quiz.questionId, "quizId":quiz.quizId }), mimetype='application/json');
 # ***************END TEXT MINING SECTION ******************
 
 # ****************Import Quiz Data****************
