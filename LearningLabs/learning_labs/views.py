@@ -230,17 +230,19 @@ def showChart(request):
     currentQuestion = Quiz.objects.get(currentQuestion=True);
     currentQuestionText = currentQuestion.question;
     currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
+    currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
     chartData = mining.getChartData();
-    return render(request, 'TextMining/MiningResults.html', {"data":chartData, "question":currentQuestionText, "questionId":currentQuestionId})
+    return render(request, 'TextMining/MiningResults.html', {"data":chartData, "question":currentQuestionText, "questionId":currentQuestionId, 'quizId':currentQuizId})
 
 def saveFamilyFeudData(request):
     print "saveFamilyFeudData";
     questionId = request.POST.get('questionId');
+    quizId = request.POST.get('quizId');
     data = json.loads(request.POST.getlist("familyFeudData")[0]);
     for obj in data:
         result = TopFiveAnswers();
-        result.quizId=1;
-        result.questionId=questionId; #TODO: send from UI.
+        result.quizId=quizId;
+        result.questionId=questionId; 
         result.answer = obj["answer"];
         result.frequency = obj["frequency"];
         result.save();
