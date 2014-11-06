@@ -116,6 +116,7 @@
                         data : {
                             'familyFeudData' : JSON.stringify(familyFeudData),
                             'questionId' :  document.getElementById('questionId').textContent,
+                            'quizId': document.getElementById('quizId').textContent,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                             },
                             success : function(json) {
@@ -136,6 +137,7 @@
  	<div class="row">
    		<h4>Polling results for Question: <span class="label">{{question}}</span></h4>
    		<label style="display:none" id="questionId">{{questionId}}</label>
+   		<label style="display:none" id="quizId">{{quizId}}</label>
     </div>
  	<div class="row">
     <div id="chart_div" style="width: 70%; height: 500px"></div>
