@@ -335,7 +335,5 @@ def createTeams(request):
         studentDetail = request.POST.getlist('selStudent')
         for q in studentDetail:
             studentId,fname,lname = q.split(",")
-            
-            teamObj = Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname )
-            teamObj.save()
-        return HttpResponse("Teams Created Successfuly!")
+            Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname )
+        return redirect('/home/createTeams');
