@@ -63,10 +63,12 @@ def signUp(request):
 def signIn(request):
     studentId = request.POST.get('studentId')
     password = request.POST.get('password')
-    readObj = Register.objects.filter(studentId=int(studentId), password=password)
+    readObj = Register.objects.get(studentId=int(studentId), password=password)
     if not readObj: 
         return HttpResponse("Your credentials are wrong");
     else:
+        if readObj.admin == True:
+            return redirect('/home');
         return HttpResponse("You are signdin successfully");
     
 def resetPassword(request):
