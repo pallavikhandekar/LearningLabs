@@ -11,42 +11,44 @@
 			{% csrf_token %}
 		
 		<input type="hidden" name="queryset" value={{queryset}}> 
-	    <div id="datetimepicker" class="input-append date">
-	      <input type="text"></input>
-	      <span class="add-on"><span class="fa fa-calendar"></span>
-	      </span>
-	    </div>
-	     <script type="text/javascript"
-			     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-			    </script>
-		 <script type="text/javascript"
-			     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-			    </script>
-	     <script type="text/javascript">
-		      $('#datetimepicker').datetimepicker({
-		        format: 'dd/MM/yyyy hh:mm:ss',
-		        language: 'pt-BR'
-		      });
-		    </script>
-	   
-		<div>
+		<div class="row" style="padding-bottom:10px">
+			<div id="datetimepicker" class="input-append date">
+		      <input type="text" name="datetime"></input>
+		      <span class="add-on"><span class="fa fa-calendar"></span>
+		      </span>
+		    </div>
+		     <script type="text/javascript"
+				     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+				    </script>
+			 <script type="text/javascript"
+				     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+				    </script>
+		     <script type="text/javascript">
+			      $('#datetimepicker').datetimepicker({
+			        format: 'dd/MM/yyyy hh:mm:ss',
+			        language: 'pt-BR'
+			      });
+			 </script>
+		</div>
+	    <div class="row" style="padding-bottom:10px">
 			<select name="selStudent" multiple="multiple" >
 				<option value="selTeam" selected>--Select Team Name--</option>
 				<option value="A">studentId, First Name, Last Name</option>
 				{% for category in queryset %}	
 				  <option value="{{category.studentId}},{{category.fname}},{{category.lname}}">{{category.studentId}} , {{category.fname}} , {{category.lname}}</option>
 				 {% endfor %}
-			</select><br>
-			
-			
+			</select>
+		</div>
+		<div class="row" style="padding-bottom:10px">
 			<select name="teamName">
 				  <option value="selTeam" selected>--Select Team Name--</option>
 				  <option value="A">Team A</option>
 				  <option value="B">Team B</option>
 			</select>
-			<div class="row">
-				<input class="btn btn-primary" type="submit" value="Create Teams"/>
-			</div>
+		</div>
+		
+		<div class="row">
+			<input class="btn btn-primary" type="submit" value="Create Teams"/>
 		</div>
 	
 </form>
