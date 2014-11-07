@@ -5,29 +5,41 @@
 {% endblock %}
 {% block content %}
 {% load staticfiles %}
+	<script>
+		function switchDiv(element){
+			if (element.id == 'linkSignUp'){
+				document.getElementById('divSignIn').style.display = 'none';
+				document.getElementById('divSignUp').style.display = 'block';
+			}else {
+				document.getElementById('divSignUp').style.display = 'none';
+				document.getElementById('divSignIn').style.display = 'block';
+			}
+			
+		}
+		
+	</script>
 	<div align="center">
 		<div style="width: 60%">
 			{{ state }}
-		<div class="container" ng-controller="personController" ng-app="" style="float: left; width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
-		border-radius: 10px;  padding: 10% 10% 21.80%; border: 2px solid black;">
+		<div class="container" ng-controller="personController" ng-app="" style="width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
+		border-radius: 10px;  padding: 10% 10%; border: 2px solid black;" id="divSignIn">
 			<form method="post" action="signIn" class="form-signin">
 			{% csrf_token %}
 				{% if next %} <input type="hidden" name="next" value="{{ next }}" />
 				{% endif %}
 				<h3>Please sign in</h3> 
 				<table style="width:100%">
-<!-- 				<tr><td><input class="form-control" name="email" type="email" placeholder="Email address" required="" autofocus=""></td></tr> -->
-				<!-- <tr><td><input class="form-control" name="usrname" type="text" placeholder="User Name" required="" autofocus=""></td></tr> -->
 				<tr><td><input class="form-control" name="studentId" type="text" placeholder="Student ID" required="" autofocus=""></td></tr>
 				<tr><td><input class="form-control" name="password"  type="password" placeholder="Password" required=""></td></tr>
 				<tr><td><input class="btn btn-lg btn-primary btn-block" type="submit" value="Log In" /></td></tr>
 				<tr><td><a href="/ResetPassword">Reset Password</a></td></tr>
+				<tr><td><a id="linkSignUp" onclick="switchDiv(this)" style="cursor:pointer">Sign Up now</a></td></tr>
 				</table>		
 			</form>	
 	
 	   </div>
-	   <div ng-app="" ng-controller="personController" style="float: right; width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
-		border-radius: 10px; padding: 10%; border: 2px solid black;">
+	   <div ng-app="" ng-controller="personController" style="width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
+		border-radius: 10px; padding: 10%; border: 2px solid black; display: none;" id="divSignUp">
 			<form method="post" action="signUp"  class="form-signin">
 				{% csrf_token %}
 					<h3>Please sign up</h3> 
@@ -39,6 +51,7 @@
 						<tr><td><input class="form-control" name="email" type="email" placeholder="Email address" required="" autofocus=""></td></tr>
 						<tr><td><input class="form-control" name="password"  type="password" placeholder="Password" required=""></td></tr>
 						<tr><td><input  class="btn btn-lg btn-primary btn-block"  type="submit"value="Sign Up"></td></tr>
+						<tr><td><a id="linkSignIn" onclick="switchDiv(this)" style="cursor:pointer">Sign In</a></td></tr>
 					</table>
 			</form>
 		</div>

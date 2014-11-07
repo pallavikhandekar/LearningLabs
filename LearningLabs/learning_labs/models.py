@@ -13,6 +13,7 @@ class Register(models.Model):
     studentId = models.IntegerField()
     email = models.EmailField()
     password = models.TextField()
+    admin = models.BooleanField(default=False)
 
 class Teams(models.Model):
     teamName = models.TextField()

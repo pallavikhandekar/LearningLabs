@@ -39,8 +39,7 @@ def registerUser(request):
  
     firstname = request.POST.get('fname')
     lastname = request.POST.get('lname')
-    regObj = Register.objects.create(fname=firstname, lname=lastname)
-    regObj.save()
+    Register.objects.create(fname=firstname, lname=lastname)
     if(geodata != None):
         return HttpResponse(str(geodata));
     else:
@@ -55,8 +54,7 @@ def signUp(request):
     password = request.POST.get('password')
     readObj = Register.objects.filter(studentId=studentId)
     if not readObj: 
-        regObj = Register.objects.create(fname=firstname, lname=lastname, usrname=usrname,studentId=studentId ,email=email, password=password)
-        regObj.save()
+        Register.objects.create(fname=firstname, lname=lastname, usrname=usrname,studentId=int(studentId) ,email=email, password=password)
         return HttpResponse("You are signed up successfully!");
     else:
         return HttpResponse("Your Student ID already exits in record")
@@ -65,7 +63,7 @@ def signUp(request):
 def signIn(request):
     studentId = request.POST.get('studentId')
     password = request.POST.get('password')
-    readObj = Register.objects.filter(studentId=studentId, password=password)
+    readObj = Register.objects.filter(studentId=int(studentId), password=password)
     if not readObj: 
         return HttpResponse("Your credentials are wrong");
     else:
@@ -327,24 +325,15 @@ def createTeams(request):
             return HttpResponse('Sorry! No data found')
          
     else:
-        print "i am post"
-        
         teamName= request.POST.get('teamName')
-        print teamName
         gameDate = request.POST.get('datetime')
         date, time = gameDate.split(" ")
-        print "Date is:" + date 
-        print "Time is:" + time
-        print gameDate
         chngFormat = datetime.strptime(gameDate,"%d/%m/%Y %H:%M:%S").strftime('%Y-%m-%d %H:%M:%S')
         print "Changed format" + chngFormat
         studentDetail = request.POST.getlist('selStudent')
         for q in studentDetail:
             studentId,fname,lname = q.split(",")
-            print "Student ID is:" + studentId 
-            print "First Name is:" + fname
-            print "Last Name is:" + lname
-        
-            teamObj = Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=studentId,lname=lname,fname=fname )
+            
+            teamObj = Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname )
             teamObj.save()
         return HttpResponse("Teams Created Successfuly!")
