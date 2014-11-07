@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles %}
-	<head  style="height:100%">
-	
+<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<title>Bootstrap Sidebar</title>
@@ -35,10 +34,10 @@
 	
 		</script>
 	</head>
-	<body  background="{% static "images/learn.png" %}" style="background-size:cover;position:absolute; top:0; bottom:0; right:0; left:0;">
+	<body>
 
  <!-- Navigation -->
-   <div id="wrapper" style="heigth:100%">
+   <div id="wrapper" style="height: 100%;">
 
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -101,7 +100,7 @@
             <!-- /.navbar-collapse -->
         </nav>
 
-       	<div id="contentPane">
+       	<div id="contentPane" class="contentBackground">
        				 {% block content %}
        				 
        				 	<div>
