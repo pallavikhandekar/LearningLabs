@@ -26,11 +26,8 @@
 
 	    google.load("visualization", "1", {packages:["corechart"]});
 	
-		var dataChart = [['Words','Frequency']];
-		  {% for key, value in data.items %}
-		  	dataChart.push(['{{key}}',{{value}}]);
-		  {% endfor %}
-		  
+		var dataChart = [];
+
 		 var options = {
 		    title: 'Polling Results',
 		    selectionMode: 'multiple',
@@ -41,9 +38,7 @@
 		//Holds the selected data
 		var selectedData = [];
 		
-		window.onload = function onMiningResultsLoad(){
-			drawChart(dataChart);
-		}
+		
 		//Draw chart from passed data array
 		function drawChart(dataForChart) {
 		  var data = google.visualization.arrayToDataTable(dataForChart);
@@ -129,40 +124,85 @@
                     return false;
             });
             
+            $("#btnPullChartData").click(function() {
+              	$.ajax({
+                        url : "/loadChartData", 
+                        type : "GET",
+                        dataType: "json",
+                        data : {
+                            'questionId' :  document.getElementById('selQuestions').value,
+                            'quizId': document.getElementById('quizId').textContent,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(json) {
+                            	dataChart.length = 0;
+                            	dataChart.push(['Words','Frequency']);
+                            	var keys = Object.keys(json.data);
+                            	for (var i = 0; i < keys.length; i++) {
+                            	   var key = keys[i];
+								   dataChart.push([key,json.data[key]]);
+								}
+                            	drawChart(dataChart);
+                            	document.getElementById('divChartData').style.display = 'block';
+                            },
+                            error : function(xhr,errmsg,err) {
+                                alert(xhr.status + ": " + xhr.responseText);
+                            }
+                    });
+                    return false;
+              
+            });
          });
     </script>
 <div id="page-wrapper" style="height:100%;">
 
  	<div class="container-fluid"  style="height:100%;">
- 	<div class="row">
-   		<h4>Polling results for Question: <span class="label">{{question}}</span></h4>
-   		<label style="display:none" id="questionId">{{questionId}}</label>
-   		<label style="display:none" id="quizId">{{quizId}}</label>
-    </div>
- 	
-    <div id="chart_div" style="width: 70%; height: 70%;"></div>
-  
-  	<div class="row" style="padding-top: 10px">
-  		<div class="form-horizontal">
-  			<div class="col-lg-2">
-  			<label class="control-label" >New Bar Title:</label>
-  			</div>
-	        <div class="form-group has-feedback has-feedback-left col-lg-3">
-		     <input type="text" id="mergeTitle" placeholder="" class="form-control" >
-		      <i title = "Enter new or merge title" class="glyphicon glyphicon-info-sign form-control-feedback"></i>
+ 	<div>
+ 		<div class="row">
+	   		<h4> Quiz: <span class="label">{{quizDetails.quizName}}</span></h4>
+	   		<label style="display:none" id="quizId">{{quizDetails.quizId}}</label>
+	    </div>
+	    <div class="row">
+	   			<select id="selQuestions" class="form-control col-lg-6"> 
+								{% for question in questions %}
+				    			<option value="{{question.questionId}}">{{question.question}}</option>
+				    	    	{% endfor %}
+				</select>
+	    </div>
+	    <div class="row">
+	   		 <input id="btnPullChartData" class="btn btn-primary" type="button" value="Load Mined Data">
+	    </div> 
+ 	</div>
+ 	<div id="divChartData" style="display:none">
+			<div class="row">
+		   		<h4>Polling results for Question: <span class="label">{{question}}</span></h4>
+		   		<label style="display:none" id="quizId">{{quizId}}</label>
+		    </div>
+		    <div class="row">
+		   	 <div id="chart_div" style="width: 70%; height: 70%;"></div>
+		 	</div>
+		  	<div class="row" style="padding-top: 10px">
+		  		<div class="form-horizontal">
+		  			<div class="col-lg-2">
+		  			<label class="control-label" >New Bar Title:</label>
+		  			</div>
+			        <div class="form-group has-feedback has-feedback-left col-lg-3">
+				     <input type="text" id="mergeTitle" placeholder="" class="form-control" >
+				      <i title = "Enter new or merge title" class="glyphicon glyphicon-info-sign form-control-feedback"></i>
+					</div>
+					<div  class="col-lg-2">
+					<input class="btn btn-primary" type="button" value="Update Chart" onclick="mergeData();">
+					</div>
+				</div>
 			</div>
-			<div  class="col-lg-2">
-			<input class="btn btn-primary" type="button" value="Update Chart" onclick="mergeData();">
-			</div>
-		</div>
-	</div>
-	<form role="form">
-	<div class="row col-lg-2">
-  		<input id="btnSave" class="btn btn-primary" type="button" value="Save Data for Game">
-  	</div>
-  		<input type="hidden" id="finalPolledData"></input>
-	</form>
-	
+			<form role="form">
+			<div class="row col-lg-2">
+		  		<input id="btnSave" class="btn btn-primary" type="button" value="Save Data for Game">
+		  	</div>
+		  		<input type="hidden" id="finalPolledData"></input>
+			</form>
+		 	
+ 	</div>
   	</div>
  </div>
   	

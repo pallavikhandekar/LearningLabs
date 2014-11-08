@@ -41,7 +41,7 @@ urlpatterns = patterns('',
   
     
     #**********Text Mining Section ***********
-    url(r'miningResults',views.showChart),
+   # url(r'miningResults',views.showChart),
     
     # ******End Text Mining Section **********
 
@@ -58,7 +58,13 @@ urlpatterns = patterns('',
     url(r'addQuestion', views.addQuestion),
     
     url(r'^home/createTeams$',views.createTeams),
-    url(r'^home/miningResults$',views.showChart),
+    
+    
+    url(r'^home/miningResults$',views.loadMiningResults),
+    url(r'loadChartData',views.showChart),
+    #url(r'^home/miningResults$',views.showChart),
+    
+    
     url(r'familyFeudData$',views.saveFamilyFeudData),
     url(r'FamilyFeudGame$',TemplateView.as_view(template_name='./familyFeudUI.html')),
     url(r'^loadFamilyFeudGameData$',views.fetchFamilyFeudGameData)

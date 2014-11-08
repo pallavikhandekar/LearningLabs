@@ -226,13 +226,31 @@ def getPolls(request):
 
 #*****************TEXT MINING SECTION ******************
 
+def loadMiningResults(request):
+    currentQuiz = Quiz.objects.get(currentQuestion=True);
+    if currentQuiz is None:
+        return HttpResponse("No Quiz is set");
+    else:
+        #Quiz is set by Admin using Select quiz/question page
+        quiz = Quiz.objects.filter(quizId=currentQuiz.quizId);
+        quizDetails={}
+        quizDetails['quizId'] = quiz[0].quizId;
+        quizDetails['quizName'] = quiz[0].quizName
+        questions=[];
+        for item in quiz:
+            questions.append({'questionId': item.questionId,'question':item.question});
+            
+        return render(request, 'TextMining/MiningResults.html', {"questions":questions, 'quizDetails': quizDetails }); 
+
 def showChart(request):
-    currentQuestion = Quiz.objects.get(currentQuestion=True);
-    currentQuestionText = currentQuestion.question;
-    currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
-    currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
+#     currentQuestion = Quiz.objects.get(currentQuestion=True);
+#     currentQuestionText = currentQuestion.question;
+#     currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
+#     currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
+    quizId = request.GET.get('quizId');#TODO: Pass current quiz Id to the getChartData
+    questionId = request.GET.get('questionId');#TODO: Pass current question Id to the getChartData
     chartData = mining.getChartData();
-    return render(request, 'TextMining/MiningResults.html', {"data":chartData, "question":currentQuestionText, "questionId":currentQuestionId, 'quizId':currentQuizId})
+    return HttpResponse(simplejson.dumps({"data":chartData}), mimetype='application/json');
 
 def saveFamilyFeudData(request):
     print "saveFamilyFeudData";
