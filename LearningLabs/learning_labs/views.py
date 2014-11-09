@@ -257,6 +257,7 @@ def saveFamilyFeudData(request):
     questionId = request.POST.get('questionId');
     quizId = request.POST.get('quizId');
     data = json.loads(request.POST.getlist("familyFeudData")[0]);
+    TopFiveAnswers.objects.filter(quizId=quizId,questionId=questionId).delete(); #Delete if data already exists to over write 
     for obj in data:
         result = TopFiveAnswers();
         result.quizId=quizId;
