@@ -2,7 +2,7 @@ function AppController($http,$scope) {
 	
 	$http({method: 'GET', url: '/loadFamilyFeudGameData'}).
 	success(function(data, status, headers, config) {
-		if(data.questions.length>0){
+		if(data.questions!=undefined){
 			$scope.questions =  data.questions; //Global variables
 			$scope.gameData =  data.gameData;//Global variables
 			$scope.quizId = data.quizId;//Global variables
