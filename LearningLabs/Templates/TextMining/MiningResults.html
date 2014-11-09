@@ -31,6 +31,8 @@
 		 var options = {
 		    title: 'Polling Results',
 		    selectionMode: 'multiple',
+		    width: 700,
+		    heigth: 700,
 		    hAxis: {title: 'Answer Choice', titleTextStyle: {color: 'red'}},
 		    vAxis: {viewWindowMode:'pretty'}
 		  };
@@ -56,8 +58,6 @@
 		            	}
 		            }
 		         }
-		         //var testData = google.visualization.arrayToDataTable(selectedData);
-		         //chart.draw(testData, options);
 				  
 		  });
 		  
@@ -110,7 +110,7 @@
                         dataType: "json",
                         data : {
                             'familyFeudData' : JSON.stringify(familyFeudData),
-                            'questionId' :  document.getElementById('questionId').textContent,
+                            'questionId' :   document.getElementById('selQuestions').value,
                             'quizId': document.getElementById('quizId').textContent,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                             },
@@ -142,8 +142,11 @@
                             	   var key = keys[i];
 								   dataChart.push([key,json.data[key]]);
 								}
-                            	drawChart(dataChart);
+                            	
                             	document.getElementById('divChartData').style.display = 'block';
+                            	document.getElementById('selectedQuestion').textContent = 
+                            	document.getElementById('selQuestions')[document.getElementById('selQuestions').value-1].textContent;
+                            	drawChart(dataChart);
                             },
                             error : function(xhr,errmsg,err) {
                                 alert(xhr.status + ": " + xhr.responseText);
@@ -154,34 +157,40 @@
             });
          });
     </script>
-<div id="page-wrapper" style="height:100%;">
+<div id="page-wrapper" style="width:100%;height:100%;">
 
  	<div class="container-fluid"  style="height:100%;">
- 	<div>
- 		<div class="row">
-	   		<h4> Quiz: <span class="label">{{quizDetails.quizName}}</span></h4>
+ 	
+ 		<div class="row-fluid ">
+			<div class="col-lg-12">
+			<label>Quiz:</label><span class="label">{{quizDetails.quizName}}</span>
 	   		<label style="display:none" id="quizId">{{quizDetails.quizId}}</label>
+			</div>
 	    </div>
-	    <div class="row">
-	   			<select id="selQuestions" class="form-control col-lg-6"> 
+	    <div class="row-fluid" >
+	    		<div class="col-lg-2">
+	    		<label for="selQuestions">Select Question</label>
+	    		</div>
+	    		<div class="col-lg-6">
+	    		<select id="selQuestions" class="form-control"> 
 								{% for question in questions %}
 				    			<option value="{{question.questionId}}">{{question.question}}</option>
 				    	    	{% endfor %}
 				</select>
+	    		</div>
+	    		<div class="col-lg-4">
+	    		<input id="btnPullChartData" class="btn btn-primary" type="button" value="Load Mined Data">
+	    		</div>
 	    </div>
-	    <div class="row">
-	   		 <input id="btnPullChartData" class="btn btn-primary" type="button" value="Load Mined Data">
-	    </div> 
- 	</div>
- 	<div id="divChartData" style="display:none">
-			<div class="row">
-		   		<h4>Polling results for Question: <span class="label">{{question}}</span></h4>
-		   		<label style="display:none" id="quizId">{{quizId}}</label>
+ 	
+ 	<div id="divChartData" style="display:none;" >
+			<div class="row-fluid">
+		   		<h4>Polling results for Question: <span class="label" id="selectedQuestion"></span></h4>
 		    </div>
-		    <div class="row">
-		   	 <div id="chart_div" style="width: 70%; height: 70%;"></div>
+		    <div class="row-fluid">
+		   	 	<div id="chart_div" style="width:700px; height:500px"></div>
 		 	</div>
-		  	<div class="row" style="padding-top: 10px">
+		  	<div class="row-fluid" style="padding-top: 10px">
 		  		<div class="form-horizontal">
 		  			<div class="col-lg-2">
 		  			<label class="control-label" >New Bar Title:</label>
@@ -195,14 +204,12 @@
 					</div>
 				</div>
 			</div>
-			<form role="form">
-			<div class="row col-lg-2">
-		  		<input id="btnSave" class="btn btn-primary" type="button" value="Save Data for Game">
-		  	</div>
-		  		<input type="hidden" id="finalPolledData"></input>
-			</form>
-		 	
- 	</div>
+			<div class="row-fluid col-lg-2">
+				<form role="form">
+			  		<input id="btnSave" class="btn btn-primary" type="button" value="Save Data for Game">
+			  		<input type="hidden" id="finalPolledData"></input>
+				</form>
+			</div>
   	</div>
  </div>
   	
