@@ -317,24 +317,27 @@ def fetchFamilyFeudGameData(request):
 # ***************END TEXT MINING SECTION ******************
 
 # ****************Import Quiz Data****************
-def uploadFile(request):
+def uploadQuizData(request):
     if request.method == 'POST':
         file = request.FILES['file'];
         try:
             saveCSVToMongo(file);
-            return redirect('/home/Upload');
+            return redirect('/home/UploadQuiz');
         except Exception as e:
             Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else ""), Answer Options for Quiz (if any else "")"
-            return HttpResponse(Errormessage)
-    else:
-        form = UploadFileForm()
+            return HttpResponse(Errormessage);
     return HttpResponse("Data saved unsuccessfully!");
  
 def saveCSVToMongo(file):
 #     csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
+    quizId  = -1;
     dataReader = csv.reader(file)
     for row in dataReader:
         quizObj = Quiz();
+        if quizId != int(row[0]):
+            quizId = int(row[0]);
+            Quiz.objects.filter(quizId=quizId).delete(); #Delete Quiz before uploading.
+            
         quizObj.quizId = row[0];
         quizObj.quizName = row[1];
         quizObj.questionId = row[2];
