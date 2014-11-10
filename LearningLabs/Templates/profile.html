@@ -17,13 +17,18 @@
 			
 		}
 		
+		//modify action if admin
+		window.onload = function() {
+        	 document.getElementById("form-signin").action = "{{form_action}}";
+    	}
+		
 	</script>
 	<div align="center">
 		<div style="width: 60%">
 			{{ state }}
 		<div class="container" ng-controller="personController" ng-app="" style="width: 50%; text-align: center; background: none repeat scroll 0% 0% rgb(248, 248, 248); 
 		border-radius: 10px;  padding: 10% 10%; border: 2px solid black;" id="divSignIn">
-			<form method="post" action="signIn" class="form-signin">
+			<form method="post" action="signIn" class="form-signin" id="form-signin">
 			{% csrf_token %}
 				{% if next %} <input type="hidden" name="next" value="{{ next }}" />
 				{% endif %}

@@ -46,7 +46,7 @@ urlpatterns = patterns('',
     # ******End Text Mining Section **********
 
     #******* URL for Template ***************
-    url(r'^home$',TemplateView.as_view(template_name='./index.html')),
+    url(r'^home$',views.loadAdminHome),
     
     url(r'^home/Upload$',TemplateView.as_view(template_name='./upload.html')),
     url(r'^uploadFile$', views.uploadFile),

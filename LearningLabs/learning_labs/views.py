@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http.response import HttpResponse
+from django.shortcuts import render, redirect,render_to_response
+from django.http.response import HttpResponse, HttpResponseRedirect
 from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams, TopFiveAnswers
 from django.db.models import  Sum
 from django.utils import simplejson
@@ -18,6 +18,7 @@ import json
 import mining
 import os, manage, csv
 import geoTracker
+from django.core.urlresolvers import reverse
 
 # Stores current question ID
 currentQuestionID = 0
@@ -30,6 +31,24 @@ SITE_ROOT = os.path.dirname(os.path.realpath(manage.__file__));
 def helloWorld (request):
     return HttpResponse("Welcome Your are on Learning Labs App");
  
+def loadAdminHome (request):
+    if request.method == 'GET':
+        return render(request, "Profile.html", {"form_action":"/home"});
+    else:
+        studentId = request.POST.get('studentId')
+        if not studentId.isdigit():
+            return HttpResponse("Incorrect Student ID");
+        password = request.POST.get('password')
+        regUser = Register.objects.get(studentId=int(studentId), password=password)
+        if not regUser: 
+            return HttpResponse("Your credentials are wrong");
+        else:
+            if regUser.admin == True:
+                user = {'name':(regUser.fname + " " +regUser.lname),'studentId':regUser.studentId}
+                return render(request, "index.html", {"user":user});
+            else:
+                return HttpResponse("Access Denied");
+     
 # Register user : We can remove this
 def registerUser(request):
     geodata = geoTracker.getGeoLocationData(request.META['REMOTE_ADDR'])
@@ -67,8 +86,6 @@ def signIn(request):
     if not readObj: 
         return HttpResponse("Your credentials are wrong");
     else:
-        if readObj.admin == True:
-            return redirect('/home');
         return HttpResponse("You are signdin successfully");
     
 def resetPassword(request):
