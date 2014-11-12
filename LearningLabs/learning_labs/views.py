@@ -33,7 +33,7 @@ def helloWorld (request):
  
 def loadAdminHome (request):
     if request.method == 'GET':
-        return render(request, "Profile.html", {"form_action":"/home"});
+        return render(request, "profile.html", {"form_action":"/home"});
     else:
         studentId = request.POST.get('studentId')
         if not studentId.isdigit():
