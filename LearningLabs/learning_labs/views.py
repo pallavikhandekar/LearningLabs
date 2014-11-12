@@ -315,6 +315,17 @@ def fetchFamilyFeudGameData(request):
 #       
         return HttpResponse(simplejson.dumps({"questions":questions, "gameData":gameData, "quizId":quiz.quizId }), mimetype='application/json');
 # ***************END TEXT MINING SECTION ******************
+# *************** Import Student Data ************
+def uploadStudentData(request):
+    if request.method == 'POST':
+        file = request.FILES['file'];
+        try:
+            saveCSVToMongo(file);
+            return redirect('/home/UploadQuiz');
+        except Exception as e:
+            Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else ""), Answer Options for Quiz (if any else "")"
+            return HttpResponse(Errormessage);
+    return HttpResponse("Data saved unsuccessfully!");
 
 # ****************Import Quiz Data****************
 def uploadQuizData(request):

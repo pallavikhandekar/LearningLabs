@@ -1,6 +1,6 @@
 
-import rpy2.robjects as robjects
-from rpy2.robjects.packages import importr
+# import rpy2.robjects as robjects
+# from rpy2.robjects.packages import importr
 from learning_labs.models import Quiz,Answers
 import nltk
 from nltk.corpus import stopwords
@@ -13,11 +13,11 @@ numDict = {1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eigh
                90:"ninty"}
 
 def getChartData():
-    pi = robjects.r['pi']
-    base = importr('base')
-    tm = importr('tm')
-    r = robjects.r
-    docs = base.c("")
+    # pi = robjects.r['pi']
+    # base = importr('base')
+    # tm = importr('tm')
+    # r = robjects.r
+    # docs = base.c("")
     #p=""
     #queryset = StudentAnswers.objects.all();
 
