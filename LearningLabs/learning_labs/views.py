@@ -321,7 +321,7 @@ def uploadStudentData(request):
         file = request.FILES['file'];
         try:
             saveStudentDataToMongo(file);
-            return redirect('/home/UploadQuiz');
+            return redirect('/home/UploadStudent');
         except Exception as e:
             Errormessage = "FILE should be , separated csv with data in format"
             return HttpResponse(Errormessage);
@@ -346,6 +346,10 @@ def saveStudentDataToMongo(file):
         studentObj.fname = row[0];
         studentObj.lname = row[1];
         studentObj.usrname = row[2];
+        studentObj.studentId = row[3];
+        studentObj.email = row[4];
+        studentObj.password = row[5];
+        studentObj.save();
     # firstname = request.POST.get('fname')
     # lastname = request.POST.get('lname')
     # email = request.POST.get('email')
