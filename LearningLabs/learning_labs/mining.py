@@ -12,7 +12,7 @@ numDict = {1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eigh
                19:"ninteen",20:"twenty",30:"thirty",40:"fourty",50:"fifty",60:"sixty",70:"seventy",80:"eighty",
                90:"ninty"}
 
-def getChartData():
+def getChartData(quizId,questionId):
     # pi = robjects.r['pi']
     # base = importr('base')
     # tm = importr('tm')
@@ -20,7 +20,8 @@ def getChartData():
     # docs = base.c("")
     #p=""
     #queryset = StudentAnswers.objects.all();
-
+    print(questionId)
+    print(quizId)
     wordDict = {}
     nounSet = set()
     for obj in Answers.objects.all().filter(Question_Id =23156645):

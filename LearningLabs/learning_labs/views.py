@@ -260,13 +260,13 @@ def loadMiningResults(request):
         return render(request, 'TextMining/MiningResults.html', {"questions":questions, 'quizDetails': quizDetails }); 
 
 def showChart(request):
-#     currentQuestion = Quiz.objects.get(currentQuestion=True);
-#     currentQuestionText = currentQuestion.question;
-#     currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
-#     currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
-    quizId = request.GET.get('quizId');#TODO: Pass current quiz Id to the getChartData
-    questionId = request.GET.get('questionId');#TODO: Pass current question Id to the getChartData
-    chartData = mining.getChartData();
+    currentQuestion = Quiz.objects.get(currentQuestion=True);
+    currentQuestionText = currentQuestion.question;
+    currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
+    currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
+    # quizId = request.GET.get('quizId');#TODO: Pass current quiz Id to the getChartData
+    # questionId = request.GET.get('questionId');#TODO: Pass current question Id to the getChartData
+    chartData = mining.getChartData(currentQuizId,currentQuestionId);
     return HttpResponse(simplejson.dumps({"data":chartData}), mimetype='application/json');
 
 def saveFamilyFeudData(request):
@@ -320,10 +320,10 @@ def uploadStudentData(request):
     if request.method == 'POST':
         file = request.FILES['file'];
         try:
-            saveCSVToMongo(file);
+            saveStudentDataToMongo(file);
             return redirect('/home/UploadQuiz');
         except Exception as e:
-            Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else ""), Answer Options for Quiz (if any else "")"
+            Errormessage = "FILE should be , separated csv with data in format"
             return HttpResponse(Errormessage);
     return HttpResponse("Data saved unsuccessfully!");
 
@@ -338,6 +338,26 @@ def uploadQuizData(request):
             Errormessage = "FILE should be , separated csv with data in format Quiz Id, Quiz Name, Question Id, Question, Correct Ans (if any else ""), Answer Options for Quiz (if any else "")"
             return HttpResponse(Errormessage);
     return HttpResponse("Data saved unsuccessfully!");
+
+def saveStudentDataToMongo(file):
+    dataReader = csv.reader(file)
+    for row in dataReader:
+        studentObj = Register();
+        studentObj.fname = row[0];
+        studentObj.lname = row[1];
+        studentObj.usrname = row[2];
+    # firstname = request.POST.get('fname')
+    # lastname = request.POST.get('lname')
+    # email = request.POST.get('email')
+    # usrname = request.POST.get('usrname')
+    # studentId = request.POST.get('studentId')
+    # password = request.POST.get('password')
+    # readObj = Register.objects.filter(studentId=studentId)
+    # if not readObj:
+    #     Register.objects.create(fname=firstname, lname=lastname, usrname=usrname,studentId=int(studentId) ,email=email, password=password)
+    #     return HttpResponse("You are signed up successfully!");
+    # else:
+    #     return HttpResponse("Your Student ID already exits in record")
  
 def saveCSVToMongo(file):
 #     csvFilePath = SITE_ROOT + '/static/QuestionsList.csv';
