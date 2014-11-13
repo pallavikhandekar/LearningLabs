@@ -47,7 +47,9 @@ urlpatterns = patterns('',
     url(r'^home$',views.loadAdminHome),
     
     url(r'^home/UploadQuiz$',TemplateView.as_view(template_name='./uploadQuizData.html')),
+    url(r'^home/UploadStudent$',TemplateView.as_view(template_name='./uploadStudentData.html')),
     url(r'^uploadQuizFile$', views.uploadQuizData),
+    url(r'^uploadStudentFile$', views.uploadStudentData),
     url(r'^importCsv/$', views.saveCSVToMongo),
     
     url(r'^home/selectQuiz$',views.populateQuiz),
