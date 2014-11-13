@@ -4,7 +4,19 @@
 
 {% load staticfiles %}
 
-
+		<script>
+			var wrongCounter = 0;
+			$(document).keypress(function(e) {
+			  if(e.which == 88 || e.which == 120) {
+				  if(wrongCounter<=3){
+				     wrongCounter++;
+				     imageName  = "#"+ "imgCross" +  wrongCounter;
+				     var crossimage = $(imageName).css({'visibility':"visible"});;
+					}
+			  }
+			});
+			
+		</script>
 		<div ng-app ng-controller='AppController'>
 		{% verbatim %}
 		<div style="padding-bottom: 4%" >
@@ -28,28 +40,18 @@
 	      	</tr>
    	    </table>
 		</div>
+		
 		<div style="padding-bottom:4%">
 			<table  style="width:80%" cellpadding="10px">
 				<tr colspan=3 style="text-align:center">
-					<td class="label">
-						<label>Team A Score</label>
+					<td>
+						<img id="imgCross1" src="static/images/red_cross.png" style="visibility: hidden;" /> 
 					</td>
-					<td  class="label">
-						<label>Total Score this round</label>
+					<td >
+						<img id="imgCross2"  src="static/images/red_cross.png"  style="visibility: hidden;"/> 
 					</td>
-					<td  class="label">
-						<label>Team B Score</label>
-					</td>
-				<tr>
-				<tr colspan=3  style="text-align: center">
-					<td class="label">
-						<label  name="teamAScore">0</label>
-					</td>
-					<td class="label">
-						<label  name="totalRoundScore">0</label>
-					</td>
-					<td class="label">
-						<label  name="teamBScore">0</label>
+					<td >
+						<img id="imgCross3"  src="static/images/red_cross.png" style="visibility: hidden;" /> 
 					</td>
 				<tr>
 			</table>
