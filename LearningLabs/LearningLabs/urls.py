@@ -51,23 +51,22 @@ urlpatterns = patterns('',
     url(r'^importCsv/$', views.saveCSVToMongo),
     
     url(r'^home/selectQuiz$',views.populateQuiz),
+   
     
     url(r'^home/addQuestion$', TemplateView.as_view(template_name='./createquestions.html')),
     url(r'addQuestion', views.addQuestion),
     
     url(r'^home/createTeams$',views.createTeams),
     
-    
     url(r'^home/miningResults$',views.loadMiningResults),
     url(r'loadChartData',views.showChart),
-    #url(r'^home/miningResults$',views.showChart),
     
     
     url(r'familyFeudData$',views.saveFamilyFeudData),
     url(r'FamilyFeudGame$',TemplateView.as_view(template_name='./familyFeudUI.html')),
-    url(r'^loadFamilyFeudGameData$',views.fetchFamilyFeudGameData)
+    url(r'^loadFamilyFeudGameData$',views.fetchFamilyFeudGameData),
     
-    
+    url(r'TeamScore', TemplateView.as_view(template_name='./teamScores.html'))
     #******* END URL for Template ***************
     #******* URL for Template ***************
 
