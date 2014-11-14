@@ -341,7 +341,9 @@ def uploadQuizData(request):
 
 def saveStudentDataToMongo(file):
     dataReader = csv.reader(file)
+    # print(file.get_full_path())
     for row in dataReader:
+        print(row[0])
         studentObj = Register();
         studentObj.fname = row[0];
         studentObj.lname = row[1];
