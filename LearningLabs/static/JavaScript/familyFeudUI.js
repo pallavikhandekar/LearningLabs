@@ -12,12 +12,25 @@ function AppController($http,$scope) {
      		$scope.question = $scope.questions[$scope.currentQuestion];
      		$scope.answers = $scope.gameData[$scope.currentQuestion];
      	}else{
-     		 alert(data);
+     			
+	//hide all divs
+	
+	 $("#divQuizResults").hide();
+	 $("#divWrongAnswer").hide();
+	 $("#divActionButtons").hide();
+     		 displayError("Application Error",data,"no-close error");
+     		 errorDig.dialog( "open" );
      	}
     }).
     error(function(data, status, headers, config) {
-      // log error
-      alert(data);
+    	
+	//hide all divs
+	
+	 $("#divQuizResults").hide();
+	 $("#divWrongAnswer").hide();
+	 $("#divActionButtons").hide();
+     displayError("Response Error",data,"no-close error");
+     errorDig.dialog( "open" );
     });
   
 	$scope.loadNextQuestion=function(){
@@ -26,7 +39,8 @@ function AppController($http,$scope) {
 		    $scope.question = $scope.questions[$scope.currentQuestion];
      		$scope.answers = $scope.gameData[$scope.currentQuestion];
   		}else{
-  			alert("End of Quiz");
+  			displayError("Message","End of Quiz","no-close teamScore");
+  			errorDig.dialog( "open" );
   		}
   		
 	};
@@ -43,17 +57,7 @@ function AppController($http,$scope) {
 	};
 	
 	$scope.viewScores=function(){
-	/*
-			var width = 300; //popup width
-			var height = 300;//popup height
-			var left = (screen.width/2)-(width/2);
-  			var top = (screen.height/2)-(height/2);
-		
-			newwindow=window.open("/displayScores",'name','left='+left+',top='+top+', height='+height+', width='+width);
-			if (window.focus) {newwindow.focus()}
-				return false;
 	
-		*/
 		
 		dialog = $("#dialog").dialog({
 		autoOpen: false,
@@ -71,12 +75,37 @@ function AppController($http,$scope) {
       	close: function() {
        	
       	},
-      	dialogClass:"no-close ui-dialog-titlebar"
+      	dialogClass:"no-close teamScore"
         });
       
       	dialog.dialog( "open" );
 	
 	};
+	
+	//Error Popup
+	function displayError(title,data, cssClass){
+	$("#lblResponse").text(data);
+		 
+      errorDig = $("#divError").dialog({
+		autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+	    title: title,
+        buttons: [{
+         		text:"Ok",
+         		click: function() {
+         		 errorDig.dialog( "close" );
+        		}
+     	 }],
+      	close: function() {
+       	
+      	},
+      	dialogClass:cssClass
+        });
+     
+      
+	}
 }
 
 
