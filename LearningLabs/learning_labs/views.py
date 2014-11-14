@@ -303,7 +303,7 @@ def fetchFamilyFeudGameData(request):
             topFiveAns = TopFiveAnswers.objects.filter(quizId=quiz.quizId,questionId = question.questionId);
             if len(topFiveAns) == 0:
                 return HttpResponse("Data polling pending for question : " + question.question);
-            aggregation = TopFiveAnswers.objects.filter(quizId=quiz.quizId,questionId = quiz.questionId).aggregate(totalSum=Sum('frequency'));
+            aggregation = TopFiveAnswers.objects.filter(quizId=quiz.quizId,questionId = question.questionId).aggregate(totalSum=Sum('frequency'));
             answerNumber = 0;
             questionData=[];
             for data in topFiveAns:
