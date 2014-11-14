@@ -41,6 +41,42 @@ function AppController($http,$scope) {
 			
 		}
 	};
+	
+	$scope.viewScores=function(){
+	/*
+			var width = 300; //popup width
+			var height = 300;//popup height
+			var left = (screen.width/2)-(width/2);
+  			var top = (screen.height/2)-(height/2);
+		
+			newwindow=window.open("/displayScores",'name','left='+left+',top='+top+', height='+height+', width='+width);
+			if (window.focus) {newwindow.focus()}
+				return false;
+	
+		*/
+		
+		dialog = $("#dialog").dialog({
+		autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+	    title: "Team Scores",
+	    hide:"puff",
+        buttons: [{
+         		text:"Ok",
+         		click: function() {
+         		 dialog.dialog( "close" );
+        		}
+     	 }],
+      	close: function() {
+       	
+      	},
+      	dialogClass:"no-close ui-dialog-titlebar"
+        });
+      
+      	dialog.dialog( "open" );
+	
+	};
 }
 
 

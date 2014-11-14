@@ -8,7 +8,8 @@
 <script type = "text/javascript"  src = "{% static "JavaScript/familyFeudUI.js" %}">
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
+ <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script type = "text/javascript" >
  if(typeof angular == 'undefined') {
  	alert('undefined');
@@ -40,9 +41,19 @@ background-image:-ms-linear-gradient(top, #476d8f 0%, #205799 25%,#21a0db 100%);
    color: white;
    font-size: 25px;
    font-family: arial;
+   
 }
 
+.ui-widget-header,.ui-state-default, ui-button{
+            background:#0066FF;
+            border: 1px solid #0066FF;
+            color: #FFFFFF;
+            font-weight: bold;
+}
 
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
 </style>
 
 
