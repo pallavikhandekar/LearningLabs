@@ -24,31 +24,31 @@ def getChartData(quizId,questionId):
     print(quizId)
     wordDict = {}
     nounSet = set()
-    for obj in Answers.objects.all().filter(Question_Id =23156645):
+    for obj in Answers.objects.all().filter(Question_Id =23156644):
         answer = obj.Answer;
         if answer == None or answer == "":
             continue
-        print(" Before Preprocess : " + answer)
+        # print(" Before Preprocess : " + answer)
 
         #NLTK pre-process
         anstokens = nltk.word_tokenize(answer)
-        nouns = [tup[0] for tup in nltk.pos_tag(anstokens) if tup[1] == 'NN' or tup[1]=='NNS']
-        for n in nouns:
-            nounSet.add(n)
-        b = TextBlob(answer)
-        nounList = b.noun_phrases
-        for n in nounList:
-            for m in n.split():
-               nounSet.add(m)
+        # nouns = [tup[0] for tup in nltk.pos_tag(anstokens) if tup[1] == 'NN' or tup[1]=='NNS']
+        # for n in nouns:
+        #     nounSet.add(n)
+        # b = TextBlob(answer)
+        # nounList = b.noun_phrases
+        # for n in nounList:
+        #     for m in n.split():
+        #        nounSet.add(m)
         looper = 0
         for token in anstokens:
             if token.isdigit():
                 token = convert(int(token))
-            if token not in nounSet:
-                w = Word(token)
-                token = w.correct()
-            else:
-                print "skipping noun for auto correct : " + token
+            # if token not in nounSet:
+            #     w = Word(token)
+            #     token = w.correct()
+            # else:
+                # print "skipping noun for auto correct : " + token
             anstokens[looper] = token.lower()
             looper += 1
         stopwordsList = ['the','it','she','he']
@@ -64,8 +64,8 @@ def getChartData(quizId,questionId):
             wordDict[processedAnswer] +=1
         else:
             wordDict[processedAnswer] = 1
-        print("After proess : "+str(processedAnswer))
-    print str(wordDict)
+    #     print("After proess : "+str(processedAnswer))
+    # print str(wordDict)
     return wordDict
        # docs = base.cbind(answer, docs)
     #p ="first Docuent"
