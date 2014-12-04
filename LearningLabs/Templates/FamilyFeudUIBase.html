@@ -14,6 +14,11 @@
  if(typeof angular == 'undefined') {
  	alert('undefined');
  }
+ 
+ var buzzerSound = new Audio();
+ buzzerSound.src = "{% static "sounds/wronganswer.mp3" %}";
+ var chimeSound = new Audio();
+ chimeSound.src = "{% static "sounds/chime.mp3" %}";
 </script>
 
 <style type="text/css">

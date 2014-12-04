@@ -5,13 +5,14 @@
 {% load staticfiles %}
 
 		<script>
-			var wrongCounter = 0;
+			var wrongCounter = 1;
 			$(document).keypress(function(e) {
 			  if(e.which == 88 || e.which == 120) {
 				  if(wrongCounter<=3){
-				     wrongCounter++;
 				     imageName  = "#"+ "imgCross" +  wrongCounter;
-				     var crossimage = $(imageName).css({'visibility':"visible"});;
+				     var crossimage = $(imageName).css({'visibility':"visible"});
+				     buzzerSound.play();
+				     wrongCounter++;
 					}
 			  }
 			});
@@ -29,7 +30,7 @@
 			<tr ng-repeat='answer in answers'>
 				<td style="background-color: rgb(250, 176, 37); cursor: pointer; border-right: medium solid rgb(153, 0, 51); 
 				border-width: thin medium medium thin; border-style: solid; border-color: rgb(153, 0, 51);">
-						<div id="selectOptionDiv{{answer.answerNumber}}" class ="childDiv" ng-click="show=!show" ng-show="!show">
+						<div id="selectOptionDiv{{answer.answerNumber}}" class ="childDiv" ng-click="show=!show;playSound()" ng-show="!show">
 							<span >{{answer.answerNumber}}</span>
 						</div>
 						<div id="answerDiv{{answer.answerNumber}}" ng-show="show" style="text-align:center;font-weight: bold;"> 
