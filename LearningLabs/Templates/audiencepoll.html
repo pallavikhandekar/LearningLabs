@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="width: 100%;height: 100%">
 
 <head>
 {% load staticfiles %}
@@ -49,7 +49,9 @@
 body {
 	position: absolute;
 	background-size: cover;
-	background-repeat: no-repeat
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
 }
 
 label {
@@ -67,11 +69,11 @@ h1.text-center {
 }
 
 .padding1 {
-	padding: 10px 5px;
+	
 }
 
 .padding2 {
-	padding: 10px 5px 15px 450px;
+	
 }
 
 tr.spaceUnder>td {
@@ -82,6 +84,8 @@ tr.spaceUnder>td {
 	padding: 10px 10px 10px;
 	color: #CEF6F5;
 	font-size: 30px;
+	height: 10%;
+	width: 100%;
 }
 
 .container {
@@ -90,26 +94,30 @@ tr.spaceUnder>td {
 </style>
 </head>
 
-<body background="{% static "images/webbackground.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
+<body background="{% static "images/learn.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
 
-	<div id="countdown" class="countdownHolder">
+	<div id="countdown" style="width:100%;height: 20%">
 		<span id="countdown" class="timer"></span>
 	</div>
 
-	<!-- Test with bootstrap -->
-<div  class="padding2">
-		<h1 class="text-center">Please enter your answer here</h1>
-			<form name="input" method="post" action="/answerSaved">
+	<div style="width:100%;height: 80%">
+		<div  style="width:100%;height: 10%; padding-bottom: 20px">
+		<h1 style="color: #CEF6F5; text-align: center;">Please enter your answer here</h1>
+		</div>
+		<div style="width:100%;height: 80%;">
+		<form name="input" method="post" action="/answerSaved">
 				{% csrf_token %}
 
-				<div style="width: 400px">
+				<div style="width:100%; height:20%; text-align: center;color: #CEF6F5;">
 					<input type="hidden" name="quizId" value={{quizId}}> 
 					<input type="hidden" name="questionId" value={{questionId}}> 
 					<input type="hidden" name="questionName" value={{questionName}}> 
-					<label>{{questionName}}</label>
+					<div style="display: inline-block; width:50%">
+						<label>{{questionName}}</label>
+					</div>
 				</div>
 
-				<div>
+				<div style="width:100%; height:40%;"">
 					<table align="center" style="width: 300px">
 
 						<tr class="spaceUnder">
@@ -124,14 +132,15 @@ tr.spaceUnder>td {
 						</tr>
 
 						<tr class="spaceUnder">
-							<td><input class="btn btn-primary btn-lg active" id="submit"
+							<td><input class="btn btn-primary btn-lg active" style="width:100px" id="submit"
 								onclick="disable()" method="post" type="Submit" value=Submit></td>
 
 						</tr>
 					</table>
 				</div>
 
-			</form>
+		</form>
+		</div>
 	</div>
 
 </body>
