@@ -28,7 +28,7 @@ def getChartData(questionID,quizID):
         answer = obj.answer;
         if answer == None or answer == "":
             continue
-        # print(" Before Preprocess : " + answer)
+        print(" Before Preprocess : " + answer)
 
         #NLTK pre-process
         anstokens = nltk.word_tokenize(answer)
@@ -64,8 +64,8 @@ def getChartData(questionID,quizID):
             wordDict[processedAnswer] +=1
         else:
             wordDict[processedAnswer] = 1
-    #     print("After proess : "+str(processedAnswer))
-    # print str(wordDict)
+        print("After process : "+str(processedAnswer))
+    print str(wordDict)
     return wordDict
        # docs = base.cbind(answer, docs)
     #p ="first Docuent"
