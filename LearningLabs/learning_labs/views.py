@@ -40,11 +40,12 @@ def loadAdminHome (request):
             return HttpResponse("Incorrect Student ID");
         password = request.POST.get('password')
         regUser = Register.objects.filter(studentId=int(studentId), password=password)
-        if not regUser: 
+        if len(regUser)!=1: 
             return HttpResponse("Your credentials are wrong");
         else:
-            if regUser.admin == True:
-                user = {'name':(regUser.fname + " " +regUser.lname),'studentId':regUser.studentId}
+            if regUser[0].admin == True:
+                obj = regUser[0];
+                user = {'name':(obj.fname + " " +obj.lname),'studentId':obj.studentId}
                 return render(request, "index.html", {"user":user});
             else:
                 return HttpResponse("Access Denied");
