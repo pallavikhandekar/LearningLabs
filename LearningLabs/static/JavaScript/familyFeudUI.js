@@ -82,6 +82,11 @@ function AppController($http,$scope) {
 	
 	};
 	
+	
+	$scope.playSound = function(){
+		chimeSound.play();
+	};
+	
 	//Error Popup
 	function displayError(title,data, cssClass){
 	$("#lblResponse").text(data);
