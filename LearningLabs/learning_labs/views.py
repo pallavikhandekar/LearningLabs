@@ -265,8 +265,8 @@ def loadMiningResults(request):
 def showChart(request):
     currentQuestion = Quiz.objects.get(currentQuestion=True);
     currentQuestionText = currentQuestion.question;
-    currentQuestionId = currentQuestion.questionId #TODO: Pass current question Id to the getChartData
-    currentQuizId = currentQuestion.quizId;#TODO: Pass current quiz Id to the getChartData
+    currentQuestionId = request.GET.get('quizId') #TODO: Pass current question Id to the getChartData
+    currentQuizId = request.GET.get('questionId');#TODO: Pass current quiz Id to the getChartData
     # quizId = request.GET.get('quizId');#TODO: Pass current quiz Id to the getChartData
     # questionId = request.GET.get('questionId');#TODO: Pass current question Id to the getChartData
     chartData = mining.getChartData(currentQuizId,currentQuestionId);

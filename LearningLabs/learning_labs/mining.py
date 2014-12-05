@@ -12,7 +12,7 @@ numDict = {1:"one",2:"two",3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eigh
                19:"ninteen",20:"twenty",30:"thirty",40:"fourty",50:"fifty",60:"sixty",70:"seventy",80:"eighty",
                90:"ninty"}
 
-def getChartData(quizID,questionID):
+def getChartData(questionID,quizID):
     # pi = robjects.r['pi']
     # base = importr('base')
     # tm = importr('tm')
@@ -24,7 +24,7 @@ def getChartData(quizID,questionID):
     print(quizID)
     wordDict = {}
     nounSet = set()
-    for obj in PollAnswers.objects.filter(questionId = questionID):
+    for obj in PollAnswers.objects.filter(questionId = questionID,quizId=quizID):
         answer = obj.answer;
         if answer == None or answer == "":
             continue
