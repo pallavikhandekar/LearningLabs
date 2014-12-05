@@ -150,6 +150,7 @@ def audienceAnswer(request):
     questionId = None
     quizId = None
     questionName = None
+    print request.method;
     if request.method == 'GET':
         try:
             questionId = Quiz.objects.get(currentQuestion=True).questionId;
