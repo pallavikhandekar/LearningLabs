@@ -39,7 +39,7 @@ def loadAdminHome (request):
         if not studentId.isdigit():
             return HttpResponse("Incorrect Student ID");
         password = request.POST.get('password')
-        regUser = Register.objects.get(studentId=int(studentId), password=password)
+        regUser = Register.objects.filter(studentId=int(studentId), password=password)
         if not regUser: 
             return HttpResponse("Your credentials are wrong");
         else:
