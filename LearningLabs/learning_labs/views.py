@@ -171,7 +171,7 @@ def audienceAnswer(request):
         readObj = PollAnswers.objects.filter(studentId=studentId, quizId=quizId, questionId=questionId )
         print readObj;
         if not readObj:
-            aaObj = PollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
+            PollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
             #aaObj.save()
             return HttpResponse("Answer Saved Successfuly!")
         else:
