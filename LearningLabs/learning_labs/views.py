@@ -172,11 +172,14 @@ def audienceAnswer(request):
         readObj = PollAnswers.objects.filter(studentId=studentId, quizId=quizId, questionId=questionId )
         print readObj;
         if not readObj:
+            #Check is student exists
+            studentExists = Register.objects.filter(studentId=studentId);
+            if not studentExists:
+                return HttpResponse(simplejson.dumps({"rc":-1, "message":"Incorrect Student Id"}), mimetype='application/json');
             PollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
-            #aaObj.save()
-            return HttpResponse("Answer Saved Successfuly!")
+            return HttpResponse(simplejson.dumps({"rc":0, "message":"Answer saved successfully!"}), mimetype='application/json');
         else:
-            return HttpResponse("Cannot retake poll!")
+            return HttpResponse(simplejson.dumps({"rc":-1, "message":"Cannot re-take poll!"}), mimetype='application/json')
     
 # Add questions to Quiz
 def addQuestion(request):

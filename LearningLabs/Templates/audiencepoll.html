@@ -5,6 +5,8 @@
 {% load staticfiles %}
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+ <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
 
@@ -31,7 +33,7 @@
 		if (seconds == 0) {
 			clearInterval(countdownTimer);
 			document.getElementById('countdown').innerHTML = "Time Over";
-			var x = document.getElementById('submit');
+			var x = document.getElementById('btnSubmit');
 			x.disabled = true;
 			alert("Sorry! Your time is over");
 		} else {
@@ -40,6 +42,71 @@
 	}
 
 	var countdownTimer = setInterval('secondPassed()', 1000);
+	
+	//POST AJAX on Save
+	$(document).ready(function() {
+            $("#btnSubmit").click(function() {
+            	
+				$.ajax({
+                        url : "/saveAnswer", 
+                        type : "POST",
+                        dataType: "json",
+                        data : {
+                            'studentId' :  document.getElementById('studentId').value,
+                            'questionId' : document.getElementById('questionId').value,
+                            'quizId': document.getElementById('quizId').value,
+                            'answer' : document.getElementById('answer').value,
+                            'questionName' : document.getElementById('questionName').textContent,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(json) {
+                               displayMessage(json.rc, json.message);
+                            },
+                            error : function(xhr,errmsg,err) {
+                                
+                            }
+                    });
+                    return false;
+            });
+            });
+            
+         function displayMessage (code, msg){
+         
+         	var title = "";
+         	var type = "";
+         	$("#lblmessage").text(msg);
+		 
+		 	if (code == 0){
+		 		title = "Success";
+		 		cssStyle = "no-close success";
+		 		document.getElementById('btnSubmit').disabled = true;;
+		 		
+		 	}else {
+		 		title = "Error";
+		 		cssStyle = "no-close error";
+		 	}
+		 	
+		    dig = $("#dialog").dialog({
+				autoOpen: false,
+		        height: 300,
+		        width: 350,
+		        modal: true,
+			    title: title,
+		        buttons: [{
+		         		text:"Ok",
+		         		click: function() {
+		         		dig.dialog( "close" );
+		        		}
+		     	 }],
+		      	close: function() {
+		       	
+		      	},
+		      	dialogClass:cssStyle
+		        });
+		        
+		     dig.dialog( "open" );
+          }
+         
 </script>
 
 <link rel="stylesheet"
@@ -67,6 +134,19 @@ tr.spaceUnder>td {
 	width: 100%;
 }
 
+.success .ui-widget-header,.ui-state-default, ui-button{
+            background:#339933;
+            border: 1px solid #0066FF;
+            color: #FFFFFF;
+            font-weight: bold;
+}
+
+.error .ui-widget-header,.ui-state-default, ui-button{
+            background:#FF0000;
+            border: 1px solid #FF0000;
+            color: #FFFFFF;
+            font-weight: bold;
+}
 </style>
 </head>
 
@@ -81,13 +161,12 @@ tr.spaceUnder>td {
 		<h1 style="color: #CEF6F5; text-align: center;">Please enter your answer here</h1>
 		</div>
 		<div style="width:100%;height: 80%;">
-		<form name="pollForm" method="post" action="/saveAnswer">
-				{% csrf_token %}
+		
 
-				<div style="width:100%; height:20%; text-align: center;color: #CEF6F5;">
-					<input type="hidden" name="quizId" value={{quizId}}> 
-					<input type="hidden" name="questionId" value={{questionId}}> 
-					<input type="hidden" name="questionName" value={{questionName}}> 
+				<div style="width:100%; height:20%; text-align: center;color: #CEF6F5;font-size: 25px">
+					<input type="hidden" id="quizId" name="quizId" value={{quizId}}> 
+					<input type="hidden" id="questionId" name="questionId" value={{questionId}}> 
+					<label style="display:none" id="questionName">{{questionName}}</label> 
 					<div style="display: inline-block; width:50%">
 						<label>{{questionName}}</label>
 					</div>
@@ -97,23 +176,28 @@ tr.spaceUnder>td {
 					<table align="center" style="width: 300px">
 
 						<tr class="spaceUnder">
-							<td><input class="form-control" name="studentId" type="text"
+							<td><input class="form-control" name="studentId" id="studentId" type="text"
 								placeholder="Enter Your Student ID:" ></td>
 						</tr>
 
 						<tr class="spaceUnder">
-							<td><input class="form-control" name="answer" type="text"
+							<td><input class="form-control" name="answer" id="answer" type="text"
 								placeholder="Enter Your Answer for Quiz:"></td>
 						</tr>
+						
+						<tr class="spaceUnder">
+							<td><input class="btn btn-primary btn-lg active" id="btnSubmit" name="submit"
+								onclick="" type="submit" value=Submit></td>
+						</tr>
+						
 					</table>
 				</div>
 
-				<div style="text-align: center;">
-					<input class="btn btn-primary btn-lg active" id="submit" name="submit"
-								onclick="" type="submit" value=Submit>
-				</div>
-		</form>
 		</div>
+	</div>
+	
+	<div style="display:none; width:100%; height:100%" id="dialog">
+		<label id="lblmessage"></label>
 	</div>
 
 </body>
