@@ -54,27 +54,6 @@ body {
 	width: 100%;
 }
 
-label {
-   text-align: center;
-	padding: 10px 5px 15px 10px;
-	color: #CEF6F5;
-	font-size: 30px;
-}
-
-h1.text-center {
-	text-align: center;
-	padding: 10px 5px; 
-	text-decoration: underline;
-	color: #CEF6F5;
-}
-
-.padding1 {
-	
-}
-
-.padding2 {
-	
-}
 
 tr.spaceUnder>td {
 	padding-bottom: 25px;
@@ -88,16 +67,13 @@ tr.spaceUnder>td {
 	width: 100%;
 }
 
-.container {
-	margin-top: 10px;
-}
 </style>
 </head>
 
-<body background="{% static "images/learn.png" %}" data-ng-app="application" ng-controller="QuizMe as quizmeCntrl">
+<body background="{% static "images/learn.png" %}">
 
 	<div id="countdown" style="width:100%;height: 20%">
-		<span id="countdown" class="timer"></span>
+		<span id="countdown" ></span>
 	</div>
 
 	<div style="width:100%;height: 80%">
@@ -105,7 +81,7 @@ tr.spaceUnder>td {
 		<h1 style="color: #CEF6F5; text-align: center;">Please enter your answer here</h1>
 		</div>
 		<div style="width:100%;height: 80%;">
-		<form name="input" method="post" action="/saveAnswer">
+		<form name="pollForm" method="post" action="/saveAnswer">
 				{% csrf_token %}
 
 				<div style="width:100%; height:20%; text-align: center;color: #CEF6F5;">
@@ -117,28 +93,25 @@ tr.spaceUnder>td {
 					</div>
 				</div>
 
-				<div style="width:100%; height:40%;"">
+				<div style="width:100%; height:40%;">
 					<table align="center" style="width: 300px">
 
 						<tr class="spaceUnder">
 							<td><input class="form-control" name="studentId" type="text"
-								placeholder="Enter Your Student ID:" required="" autofocus=""></td>
+								placeholder="Enter Your Student ID:" ></td>
 						</tr>
 
 						<tr class="spaceUnder">
 							<td><input class="form-control" name="answer" type="text"
-								placeholder="Enter Your Answer for Quiz:" required=""
-								autofocus=""></td>
-						</tr>
-
-						<tr class="spaceUnder">
-							<td><input class="btn btn-primary btn-lg active" style="width:100px" id="submit"
-								onclick="disable()" method="post" type="submit" value=Submit></td>
-
+								placeholder="Enter Your Answer for Quiz:"></td>
 						</tr>
 					</table>
 				</div>
 
+				<div style="text-align: center;">
+					<input class="btn btn-primary btn-lg active" id="submit" name="submit"
+								onclick="" type="submit" value=Submit>
+				</div>
 		</form>
 		</div>
 	</div>
