@@ -46,6 +46,17 @@
 	//POST AJAX on Save
 	$(document).ready(function() {
             $("#btnSubmit").click(function() {
+            
+            	testStudentId = document.getElementById('studentId').value;
+            	if (isNaN(testStudentId)!=false){
+            		  displayMessage(-1, "Student Id should be number");
+            		  return false;
+            	}
+            	
+            	if(document.getElementById('answer').value===""){
+            		displayMessage(-1, "Enter answer to proceed");
+            		return false;
+            	}
             	
 				$.ajax({
                         url : "/saveAnswer", 
@@ -92,6 +103,7 @@
 		        width: 350,
 		        modal: true,
 			    title: title,
+			    position: { my: "center", at: "center", of: window },
 		        buttons: [{
 		         		text:"Ok",
 		         		click: function() {
