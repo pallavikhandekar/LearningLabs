@@ -38,6 +38,7 @@ function AppController($http,$scope) {
   			$scope.currentQuestion = $scope.currentQuestion+1; //counter for questions
 		    $scope.question = $scope.questions[$scope.currentQuestion];
      		$scope.answers = $scope.gameData[$scope.currentQuestion];
+     		resetWrongOptions()
   		}else{
   			displayError("Message","End of Quiz","no-close teamScore");
   			errorDig.dialog( "open" );
@@ -50,6 +51,7 @@ function AppController($http,$scope) {
 			$scope.currentQuestion = $scope.currentQuestion - 1;
 			$scope.question =  $scope.questions[$scope.currentQuestion]; 
 			$scope.answers = $scope.gameData[$scope.currentQuestion];
+			resetWrongOptions();
 		}
 		else{
 			
@@ -110,6 +112,13 @@ function AppController($http,$scope) {
         });
      
       
+	}
+	
+	function resetWrongOptions(){
+		wrongCounter = 1;
+		$(imgCross1).css({'visibility':"hidden"});
+		$(imgCross2).css({'visibility':"hidden"});
+		$(imgCross3).css({'visibility':"hidden"});
 	}
 }
 
