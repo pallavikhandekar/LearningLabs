@@ -35,7 +35,7 @@
 			document.getElementById('countdown').innerHTML = "Time Over";
 			var x = document.getElementById('btnSubmit');
 			x.disabled = true;
-			alert("Sorry! Your time is over");
+			displayMessage(-1,"Sorry! Your time is over");
 		} else {
 			seconds--;
 		}
@@ -79,8 +79,8 @@
 		 	if (code == 0){
 		 		title = "Success";
 		 		cssStyle = "no-close success";
-		 		document.getElementById('btnSubmit').disabled = true;;
-		 		
+		 		document.getElementById('btnSubmit').disabled = true;
+		 		clearInterval(countdownTimer);
 		 	}else {
 		 		title = "Error";
 		 		cssStyle = "no-close error";
