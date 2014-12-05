@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     url(r'resetPassword', views.resetPassword),
     
     url(r'Audiencepoll',views.audienceAnswer),
-    url(r'answerSaved', views.audienceAnswer),
+    url(r'saveAnswer', views.audienceAnswer),
     
     url(r'createTeams',views.createTeams),
     url(r'answerSaved', views.createTeams),

@@ -172,7 +172,7 @@ def audienceAnswer(request):
         print readObj;
         if not readObj:
             aaObj = PollAnswers.objects.create(studentId=studentId, questionId=questionId, answer=answer, quizId=quizId, question=questionName)
-            aaObj.save()
+            #aaObj.save()
             return HttpResponse("Answer Saved Successfuly!")
         else:
             return HttpResponse("Cannot retake poll!")

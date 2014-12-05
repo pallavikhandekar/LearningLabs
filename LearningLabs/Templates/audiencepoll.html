@@ -105,7 +105,7 @@ tr.spaceUnder>td {
 		<h1 style="color: #CEF6F5; text-align: center;">Please enter your answer here</h1>
 		</div>
 		<div style="width:100%;height: 80%;">
-		<form name="input" method="post" action="/answerSaved">
+		<form name="input" method="post" action="/saveAnswer">
 				{% csrf_token %}
 
 				<div style="width:100%; height:20%; text-align: center;color: #CEF6F5;">
@@ -133,7 +133,7 @@ tr.spaceUnder>td {
 
 						<tr class="spaceUnder">
 							<td><input class="btn btn-primary btn-lg active" style="width:100px" id="submit"
-								onclick="disable()" method="post" type="Submit" value=Submit></td>
+								onclick="disable()" method="post" type="submit" value=Submit></td>
 
 						</tr>
 					</table>
