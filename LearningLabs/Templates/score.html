@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <style type="text/css">
+.txtfld{ width:50px;}
+.printer-row{border-collapse: collapse;}
+.printer-row td{border:1px solid #ccc;}
+</style>
+
+<script>
+         $('.txtfld').bind({
+                keyup:function(){
+             //total calculation
+                        $(".printer-type tr:not(:first, last) td:last-child").text(function () {
+                            var totalVal = 0;
+                            $(this).prevAll().each(function () {
+                                totalVal += parseInt($(this).children('.txtfld').val()) || 0;
+                                //totalVal += parseInt( );
+                            });
+                            return totalVal;
+                        });
+
+                        $(".printer-type tr:last td").text(function (i) {
+                            var totalVal = 0;
+                            $(this).parent().prevAll().find("td:nth-child(" + (++i) + ")").each(function () {
+                                totalVal += parseInt($(this).children('.txtfld').val()) || 0;
+                                $(".printer-type tr:last td:first").text('Total sheets/year');
+                            });
+                            return totalVal;
+
+                        });
+                        //Total calculation
+                }
+            });
+</script>
+
+
+
+<hr>
+<h2>Quiz 1</h2>
+<div class="printer-type">
+<table width="580" border="0" class="printer-row">
+  <tr>
+    <td>&nbsp;</td>
+    <td>Team 1</td>
+    <td>Team 2</td>
+    <td>Total sheets/year</td>
+  </tr>
+  <tr>
+    <td>Question 1</td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Question 2</td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Question 3</td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Question 4</td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td><input type="text" class="txtfld" placeholder="edit"></td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>Scores</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</div>
+
+  {% endblock %}
+

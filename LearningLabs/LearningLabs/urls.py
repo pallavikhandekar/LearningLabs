@@ -35,7 +35,7 @@ urlpatterns = patterns('',
     url(r'answerSaved', views.createTeams),
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
-    url(r'myTest',TemplateView.as_view(template_name='./tempTest.html')),
+    url(r'Score',TemplateView.as_view(template_name='./score.html')),
   
     
     #**********Text Mining Section ***********
