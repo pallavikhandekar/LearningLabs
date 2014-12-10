@@ -13,8 +13,10 @@
 </style>
 
 <script>
+$(document).ready(function(){
          $('.txtfld').bind({
                 keyup:function(){
+                  
              //total calculation
                         $(".printer-type tr:not(:first, last) td:last-child").text(function () {
                             var totalVal = 0;
@@ -37,6 +39,7 @@
                         //Total calculation
                 }
             });
+    });
 </script>
 
 
