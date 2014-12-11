@@ -52,7 +52,7 @@ $(document).ready(function(){
     });
 </script>
 
-
+<div ng-controller="MyCtrl">
 <form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
 {% csrf_token %}
 <hr>
@@ -68,12 +68,14 @@ $(document).ready(function(){
     <td>Team 2</td>
     <td>Total sheets/year</td>
   </tr>
-  <tr ng-repeat='quiz in quizzes'>
-	<td>{{quiz.questionId}}</td>
-	<td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td>&nbsp;</td>
-  </tr>
+  {% for quiz in quizzes %}
+  <tr>
+   <td>{{quiz.question}}</td>
+   <td><input type="text" class="txtfld" placeholder="edit"></td>
+   <td><input type="text" class="txtfld" placeholder="edit"></td>
+   <td> </td>
+ </tr>
+ {% endfor %}
   <tr id="scoretable">
     <td>Scores</td>
     <td id="team1">&nbsp;</td>
@@ -87,6 +89,7 @@ $(document).ready(function(){
 <button id="savescores"> Save Scores </button>
 </div>
 </form>
+</div>
 
   {% endblock %}
 
