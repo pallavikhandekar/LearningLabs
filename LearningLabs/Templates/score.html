@@ -68,31 +68,12 @@ $(document).ready(function(){
     <td>Team 2</td>
     <td>Total sheets/year</td>
   </tr>
-  <tr>
-    <td>Question 1</td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>Question 2</td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
+  <tr ng-repeat='quiz in quizzes'>
+	<td>{{quiz.questionId}}</td>
+	<td><input type="text" class="txtfld" placeholder="edit"></td>
     <td><input type="text" class="txtfld" placeholder="edit"></td>
     <td>&nbsp;</td>
   </tr>
-  <tr>
-    <td>Question 3</td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>Question 4</td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td><input type="text" class="txtfld" placeholder="edit"></td>
-    <td>&nbsp;</td>
-  </tr>
-
   <tr id="scoretable">
     <td>Scores</td>
     <td id="team1">&nbsp;</td>
