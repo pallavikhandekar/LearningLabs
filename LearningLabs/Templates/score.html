@@ -48,16 +48,59 @@ $(document).ready(function(){
 
 
     });
-
+    
+    	var rowElem1 = document.getElementById("rowQuestion_1")
+    	var rowElem2 = document.getElementById("rowAns_1")
+    	if (typeof(rowElem1) != 'undefined' && rowElem1 != null && typeof(rowElem2) != 'undefined' && rowElem2 != null){
+    		rowElem1.style.display = "block";
+    		rowElem2.style.display = "block";
+    	}
     });
+    
+    function onNextButtonClick(){
+    
+    }
+    
+    function onPrevButtonClick(){
+    
+    }
 </script>
 
-<div ng-controller="MyCtrl">
+<div >
 <form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
 {% csrf_token %}
 <hr>
 <h3 style="align-content: center">Current Quiz :: {{quizId}}</h3>
 <h4 style="align-content: center">No of Questions :: {{questionCount}}</h4>
+
+<div>
+	<div>
+		<table>
+			{% for answers in gameData %}
+			<tr id="rowQuestion_{{forloop.counter}}" style="display:none;">
+				<td>
+					{{answers.0.question}}
+				</td>
+			</tr>
+			<tr id="rowAns_{{forloop.counter}}" style="display:none;">
+				<td>
+					<button onClick="onPrevButtonClick">Prev Question</button>
+				</td>
+				<td>
+				 {% for o in answers %}
+				 <div>
+					 {{o.answer}}
+				 </div>
+				{% endfor %}
+				<td>
+				<td>
+					<button onClick="onNextButtonClick">Next Question</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
 <div class="printer-type">
 
 <table width="580" border="0" class="printer-row">
