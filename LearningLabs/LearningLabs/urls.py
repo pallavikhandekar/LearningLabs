@@ -45,7 +45,8 @@ urlpatterns = patterns('',
 
     #******* URL for Template ***************
     url(r'^home$',views.loadAdminHome),
-    url(r'^home/Score',TemplateView.as_view(template_name='./score.html')),
+    url(r'^home/Score',views.displayScorePage),
+    # url(r'^home/Score',TemplateView.as_view(template_name='./score.html')),
     url(r'^home/UploadQuiz$',TemplateView.as_view(template_name='./uploadQuizData.html')),
     url(r'^home/UploadStudent$',TemplateView.as_view(template_name='./uploadStudentData.html')),
     url(r'^uploadQuizFile$', views.uploadQuizData),

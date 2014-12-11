@@ -56,9 +56,12 @@ $(document).ready(function(){
 <form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
 {% csrf_token %}
 <hr>
-<h2>Quiz 1</h2>
+<h3 style="align-content: center">Current Quiz :: {{quizId}}</h3>
+<h4 style="align-content: center">No of Questions :: {{questionCount}}</h4>
 <div class="printer-type">
+
 <table width="580" border="0" class="printer-row">
+
   <tr>
     <td>&nbsp;</td>
     <td>Team 1</td>

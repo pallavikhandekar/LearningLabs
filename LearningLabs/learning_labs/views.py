@@ -146,7 +146,9 @@ def setBoolvalue(quizId, questionToPoll):
     boolObj = Quiz.objects.get(questionId=questionId, quizId=quizId)
     boolObj.currentQuestion = True
     boolObj.save()
-    
+
+
+
 def audienceAnswer(request):
     questionId = None
     quizId = None
@@ -435,4 +437,10 @@ def saveScore(request):
     #     return HttpResponse("Scores Saved Successfully");
     # else:
     #     return HttpResponse("This question Id for quiz ID already exits! Make it unique");
+
+def displayScorePage(request):
+    quizId = Quiz.objects.get(currentQuestion=True).quizId;
+    quizzes = Quiz.objects.filter(quizId=quizId);
+    questionCount = Quiz.objects.filter(quizId=quizId).count();
+    return render(request, "score.html", {"quizId" : quizId,"questionCount" : questionCount,"quizzes" : quizzes});
 
