@@ -22,12 +22,21 @@
 	}
 </script>
 
+<style>
+table, th, td {
+    border: 1px solid black;
+    background-color: white;
+     color: black;
+}
+</style>
+
 
 
 <div id="page-wrapper">
 
     <div class="container-fluid">
     	
+    
 				<form role = "form" name="uploadDataForm" enctype="multipart/form-data" method="post" action="/uploadQuizFile" onsubmit="return validateForm()">
 		
 					{% csrf_token %} 
@@ -40,6 +49,32 @@
 			    	</div>
 						 
 				</form>
+				
+				<div>
+       				 	 <p style="color:white"> <font size="6"> --Example Quiz CSV Format -- </font></p>
+       				 	
+							
+							 <table style="width:100%">
+							  <tr>
+							    <td>QuizID</td>
+							    <td>QuizName</td> 
+							    <td>QuestionID</td>
+							    <td>Question</td>
+							    <td>Answer Options</td>
+							    <td>Correct Ans</td>
+							  </tr>
+							  <tr>
+							    <td>1</td>
+							    <td>Quiz-1</td> 
+							    <td>1</td> 
+							    <td>What is JVM?</td> 
+							    <td>--optional--</td> 
+							     <td>--optional--</td> 
+							  </tr>
+						
+							</table>
+       				 	  
+       			</div>
 			
 	</div>
 </div>
