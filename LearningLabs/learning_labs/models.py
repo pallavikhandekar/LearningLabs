@@ -66,6 +66,13 @@ class Answers(models.Model):
     Question_Id = models.IntegerField()
     Question = models.TextField()
     Submitted = models.TextField()
-    Answer = models.TextField() 
+    Answer = models.TextField()
+    #score table
+class ScoreTable(models.Model):
+    QuizId = models.IntegerField()
+    QuizName = models.TextField()
+    Team1Score = models.IntegerField()
+    Team2Score = models.IntegerField()
+
 #*********************************************************************#
     

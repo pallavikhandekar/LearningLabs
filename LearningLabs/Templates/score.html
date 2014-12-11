@@ -16,7 +16,7 @@
 $(document).ready(function(){
          $('.txtfld').bind({
                 keyup:function(){
-                  
+
              //total calculation
                         $(".printer-type tr:not(:first, last) td:last-child").text(function () {
                             var totalVal = 0;
@@ -39,11 +39,22 @@ $(document).ready(function(){
                         //Total calculation
                 }
             });
+     $('#savescores').click(function(){
+         var team1sc = document.getElementById("team1").innerHTML;
+         var team2sc = document.getElementById("team2").innerHTML;
+         document.getElementById("team1score").value =team1sc ;
+         document.getElementById("team2score").value =team2sc ;
+         alert(document.getElementById("team1score").value);
+
+
+    });
+
     });
 </script>
 
 
-
+<form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
+{% csrf_token %}
 <hr>
 <h2>Quiz 1</h2>
 <div class="printer-type">
@@ -79,14 +90,19 @@ $(document).ready(function(){
     <td>&nbsp;</td>
   </tr>
 
-  <tr>
+  <tr id="scoretable">
     <td>Scores</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td id="team1">&nbsp;</td>
+    <td id="team2">&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
 </table>
+    <br>
+ <input type="hidden" class="form-control" type="text" id ="team1score" name="team1score">
+ <input type="hidden" class="form-control" type="text" id="team2score" name="team2score">
+<button id="savescores"> Save Scores </button>
 </div>
+</form>
 
   {% endblock %}
 

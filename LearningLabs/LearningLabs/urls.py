@@ -35,7 +35,7 @@ urlpatterns = patterns('',
     url(r'answerSaved', views.createTeams),
 
     url(r'answer',TemplateView.as_view(template_name='./answer.html')),
-    url(r'Score',TemplateView.as_view(template_name='./score.html')),
+
   
     
     #**********Text Mining Section ***********
@@ -45,11 +45,12 @@ urlpatterns = patterns('',
 
     #******* URL for Template ***************
     url(r'^home$',views.loadAdminHome),
-    
+    url(r'^home/Score',TemplateView.as_view(template_name='./score.html')),
     url(r'^home/UploadQuiz$',TemplateView.as_view(template_name='./uploadQuizData.html')),
     url(r'^home/UploadStudent$',TemplateView.as_view(template_name='./uploadStudentData.html')),
     url(r'^uploadQuizFile$', views.uploadQuizData),
     url(r'^uploadStudentFile$', views.uploadStudentData),
+    url(r'saveScore$', views.saveScore),
     url(r'^importCsv/$', views.saveCSVToMongo),
     
     url(r'^home/selectQuiz$',views.populateQuiz),
@@ -57,6 +58,8 @@ urlpatterns = patterns('',
     
     url(r'^home/addQuestion$', TemplateView.as_view(template_name='./createquestions.html')),
     url(r'addQuestion', views.addQuestion),
+
+
     
     url(r'^home/createTeams$',views.createTeams),
     

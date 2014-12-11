@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,render_to_response
 from django.http.response import HttpResponse, HttpResponseRedirect
-from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams, TopFiveAnswers
+from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams, TopFiveAnswers, ScoreTable
 from django.db.models import  Sum
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
@@ -416,3 +416,23 @@ def createTeams(request):
             studentId,fname,lname = q.split(",")
             Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname )
         return redirect('/home/createTeams');
+
+def saveScore(request):
+    Team1Score = request.POST.get('team1score');
+    Team2Score = request.POST.get('team2score');
+    questionId = Quiz.objects.get(currentQuestion=True).questionId;
+    QuizId = Quiz.objects.get(currentQuestion=True).quizId;
+    QuizName = Quiz.objects.get(questionId=questionId, quizId=QuizId).question;
+    quizObj = ScoreTable.objects.create(QuizId=QuizId,QuizName="quiz",Team1Score=Team1Score,Team2Score=Team2Score);
+    quizObj.save();
+        #return HttpResponse("Question Saved Successfuly!")
+    return redirect('/home/Score');
+    readObj = ScoreTable.objects.filter(quizId=QuizId)
+    # if not readObj:
+    #     quizObj = ScoreTable.objects.create(QuizId=QuizId,QuizName="quiz",Team1Score=Team1Score,Team2Score=Team2Score);
+    #     quizObj.save();
+    #     #return HttpResponse("Question Saved Successfuly!")
+    #     return HttpResponse("Scores Saved Successfully");
+    # else:
+    #     return HttpResponse("This question Id for quiz ID already exits! Make it unique");
+
