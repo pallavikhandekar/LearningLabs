@@ -320,6 +320,20 @@ def fetchFamilyFeudGameData(request):
             gameData.append(questionData)
 #       
         return HttpResponse(simplejson.dumps({"questions":questions, "gameData":gameData, "quizId":quiz.quizId }), mimetype='application/json');
+
+def fetchFamilyFeudGameScores(request):
+    quizId =  Quiz.objects.get(currentQuestion=True).quizId;
+    score = ScoreTable.objects.filter(QuizId=quizId);
+    gameScores = {};
+    if len(score)==1:
+        obj = score[0];
+        gameScores['Team1Score'] = obj.Team1Score;
+        gameScores['Team2Score'] = obj.Team2Score;
+    else:
+        gameScores['Team1Score'] = 0;
+        gameScores['Team2Score'] = 0;
+    return HttpResponse(simplejson.dumps({"gameScores":gameScores}), mimetype='application/json');
+
 # ***************END TEXT MINING SECTION ******************
 # *************** Import Student Data ************
 def uploadStudentData(request):

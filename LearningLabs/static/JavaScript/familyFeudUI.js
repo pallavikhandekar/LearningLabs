@@ -60,8 +60,11 @@ function AppController($http,$scope) {
 	
 	$scope.viewScores=function(){
 	
-		
-		dialog = $("#dialog").dialog({
+	 $http({method: 'GET', url: '/loadFamilyFeudScores'}).
+	 success(function(data, status, headers, config) {
+	 	$("#teamAScores").text(data.gameScores.Team1Score);
+	 	$("#teamBScores").text(data.gameScores.Team2Score);
+	 	dialog = $("#dialog").dialog({
 		autoOpen: false,
         height: 300,
         width: 350,
@@ -82,6 +85,11 @@ function AppController($http,$scope) {
       
       	dialog.dialog( "open" );
 	
+	  }).
+	  error(function(data, status, headers, config) {
+	 	console.log(data);
+	  })
+	 
 	};
 	
 	
