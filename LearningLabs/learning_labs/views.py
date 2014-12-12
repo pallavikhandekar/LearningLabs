@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,render_to_response
 from django.http.response import HttpResponse, HttpResponseRedirect
-from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams, TopFiveAnswers, ScoreTable
+from learning_labs.models import Register, Quiz, QuestionsTable, PollAnswers,Teams, TopFiveAnswers, ScoreTable,DetailedScoreTable
 from django.db.models import  Sum
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login
@@ -422,31 +422,49 @@ def createTeams(request):
 
 # Score Section************
 def saveScore(request):
-    Team1Score = request.POST.get('team1score');
-    Team2Score = request.POST.get('team2score');
-    questionId = Quiz.objects.get(currentQuestion=True).questionId;
-    QuizId = Quiz.objects.get(currentQuestion=True).quizId;
-    QuizName = Quiz.objects.get(questionId=questionId, quizId=QuizId).question;
-    quizObj = ScoreTable.objects.create(QuizId=QuizId,QuizName="quiz",Team1Score=Team1Score,Team2Score=Team2Score);
-    quizObj.save();
-        #return HttpResponse("Question Saved Successfuly!")
-    return redirect('/home/Score');
-    readObj = ScoreTable.objects.filter(quizId=QuizId)
-    # if not readObj:
-    #     quizObj = ScoreTable.objects.create(QuizId=QuizId,QuizName="quiz",Team1Score=Team1Score,Team2Score=Team2Score);
-    #     quizObj.save();
-    #     #return HttpResponse("Question Saved Successfuly!")
-    #     return HttpResponse("Scores Saved Successfully");
-    # else:
-    #     return HttpResponse("This question Id for quiz ID already exits! Make it unique");
+    DetailScores =  json.loads(request.POST.get('DetailScores'));
+    gameScore =  json.loads(request.POST.get('gameScore'));
+
+    #Fetch scoretable score. 
+    scores = ScoreTable.objects.filter(QuizId=gameScore['QuizId']);
+    score = scores[0];
+    score.Team1Score = gameScore['Team1Score'];
+    score.Team2Score = gameScore['Team2Score'];
+    score.save();
+    
+    detailedScores = DetailedScoreTable.objects.filter(QuizId=gameScore['QuizId']);
+
+    for counter in range(0, len(detailedScores)):
+        obj = detailedScores[counter];
+        obj.Team1Score = DetailScores[counter]['Team1Score'];
+        obj.Team2Score = DetailScores[counter]['Team2Score'];    
+        obj.save();
+        
+    return HttpResponse("Data saved unsuccessfully!");
+   
 
 def displayScorePage(request):
-    quizId = Quiz.objects.get(currentQuestion=True).quizId;
-    quizzes = Quiz.objects.filter(quizId=quizId);
+    currentQuiz = Quiz.objects.get(currentQuestion=True);
+    quizId = currentQuiz.quizId;
+    quizName = currentQuiz.quizName;
+    questions = Quiz.objects.filter(quizId=quizId);
     questionCount = Quiz.objects.filter(quizId=quizId).count();
     gameData=[];
     questionNumber = 1;
-    for question in quizzes:
+    createObjects = False;
+    
+    #Fetch detailed score
+    detailedscores = DetailedScoreTable.objects.filter(QuizId=quizId);
+    if len(detailedscores) == 0: #No scores created
+        createObjects = True;
+        detailedscores = [];
+   
+            
+    for question in questions:
+        if createObjects: #for fist time
+            obj = DetailedScoreTable.objects.create(QuizId=quizId,QuestionId=question.questionId, QuestionName=question.question,Team1Score=0,Team2Score=0);
+            detailedscores.append(obj);
+            
         topFiveAns = TopFiveAnswers.objects.filter(quizId=quizId,questionId = question.questionId);
         if len(topFiveAns) == 0:
             return HttpResponse("Data polling pending for question : " + question.question);
@@ -462,7 +480,15 @@ def displayScorePage(request):
 
         gameData.append(answers)
         questionNumber +=1;
-    return render(request, "score.html", {"quizId" : quizId,"questionCount" : questionCount,"quizzes" : quizzes,"gameData":gameData});
+        
+
+    gamescore = ScoreTable.objects.filter(QuizId=quizId);
+    if len(gamescore) == 0: #No scores created
+        gamescore = ScoreTable.objects.create(QuizId=quizId,QuizName=quizName,Team1Score=0,Team2Score=0);
+    else:
+        gamescore = gamescore[0];
+        
+    return render(request, "score.html", {"quizId" : quizId,"questionCount" : questionCount,"questions" : questions,"gameData":gameData, "detailedscores":detailedscores,"gamescore":gamescore});
 
 
 class GameData:

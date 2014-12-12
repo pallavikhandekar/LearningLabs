@@ -13,6 +13,7 @@
 </style>
 
 <script>
+var DetailScores = [];
 $(document).ready(function(){
          $('.txtfld').bind({
                 keyup:function(){
@@ -39,15 +40,7 @@ $(document).ready(function(){
                         //Total calculation
                 }
             });
-     $('#savescores').click(function(){
-         var team1sc = document.getElementById("team1").innerHTML;
-         var team2sc = document.getElementById("team2").innerHTML;
-         document.getElementById("team1score").value =team1sc ;
-         document.getElementById("team2score").value =team2sc ;
-         alert(document.getElementById("team1score").value);
-
-
-    });
+   
     
     	//make first question visible
     	var rowElem1 = document.getElementById("rowQuestion_1")
@@ -58,6 +51,57 @@ $(document).ready(function(){
     		document.getElementById("btnPrev_1").style.display = "none";
     		document.getElementById("btnNext_{{gameData|length }}").style.display = "none";
     	}
+    	
+    	//form table view
+    	
+    	{% for detailedscore in detailedscores %}
+    		var obj = {}
+    		obj.QuizId = {{detailedscore.QuizId}}
+    		obj.QuestionId = {{detailedscore.QuestionId}}
+    		obj.QuestionName = '{{detailedscore.QuestionName}}'
+    		obj.Team1Score = {{detailedscore.Team1Score}}
+    		obj.Team2Score = {{detailedscore.Team2Score}}
+    		DetailScores.push(obj);
+    	{% endfor %}
+    	
+    	  $("#savescores").click(function() {
+            
+            	for (i=0 ; i<DetailScores.length; i++){
+            		x = DetailScores[i];
+            		x.Team1Score = document.getElementById("team1_"+x.QuestionId).value;
+            		x.Team2Score = document.getElementById("team2_"+x.QuestionId).value
+            	}
+            	
+            	gameScore ={}
+            	gameScore.QuizId = DetailScores[0].QuizId;
+            	gameScore.Team1Score =  document.getElementById("team1").innerHTML
+            	gameScore.Team2Score =  document.getElementById("team2").innerHTML
+            	
+            	/* var team1sc = document.getElementById("team1").innerHTML;
+         var team2sc = document.getElementById("team2").innerHTML;
+         document.getElementById("team1score").value =team1sc ;
+         document.getElementById("team2score").value =team2sc ;
+         alert(document.getElementById("team1score").value);*/
+            	
+            	
+				$.ajax({
+                        url : "/saveScore", 
+                        type : "POST",
+                        dataType: "json",
+                        data : {
+                            'DetailScores' : JSON.stringify(DetailScores),
+                            'gameScore' : JSON.stringify(gameScore),
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(json) {
+                              alert(json);
+                            },
+                            error : function(xhr,errmsg,err) {
+                                
+                            }
+                    });
+                    return false;
+            });
     	
     });
     
@@ -135,8 +179,7 @@ $(document).ready(function(){
 		</table>
 
 </div>
-<form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
-{% csrf_token %}
+
 <div class="printer-type">
 
 <table width="580" border="0" class="printer-row">
@@ -147,18 +190,18 @@ $(document).ready(function(){
     <td>Team 2</td>
     <td>Total sheets/year</td>
   </tr>
-  {% for quiz in quizzes %}
+  {% for detailedscore in detailedscores %}
   <tr>
-   <td>{{quiz.question}}</td>
-   <td><input type="text" class="txtfld" placeholder="edit"></td>
-   <td><input type="text" class="txtfld" placeholder="edit"></td>
+   <td id="question_{{detailedscore.QuestionId}}">{{detailedscore.QuestionName}}</td>
+   <td><input id="team1_{{detailedscore.QuestionId}}" type="text" class="txtfld" value={{detailedscore.Team1Score}}></td>
+   <td><input id="team2_{{detailedscore.QuestionId}}"  type="text" class="txtfld" value={{detailedscore.Team2Score}}></td>
    <td> </td>
  </tr>
  {% endfor %}
   <tr id="scoretable">
     <td>Scores</td>
-    <td id="team1">&nbsp;</td>
-    <td id="team2">&nbsp;</td>
+    <td id="team1" value={{gamescore.0.Team1Score}}>{{gamescore.Team1Score}}</td>
+    <td id="team2" value={{gamescore.0.Team2Score}}>{{gamescore.Team2Score}}</td>
     <td>&nbsp;</td>
   </tr>
 </table>
@@ -167,7 +210,7 @@ $(document).ready(function(){
  <input type="hidden" class="form-control" type="text" id="team2score" name="team2score">
 <button id="savescores"> Save Scores </button>
 </div>
-</form>
+
 </div>
 
   {% endblock %}
