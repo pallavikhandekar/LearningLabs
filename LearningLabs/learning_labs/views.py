@@ -357,6 +357,7 @@ def saveStudentDataToMongo(file):
         studentObj.studentId = row[3];
         studentObj.email = row[4];
         studentObj.password = row[5];
+        studentObj.teamNameProject = row[6];
         studentObj.save();
     # firstname = request.POST.get('fname')
     # lastname = request.POST.get('lname')
@@ -400,7 +401,7 @@ def saveCSVToMongo(file):
 def createTeams(request):
     if request.method == 'GET':
         try:
-            queryset = Register.objects.all()
+            queryset = Register.objects.all().order_by('teamNameProject')
             print([p.lname for p in queryset])
             return render(request, "createTeams.html", {"queryset":queryset });       
         except Exception as e:
@@ -415,8 +416,8 @@ def createTeams(request):
         print "Changed format" + chngFormat
         studentDetail = request.POST.getlist('selStudent')
         for q in studentDetail:
-            studentId,fname,lname = q.split(",")
-            Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname )
+            teamNameProject,studentId,fname,lname = q.split(",")
+            Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname,teamNameProject=teamNameProject )
         return redirect('/home/createTeams');
 
 # Score Section************
