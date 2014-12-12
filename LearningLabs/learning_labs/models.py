@@ -13,6 +13,7 @@ class Register(models.Model):
     studentId = models.IntegerField()
     email = models.EmailField()
     password = models.TextField()
+    teamNameProject = models.TextField()
     admin = models.BooleanField(default=False)
 
 class Teams(models.Model):
@@ -21,6 +22,7 @@ class Teams(models.Model):
     fname = models.TextField()
     lname = models.TextField()
     studentId = models.IntegerField()
+    teamNameProject = models.TextField()
     
 # Stores Quiz and associated questions and answers choices if any.
 class Quiz(models.Model):
