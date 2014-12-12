@@ -419,6 +419,7 @@ def createTeams(request):
             Teams.objects.create(teamName=teamName, gameDate=chngFormat,studentId=int(studentId),lname=lname,fname=fname )
         return redirect('/home/createTeams');
 
+# Score Section************
 def saveScore(request):
     Team1Score = request.POST.get('team1score');
     Team2Score = request.POST.get('team2score');
@@ -442,5 +443,33 @@ def displayScorePage(request):
     quizId = Quiz.objects.get(currentQuestion=True).quizId;
     quizzes = Quiz.objects.filter(quizId=quizId);
     questionCount = Quiz.objects.filter(quizId=quizId).count();
-    return render(request, "score.html", {"quizId" : quizId,"questionCount" : questionCount,"quizzes" : quizzes});
+    gameData=[];
+    questionNumber = 1;
+    for question in quizzes:
+        topFiveAns = TopFiveAnswers.objects.filter(quizId=quizId,questionId = question.questionId);
+        if len(topFiveAns) == 0:
+            return HttpResponse("Data polling pending for question : " + question.question);
+        aggregation = TopFiveAnswers.objects.filter(quizId=quizId,questionId = question.questionId).aggregate(totalSum=Sum('frequency'));
+        answerNumber = 0;
+        obj = None;
+        answers = []
+        for data in topFiveAns:
+            answerNumber += 1;
+            percentageValue = round((data.frequency*100)/aggregation['totalSum']);
+            obj = GameData(questionNumber,question.question,data.answer,data.frequency,++answerNumber,percentageValue);
+            answers.append(obj);
 
+        gameData.append(answers)
+        questionNumber +=1;
+    return render(request, "score.html", {"quizId" : quizId,"questionCount" : questionCount,"quizzes" : quizzes,"gameData":gameData});
+
+
+class GameData:
+    def __init__(self, questionNumber,question, answer, frequency,answerNumber,percentageValue):
+        self.questionNumber = questionNumber
+        self.question = question
+        self.answer = answer
+        self.frequency = frequency
+        self.answerNumber = answerNumber
+        self.percentageValue = percentageValue
+# Score Section************

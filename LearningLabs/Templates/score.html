@@ -6,7 +6,7 @@
 {% load staticfiles %}
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <style type="text/css">
+<style type="text/css">
 .txtfld{ width:50px;}
 .printer-row{border-collapse: collapse;}
 .printer-row td{border:1px solid #ccc;}
@@ -48,16 +48,95 @@ $(document).ready(function(){
 
 
     });
-
+    
+    	//make first question visible
+    	var rowElem1 = document.getElementById("rowQuestion_1")
+    	var rowElem2 = document.getElementById("rowAns_1")
+    	if (typeof(rowElem1) != 'undefined' && rowElem1 != null && typeof(rowElem2) != 'undefined' && rowElem2 != null){
+    		rowElem1.style.display = "block";
+    		rowElem2.style.display = "block";
+    		document.getElementById("btnPrev_1").style.display = "none";
+    		document.getElementById("btnNext_{{gameData|length }}").style.display = "none";
+    	}
+    	
     });
+    
+    function onNextButtonClick(me){
+    	var visibleDivId = me.parentNode.parentNode.id
+    	var currentQue = visibleDivId.split("_")[1];
+    
+    	document.getElementById("rowQuestion_"+currentQue).style.display = "none";
+        document.getElementById("rowAns_"+currentQue).style.display = "none";
+        
+        currentQue = parseInt(currentQue);
+    	currentQue++;
+    	
+    	var rowElem1 = document.getElementById("rowQuestion_"+currentQue);
+    	var rowElem2 = document.getElementById("rowAns_"+currentQue);
+    	if (typeof(rowElem1) != 'undefined' && rowElem1 != null && typeof(rowElem2) != 'undefined' && rowElem2 != null){
+    		rowElem1.style.display = "block";
+    		rowElem2.style.display = "block";
+    	}
+    }
+    
+    function onPrevButtonClick(me){
+    	var visibleDivId = me.parentNode.parentNode.id
+    	var currentQue = visibleDivId.split("_")[1];
+    
+    	document.getElementById("rowQuestion_"+currentQue).style.display = "none";
+        document.getElementById("rowAns_"+currentQue).style.display = "none";
+        
+        currentQue = parseInt(currentQue);
+    	currentQue--;
+    	
+    	var rowElem1 = document.getElementById("rowQuestion_"+currentQue);
+    	var rowElem2 = document.getElementById("rowAns_"+currentQue);
+    	if (typeof(rowElem1) != 'undefined' && rowElem1 != null && typeof(rowElem2) != 'undefined' && rowElem2 != null){
+    		rowElem1.style.display = "block";
+    		rowElem2.style.display = "block";
+    	}
+    }
 </script>
 
-<div ng-controller="MyCtrl">
-<form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
-{% csrf_token %}
+<div >
 <hr>
 <h3 style="align-content: center">Current Quiz :: {{quizId}}</h3>
 <h4 style="align-content: center">No of Questions :: {{questionCount}}</h4>
+
+<div style="width:580px; padding-bottom: 20px">
+		<table width= "100%"  style="border: 2px solid;">
+			{% for answers in gameData %}
+			<tr id="rowQuestion_{{forloop.counter}}"  width="100%" style="display:none;color:#FFFFFF;" align="center">
+				<td>
+					{{answers.0.question}}
+				</td>
+			</tr>
+			<tr id="rowAns_{{forloop.counter}}"  width= "100%" style="display:none;">
+				<td id="btnPrev_{{forloop.counter}}" align="center"   width= "25%" rowspan="{{ answers|length }}" style="padding: 10px">
+					<button onClick="onPrevButtonClick(this)">Prev Question</button>
+				</td>
+				<td  align="center" width="50%" rowspan="{{ answers|length }}" style="padding: 10px; padding-left: 10px">
+					 {% for o in answers %}
+					 <div>
+						 <div style="display:inline-block; text-align: left;">
+							 {{o.answer}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						 </div>
+						 <div style="display:inline-block; text-align: right;">
+						 {{o.percentageValue}} %
+						 </div>
+					</div>
+					{% endfor %}
+				</td>
+				<td align="center" width= "25%" rowspan="{{ answers|length }}" style="padding: 10px">
+					<button id="btnNext_{{forloop.counter}}" onClick="onNextButtonClick(this)">Next Question</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+</div>
+<form class="form-horizontal" role="form" method="post" action="/saveScore" id="scoreform">
+{% csrf_token %}
 <div class="printer-type">
 
 <table width="580" border="0" class="printer-row">
