@@ -98,7 +98,7 @@
             	sendData = dataChart;
 				sendData.sort(DescFrequencyComparator);
 				familyFeudData = [];
-				for (i=1; i<6; i++){
+				for (i=1; i<dataChart.length; i++){
 					var obj = {}
 					obj.answer = dataChart[i][0];
 					obj.frequency = dataChart[i][1];
