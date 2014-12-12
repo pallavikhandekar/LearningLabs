@@ -62,8 +62,10 @@ function AppController($http,$scope) {
 	
 	 $http({method: 'GET', url: '/loadFamilyFeudScores'}).
 	 success(function(data, status, headers, config) {
+
 	 	$("#teamAScores").text(data.gameScores.Team1Score);
 	 	$("#teamBScores").text(data.gameScores.Team2Score);
+
 	 	dialog = $("#dialog").dialog({
 		autoOpen: false,
         height: 300,
