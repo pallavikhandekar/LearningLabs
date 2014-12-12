@@ -1,64 +1,158 @@
 {% extends "index.html" %}
 
+
+
 {% block content %}
 
+
+
 {% load staticfiles %}
+
+<style>
+
+option.bold{
+
+font-weight:bold;
+
+}
+
+
+
+option{
+
+ border: 1px solid black;
+
+    background-color: white;
+
+     color: black;}
+
+</style>
+
   
+
+<div class="container-fluid">
+
  <div id="page-wrapper">
 
-<p style="color:white"> <font size="5"> --Create Teams-- </font></p>
+
+
+<p style="color:white"> <font size="5"> Create Teams </font></p>
+
  	<div class="container-fluid">      
+
      <form name="input" method="post" action="home/createTeams">
-			{% csrf_token %}
+
+{% csrf_token %}
+
+
+<input type="hidden" name="queryset" value={{queryset}}> 
+
+<div class="row" style="padding-bottom:10px">
+
+<div id="datetimepicker" class="input-append date">
+
+      <input type="text" name="datetime"></input>
+
+      <span class="add-on"><span class="fa fa-calendar"></span>
+
+      </span>
+
+    </div>
+
+    <script type="text/javascript"
+
+    src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+
+    </script>
+
+<script type="text/javascript"
+
+    src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+
+    </script>
+
+    <script type="text/javascript">
+
+      $('#datetimepicker').datetimepicker({
+
+        format: 'dd/MM/yyyy hh:mm:ss',
+
+        language: 'pt-BR'
+
+      });
+
+</script>
+
+</div>
+
+
+    <div class="row" style="padding-bottom:10px">
+
+<select name="selStudent" multiple="multiple" style="height:300px">
+
+<option value="selTeam" selected>--Select Team Name--</option>
+
+<option value="A" class="bold">Team Name, &nbsp;Student ID, &nbsp;Student Name</option>
+
+		{% for category in queryset %}
 		
-		<input type="hidden" name="queryset" value={{queryset}}> 
-		<div class="row" style="padding-bottom:10px">
-			<div id="datetimepicker" class="input-append date">
-		      <input type="text" name="datetime"></input>
-		      <span class="add-on"><span class="fa fa-calendar"></span>
-		      </span>
-		    </div>
-		     <script type="text/javascript"
-				     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-				    </script>
-			 <script type="text/javascript"
-				     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-				    </script>
-		     <script type="text/javascript">
-			      $('#datetimepicker').datetimepicker({
-			        format: 'dd/MM/yyyy hh:mm:ss',
-			        language: 'pt-BR'
-			      });
-			 </script>
-		</div>
-	    <div class="row" style="padding-bottom:10px">
-			<select name="selStudent" multiple="multiple" >
-				<option value="selTeam" selected>--Select Team Name--</option>
-				<option value="A">studentId, First Name, Last Name</option>
-				{% for category in queryset %}	
-				  <option value="{{category.studentId}},{{category.fname}},{{category.lname}}">{{category.studentId}} , {{category.fname}} , {{category.lname}}</option>
-				 {% endfor %}
-			</select>
-		</div>
-		<div class="row" style="padding-bottom:10px">
-			<select name="teamName">
-				  <option value="selTeam" selected>--Select Team Name--</option>
-				  <option value="A">Team A</option>
-				  <option value="B">Team B</option>
-			</select>
-		</div>
+		    <option value="{{category.teamNameProject}},{{category.studentId}},{{category.fname}},{{category.lname}}">
 		
-		<div class="row">
-			<input class="btn btn-primary" type="submit" value="Create Teams"/>
-		</div>
+		    {{category.teamNameProject}},
 		
-		</br>
-		</br>
-		<p style="color:white"> <font size="3">Select students from drop down and put them into Team A and Team B</font></p>
-		<p style="color:white"> <font size="3">Select the game date for uniqueness of team</font></p>
-	
+		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{category.studentId}},
+		
+		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{category.fname}}, &nbsp;{{category.lname}}
+		
+		</option>
+		
+		
+		{% endfor %}
+
+</select>
+
+</div>
+
+<div class="row" style="padding-bottom:10px">
+
+<select name="teamName">
+
+  <option value="selTeam" selected>--Select Team--</option>
+
+  <option value="A">Team A</option>
+
+  <option value="B">Team B</option>
+
+</select>
+
+</div>
+
+
+<div class="row">
+
+<input class="btn btn-primary" type="submit" value="Create Teams"/>
+
+</div>
+
+
 </form>
+
+<br>
+
+<textarea rows="5" cols="80">
+Help:
+    -Select the game date for uniqueness of team.
+    -Team name in selection table belongs to students project team. 
+    -Team selector at bottom of page helps to create Family Feud teams.
+    -Select students from drop down and put them into Team A and Team B.
+</textarea>
+
 </div>
+
 </div>
+
+</div>
+
+
 
 {% endblock %}
