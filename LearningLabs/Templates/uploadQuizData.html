@@ -28,8 +28,8 @@ table, th, td {
     background-color: white;
      color: black;
 }
-</style>
 
+</style>
 
 
 <div id="page-wrapper">
@@ -37,6 +37,7 @@ table, th, td {
     <div class="container-fluid">
     	
     
+<p style="color:white"> <font size="5"> Upload Quiz </font></p>
 				<form role = "form" name="uploadDataForm" enctype="multipart/form-data" method="post" action="/uploadQuizFile" onsubmit="return validateForm()">
 		
 					{% csrf_token %} 
@@ -45,13 +46,16 @@ table, th, td {
 						<input type="file" name="file" id="file" >
 					</div>
 			    	<div class="form-group">
-			    		<input class="btn btn-primary"  type="submit" name="submit" value="Upload Quiz">
+			    		<input class="btn btn-primary"  type="submit" name="submit" value="Submit">
 			    	</div>
 						 
 				</form>
 				
+				
+				<br>
+				<br>
 				<div>
-       				 	 <p style="color:white"> <font size="6"> --Example Quiz CSV Format -- </font></p>
+       				 	 <p style="color:white"> <font size="4"> Example Quiz CSV Format</font></p>
        				 	
 							
 							 <table style="width:100%">

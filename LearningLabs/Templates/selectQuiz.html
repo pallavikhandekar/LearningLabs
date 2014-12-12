@@ -19,7 +19,9 @@ function showMsg() {
  	<div class="container-fluid">
 		<!-- <h1 class="text-center">Select a question to populate </h1> -->
 			{% if quiz_list %} <!-- if quiz exists populate form else show empty message -->
-			<p style="color:white"> <font size="5"> --Select Quiz ID and Question for Family Feud Game-- </font></p>
+			<p style="color:white"> <font size="5"> Select Quiz ID and Question for Family Feud Game</font></p>
+		
+			<br>
 				<form name="QuizForm" method="post" action="/home/selectQuiz">
 				{% csrf_token %}
 				<div style="width: 400px">
@@ -67,6 +69,20 @@ function showMsg() {
 				<label>No Quiz found to display </label>
 			{% endif %}
 			
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			
+
+<textarea rows="5" cols="80">
+Help:
+    -Every game represents one quizId.
+    -Every quizId can have multiple questions.
+    -Select quizId and press "ok" for loading questions.
+    -Select question from drop down to populate on Family Feud game.
+</textarea>
 	</div>
 </div>
 
