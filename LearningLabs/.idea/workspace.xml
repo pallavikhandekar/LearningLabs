@@ -39,8 +39,8 @@
       <file leaf-file-name="mining.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/learning_labs/mining.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5034013" vertical-offset="1374" max-vertical-offset="1815">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.7619048" vertical-offset="1374" max-vertical-offset="1830">
+              <caret line="118" column="22" selection-start-line="118" selection-start-column="22" selection-end-line="118" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -88,13 +88,13 @@
         <option value="$PROJECT_DIR$/Templates/TextMining/UploadStudentData.html" />
         <option value="$PROJECT_DIR$/Templates/UploadStudentData.html" />
         <option value="$PROJECT_DIR$/Templates/uploadStudentData.html" />
-        <option value="$PROJECT_DIR$/learning_labs/mining.py" />
         <option value="$PROJECT_DIR$/Templates/TextMining/score.html" />
         <option value="$PROJECT_DIR$/Templates/index.html" />
         <option value="$PROJECT_DIR$/learning_labs/models.py" />
         <option value="$PROJECT_DIR$/LearningLabs/urls.py" />
         <option value="$PROJECT_DIR$/learning_labs/views.py" />
         <option value="$PROJECT_DIR$/Templates/score.html" />
+        <option value="$PROJECT_DIR$/learning_labs/mining.py" />
       </list>
     </option>
   </component>
@@ -1041,6 +1041,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Templates/score.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.625" vertical-offset="1215" max-vertical-offset="3345">
+          <caret line="72" column="8" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/learning_labs/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="60.423077" vertical-offset="6446" max-vertical-offset="7815">
@@ -1051,18 +1059,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Templates/score.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.625" vertical-offset="1215" max-vertical-offset="3345">
-          <caret line="72" column="8" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learning_labs/mining.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5034013" vertical-offset="1374" max-vertical-offset="1815">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7619048" vertical-offset="1374" max-vertical-offset="1830">
+          <caret line="118" column="22" selection-start-line="118" selection-start-column="22" selection-end-line="118" selection-end-column="22" />
           <folding />
         </state>
       </provider>

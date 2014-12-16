@@ -114,7 +114,8 @@ def findTens(num):
     if(num<20):
        returnVal = numDict.get(num)
     else:
-        tens = num/10
-        unit = num%10
-        returnVal = numDict.get(tens)+" "+numDict.get(unit)
+        y=num/10;
+        y=y*10;
+        unit = num%10;
+        returnVal = numDict.get(y)+" "+numDict.get(unit)
     return returnVal
